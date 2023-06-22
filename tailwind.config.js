@@ -12,7 +12,14 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        'primary': '#F9C91F',
+        background: '#1D1D1F',
+        backgroundLight: '#323232'
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss-radix")(),
+  ],
 }
