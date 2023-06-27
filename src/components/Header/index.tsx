@@ -30,7 +30,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex justify-center items-center bg-background z-30 fixed w-full h-20">
+      <header className="flex justify-center items-center bg-background z-40 fixed w-full h-20">
         <div className="flex justify-between items-center max-w-5xl w-full mx-auto">
           <div className="cursor-pointer lg:ml-0 ml-5">
             <Link href={"/"}>
@@ -41,7 +41,7 @@ export default function Header() {
             <NavigationMenu.List className="flex flex-row rounded-lg bg-transparent p-2 space-x-2 ">
               <NavigationMenu.Item asChild>
                 <NavigationMenu.Link
-                  href="https://github.com/ecklf/tailwindcss-radix"
+                  href="/"
                   className={clsx(
                     "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 ",
                     "px-3 py-2 text-sm rounded-md hover:bg-backgroundLight ease-in-out transition-all duration-200",
@@ -82,7 +82,13 @@ export default function Header() {
                     "group-radix-motion-to-end:animate-exit-to-right"
                   )}
                 >
-                  <div className="w-[21rem] lg:w-[24rem] p-3">
+                  <motion.div
+                    className="w-[21rem] lg:w-[24rem] p-3"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="grid grid-cols-3 gap-2">
                       <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4 ease-in-out transition-all duration-200">
                         Action
@@ -112,7 +118,7 @@ export default function Header() {
                         Others
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
 
@@ -145,7 +151,13 @@ export default function Header() {
                     "radix-motion-to-end:animate-exit-to-right"
                   )}
                 >
-                  <div className="w-[6rem] lg:w-[12rem] p-3 flex">
+                  <motion.div
+                    className="w-[6rem] lg:w-[12rem] p-3 flex"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="w-full flex flex-col space-y-2 text-center">
                       <NavigationMenu.Link className="w-full self-center cursor-pointer hover:bg-primary rounded-md hover:text-background p-2 ease-in-out transition-all duration-200">
                         Favorites
@@ -160,7 +172,7 @@ export default function Header() {
                         Completed
                       </NavigationMenu.Link>
                     </div>
-                  </div>
+                  </motion.div>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
 
@@ -225,7 +237,7 @@ export default function Header() {
 
       {isMenuOpen && (
         <motion.div
-          className="w-full h-auto bg-backgroundLight absolute flex justify-center top-[80px] sm:hidden"
+          className="w-full h-auto bg-backgroundLight absolute flex justify-center top-[80px] sm:hidden z-30"
           initial={{ y: -300 }}
           animate={{ y: isMenuOpen ? 0 : -300 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
