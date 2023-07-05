@@ -30,22 +30,22 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex justify-center items-center bg-background z-40 fixed w-full h-20">
+      <header className="flex justify-center items-center bg-backgroundSecondary/90 z-40 fixed w-full h-20 drop-shadow-md backdrop-blur-xl">
         <div className="flex justify-between items-center max-w-5xl w-full mx-auto">
           <div className="cursor-pointer lg:ml-0 ml-5">
             <Link href={"/"}>
               <Image src={Logo} alt="" width={32} />
             </Link>
           </div>
-          <NavigationMenu.Root className="relative sm:flex hidden">
+          <NavigationMenu.Root className="relative sm:flex hidden text-gray-600">
             <NavigationMenu.List className="flex flex-row rounded-lg bg-transparent p-2 space-x-2 ">
               <NavigationMenu.Item asChild>
                 <NavigationMenu.Link
                   href="/"
                   className={clsx(
                     "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 ",
-                    "px-3 py-2 text-sm rounded-md hover:bg-backgroundLight ease-in-out transition-all duration-200",
-                    "text-sm font-medium text-gray-100"
+                    "px-3 py-2 text-sm rounded-md hover:bg-gray-200 ease-in-out transition-all duration-200",
+                    "text-sm font-medium"
                   )}
                 >
                   Home
@@ -56,9 +56,9 @@ export default function Header() {
                 <NavigationMenu.Trigger
                   className={clsx(
                     "group",
-                    "px-3 py-2 text-sm rounded-md hover:bg-backgroundLight flex items-center gap-1 ease-in-out transition-all duration-200",
+                    "px-3 py-2 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1 ease-in-out transition-all duration-200",
                     "text-sm font-medium",
-                    "text-gray-100",
+                    "",
                     "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
                   )}
                 >
@@ -75,7 +75,7 @@ export default function Header() {
 
                 <NavigationMenu.Content
                   className={clsx(
-                    "absolute w-auto top-0 left-0 rounded-lg",
+                    "absolute w-auto top-0 left-0 rounded-lg bg-gray-200",
                     "group-radix-motion-from-start:animate-enter-from-left",
                     "group-radix-motion-from-end:animate-enter-from-right",
                     "group-radix-motion-to-start:animate-exit-to-left",
@@ -90,31 +90,31 @@ export default function Header() {
                     transition={{ duration: 0.3 }}
                   >
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4 ease-in-out transition-all duration-200">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
                         Action
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4 ease-in-out transition-all duration-200">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
                         Comedy
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4 ease-in-out transition-all duration-200">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md  py-2 px-4 ease-in-out transition-all duration-200">
                         Adventure
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4 ease-in-out transition-all duration-200">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
                         Romance
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4 ease-in-out transition-all duration-200">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
                         Fantasy
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
                         Drama
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
                         Mecha
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
                         Sports
                       </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background py-2 px-4">
+                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
                         Others
                       </div>
                     </div>
@@ -126,8 +126,8 @@ export default function Header() {
                 <NavigationMenu.Trigger
                   className={clsx(
                     "group",
-                    "px-3 py-2 text-sm rounded-md hover:bg-backgroundLight flex items-center gap-1",
-                    "text-sm font-medium text-gray-700 dark:text-gray-100",
+                    "px-3 py-2 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1",
+                    "text-sm font-medium",
                     "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 ease-in-out transition-all duration-200"
                   )}
                 >
@@ -144,7 +144,7 @@ export default function Header() {
 
                 <NavigationMenu.Content
                   className={clsx(
-                    "absolute w-auto top-0 left-0 rounded-lg",
+                    "absolute w-auto top-0 left-0 rounded-lg bg-gray-200",
                     "radix-motion-from-start:animate-enter-from-left",
                     "radix-motion-from-end:animate-enter-from-right",
                     "radix-motion-to-start:animate-exit-to-left",
@@ -159,16 +159,16 @@ export default function Header() {
                     transition={{ duration: 0.3 }}
                   >
                     <div className="w-full flex flex-col space-y-2 text-center">
-                      <NavigationMenu.Link className="w-full self-center cursor-pointer hover:bg-primary rounded-md hover:text-background p-2 ease-in-out transition-all duration-200">
+                      <NavigationMenu.Link className="w-full self-center cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
                         Favorites
                       </NavigationMenu.Link>
-                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background p-2 ease-in-out transition-all duration-200">
+                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
                         Planning
                       </NavigationMenu.Link>
-                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background p-2 ease-in-out transition-all duration-200">
+                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
                         Watching
                       </NavigationMenu.Link>
-                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md hover:text-background p-2 ease-in-out transition-all duration-200">
+                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
                         Completed
                       </NavigationMenu.Link>
                     </div>
@@ -178,14 +178,14 @@ export default function Header() {
 
               <NavigationMenu.Indicator
                 className={clsx(
-                  "z-10",
+                  "z-10 ",
                   "top-[100%] flex items-end justify-center h-2 overflow-hidden",
                   "radix-state-visible:animate-fade-in",
                   "radix-state-hidden:animate-fade-out",
                   "transition-[width_transform] duration-[250ms] ease-[ease]"
                 )}
               >
-                <div className="top-1 relative bg-backgroundLight w-2 h-2 rotate-45" />
+                <div className="top-1 relative bg-gray-200 border w-2 h-2 rotate-45" />
               </NavigationMenu.Indicator>
             </NavigationMenu.List>
 
@@ -200,7 +200,7 @@ export default function Header() {
             >
               <NavigationMenu.Viewport
                 className={clsx(
-                  "relative mt-2 shadow-lg rounded-md bg-backgroundLight overflow-hidden",
+                  "relative mt-2 drop-shadow-md rounded-md bg-gray-200 overflow-hidden",
                   "w-radix-navigation-menu-viewport",
                   "h-radix-navigation-menu-viewport",
                   "radix-state-open:animate-scale-in-content",
@@ -237,7 +237,7 @@ export default function Header() {
 
       {isMenuOpen && (
         <motion.div
-          className="w-full h-auto bg-backgroundLight absolute flex justify-center top-[80px] sm:hidden z-30"
+          className="w-full h-auto bg-backgroundSecondary absolute flex justify-center top-[80px] sm:hidden z-30"
           initial={{ y: -300 }}
           animate={{ y: isMenuOpen ? 0 : -300 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}

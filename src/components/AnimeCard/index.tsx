@@ -19,10 +19,10 @@ export default function AnimeCard({ data }: any) {
   };
 
   return (
-    <div
+    <motion.div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="flex"
+      className="flex w-48 hover:w-80 text-black"
     >
       <Link href={"/"}>
         <div className="w-48 h-full rounded-lg relative cursor-pointer flex flex-col items-center text-center gap-2">
@@ -35,30 +35,25 @@ export default function AnimeCard({ data }: any) {
           <div>{data.title}</div>
         </div>
       </Link>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isHovered && (
           <motion.div
-            className="w-64 h-64 bg-backgroundLight rounded-r-lg text-slate-100 flex flex-col p-4 gap-[6px] overflow-hidden whitespace-nowrap "
-            initial={{ width: 0 }}
-            animate={{
-              width: isHovered ? "256px" : 0,
+            className="w-0 h-64 bg-backgroundSecondary rounded-r-lg text-slate-100 flex flex-col p-4 gap-[6px] overflow-hidden whitespace-nowrap"
+            initial={{ width: 0, padding: "0px" }}
+            animate={{ width: "256px", padding: "4px" }}
+            exit={{
+              width: 0,
+              padding: 0,
+              transition: { ease: "easeInOut", duration: 1 },
             }}
-            exit={{ width: 0 }}
-            transition={{ duration: 0.3 }}
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center justify-between mb-[-8px]"
-            >
+            <div className="flex items-center justify-between mb-[-8px]">
               <p>{data.status}</p>
               <div className="flex items-center">
                 <p>{data.score}</p>
                 <Star size={20} weight="fill" className="text-primary" />
               </div>
-            </motion.div>
+            </div>
             <p>{data.year}</p>
             <p className="text-red-500 font-semibold">{data.studios[0].name}</p>
 
@@ -85,7 +80,7 @@ export default function AnimeCard({ data }: any) {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
-    </div>
+      </AnimatePresence> */}
+    </motion.div>
   );
 }

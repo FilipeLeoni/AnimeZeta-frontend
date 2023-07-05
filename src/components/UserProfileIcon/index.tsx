@@ -22,10 +22,10 @@ export default function UserProfileIcon() {
           className={clsx(
             "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down",
             "z-50 w-48 rounded-lg p-4 shadow-md md:w-56",
-            "bg-backgroundLight "
+            "bg-gray-200 "
           )}
         >
-          <PopoverPrimitive.Arrow className="fill-current dark:text-gray-800" />
+          <PopoverPrimitive.Arrow className="fill-current text-gray-200" />
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -33,16 +33,16 @@ export default function UserProfileIcon() {
             transition={{ duration: 0.3 }}
           >
             <Link href={"/"}>
-              <div className="text-sm font-medium text-gray-100 hover:bg-background p-4 rounded-lg hover:text-primary">
+              <div className="text-md font-medium text-gray-500 hover:bg-primary p-4 rounded-lg ">
                 <h3>Create an account</h3>
-                <p className="text-gray-500">Join today for free</p>
+                <p className="text-gray-400 text-sm">Join today for free</p>
               </div>
             </Link>
             <div className="mx-1 my-1 h-[2px] bg-gray-500 rounded-lg" />
             <Link href={"/login"}>
-              <div className="text-sm font-medium text-gray-100 hover:bg-background p-4 rounded-lg hover:text-primary">
+              <div className="text-md font-medium text-gray-500 hover:bg-primary p-4 rounded-lg ">
                 <h3>Log In</h3>
-                <p className="text-gray-500">Alredy joined us?</p>
+                <p className="text-gray-400 text-sm">Alredy joined us?</p>
               </div>
             </Link>
           </motion.div>

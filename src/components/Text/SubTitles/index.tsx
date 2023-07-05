@@ -5,5 +5,5 @@ interface SubTitleProps {
 }
 
 export default function SubTitle({ children }: SubTitleProps) {
-  return <h2 className="text-background">{children}</h2>;
+  return <h2 className="text-black text-xl">{children}</h2>;
 }
