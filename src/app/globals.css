@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.super-carousel {
+  background-image: url("../assets/images/bg-super-carousel.jpg");
+}

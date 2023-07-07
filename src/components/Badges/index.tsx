@@ -6,8 +6,8 @@ interface BadgesProps {
 
 export default function Badges({ children }: BadgesProps) {
   return (
-    <div className="bg-primary rounded-full">
-      <div className="px-4 text-background">{children}</div>
+    <div className="bg-primary rounded-full px-2 text-yellow-800 text-sm">
+      <div className="inline-block">{children}</div>
     </div>
   );
 }

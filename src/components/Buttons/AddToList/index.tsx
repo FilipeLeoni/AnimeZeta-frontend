@@ -3,7 +3,7 @@ import { PlusCircle } from "@phosphor-icons/react";
 
 export default function AddToList() {
   return (
-    <div className="flex items-center cursor-pointer hover:text-primary gap-1 transition-colors">
+    <div className="flex items-center cursor-pointer hover:text-primary gap-1 transition-colors text-sm md:text-base">
       <PlusCircle size={32} weight="fill" />
       <p>Add to list</p>
     </div>

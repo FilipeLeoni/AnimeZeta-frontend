@@ -1,3 +1,4 @@
+import { Nunito, Ubuntu } from "next/font/google";
 import React from "react";
 
 interface SubTitleProps {
@@ -5,5 +6,9 @@ interface SubTitleProps {
 }
 
 export default function SubTitle({ children }: SubTitleProps) {
-  return <h2 className="text-black text-xl">{children}</h2>;
+  return (
+    <h2 className="text-grayDark text-xl flex items-center gap-2 font-medium">
+      {children}
+    </h2>
+  );
 }

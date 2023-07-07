@@ -1,13 +1,16 @@
+"use client";
+
 import Header from "@/components/Header";
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { QueryClient, QueryClientProvider } from "react-query";
+import { poppins } from "./fonts";
 
 export const metadata = {
   title: "AnimeZeta",
   description: "An unofficial anime site",
 };
+
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -16,10 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        {children}
-      </body>
+      <QueryClientProvider client={queryClient}>
+        <body className={poppins.className}>
+          <Header />
+          {children}
+        </body>
+      </QueryClientProvider>
     </html>
   );
 }

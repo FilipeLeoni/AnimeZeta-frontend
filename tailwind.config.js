@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'super-carousel': 'url("/images/super-carousel.png")',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
@@ -16,6 +16,7 @@ module.exports = {
         'primary': '#F9C91F',
         background: '#f0f4f8',
         backgroundSecondary: '#fefeff',
+        grayDark: '#1e1e1e'
 
       }
     },

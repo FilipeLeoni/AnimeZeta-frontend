@@ -10,6 +10,9 @@ import Logo from "@/assets/images/Logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import HeaderOptions from "../HeaderOptions";
+import CategoriesOptions from "@/utils/HeaderOptions/CategoriesOptions";
+import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +32,7 @@ export default function Header() {
   };
 
   return (
-    <>
+    <div>
       <header className="flex justify-center items-center bg-backgroundSecondary/90 z-40 fixed w-full h-20 drop-shadow-md backdrop-blur-xl">
         <div className="flex justify-between items-center max-w-5xl w-full mx-auto">
           <div className="cursor-pointer lg:ml-0 ml-5">
@@ -44,8 +47,8 @@ export default function Header() {
                   href="/"
                   className={clsx(
                     "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 ",
-                    "px-3 py-2 text-sm rounded-md hover:bg-gray-200 ease-in-out transition-all duration-200",
-                    "text-sm font-medium"
+                    "px-3 py-2 rounded-md hover:bg-gray-200 ease-in-out transition-all duration-200",
+                    "font-medium"
                   )}
                 >
                   Home
@@ -56,9 +59,8 @@ export default function Header() {
                 <NavigationMenu.Trigger
                   className={clsx(
                     "group",
-                    "px-3 py-2 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1 ease-in-out transition-all duration-200",
-                    "text-sm font-medium",
-                    "",
+                    "px-3 py-2 rounded-md hover:bg-gray-200 flex items-center gap-1 ease-in-out transition-all duration-200",
+                    "font-medium",
                     "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
                   )}
                 >
@@ -75,7 +77,7 @@ export default function Header() {
 
                 <NavigationMenu.Content
                   className={clsx(
-                    "absolute w-auto top-0 left-0 rounded-lg bg-gray-200",
+                    "absolute w-auto top-0 left-0 rounded-lg ",
                     "group-radix-motion-from-start:animate-enter-from-left",
                     "group-radix-motion-from-end:animate-enter-from-right",
                     "group-radix-motion-to-start:animate-exit-to-left",
@@ -89,34 +91,13 @@ export default function Header() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
-                        Action
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
-                        Comedy
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md  py-2 px-4 ease-in-out transition-all duration-200">
-                        Adventure
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
-                        Romance
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4 ease-in-out transition-all duration-200">
-                        Fantasy
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
-                        Drama
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
-                        Mecha
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
-                        Sports
-                      </div>
-                      <div className="w-full cursor-pointer hover:bg-primary rounded-md py-2 px-4">
-                        Others
-                      </div>
+                    <div className="grid grid-cols-3 gap-2 text-gray-200">
+                      {CategoriesOptions.map((category) => (
+                        <HeaderOptions key={category.id} onClick="">
+                          {category.name}
+                        </HeaderOptions>
+                      ))}
+                      <HeaderOptions>Others</HeaderOptions>
                     </div>
                   </motion.div>
                 </NavigationMenu.Content>
@@ -126,8 +107,8 @@ export default function Header() {
                 <NavigationMenu.Trigger
                   className={clsx(
                     "group",
-                    "px-3 py-2 text-sm rounded-md hover:bg-gray-200 flex items-center gap-1",
-                    "text-sm font-medium",
+                    "px-3 py-2 rounded-md hover:bg-gray-200 flex items-center gap-1",
+                    "font-medium",
                     "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 ease-in-out transition-all duration-200"
                   )}
                 >
@@ -144,7 +125,7 @@ export default function Header() {
 
                 <NavigationMenu.Content
                   className={clsx(
-                    "absolute w-auto top-0 left-0 rounded-lg bg-gray-200",
+                    "absolute w-auto top-0 left-0 rounded-lg",
                     "radix-motion-from-start:animate-enter-from-left",
                     "radix-motion-from-end:animate-enter-from-right",
                     "radix-motion-to-start:animate-exit-to-left",
@@ -159,18 +140,11 @@ export default function Header() {
                     transition={{ duration: 0.3 }}
                   >
                     <div className="w-full flex flex-col space-y-2 text-center">
-                      <NavigationMenu.Link className="w-full self-center cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
-                        Favorites
-                      </NavigationMenu.Link>
-                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
-                        Planning
-                      </NavigationMenu.Link>
-                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
-                        Watching
-                      </NavigationMenu.Link>
-                      <NavigationMenu.Link className="w-full cursor-pointer hover:bg-primary rounded-md  p-2 ease-in-out transition-all duration-200">
-                        Completed
-                      </NavigationMenu.Link>
+                      {MyListOptions.map((option) => (
+                        <HeaderOptions key={option.id} onClick="">
+                          {option.name}
+                        </HeaderOptions>
+                      ))}
                     </div>
                   </motion.div>
                 </NavigationMenu.Content>
@@ -178,21 +152,21 @@ export default function Header() {
 
               <NavigationMenu.Indicator
                 className={clsx(
-                  "z-10 ",
+                  "z-10",
                   "top-[100%] flex items-end justify-center h-2 overflow-hidden",
                   "radix-state-visible:animate-fade-in",
                   "radix-state-hidden:animate-fade-out",
                   "transition-[width_transform] duration-[250ms] ease-[ease]"
                 )}
               >
-                <div className="top-1 relative bg-gray-200 border w-2 h-2 rotate-45" />
+                <div className="top-1 relative bg-grayDark/80 border w-2 h-2 rotate-45" />
               </NavigationMenu.Indicator>
             </NavigationMenu.List>
 
             <div
               className={clsx(
                 "absolute flex justify-center",
-                "w-[140%] left-[-15%] top-[100%]"
+                "w-[140%] left-[-5%] top-[100%]"
               )}
               style={{
                 perspective: "2000px",
@@ -200,7 +174,7 @@ export default function Header() {
             >
               <NavigationMenu.Viewport
                 className={clsx(
-                  "relative mt-2 drop-shadow-md rounded-md bg-gray-200 overflow-hidden",
+                  "relative mt-2 drop-shadow-md rounded-md bg-grayDark/80 overflow-hidden",
                   "w-radix-navigation-menu-viewport",
                   "h-radix-navigation-menu-viewport",
                   "radix-state-open:animate-scale-in-content",
@@ -270,31 +244,17 @@ export default function Header() {
                     exit={{ opacity: 0, height: 0 }}
                     className="bg-background shadow-md p-2 w-full rounded-lg"
                   >
-                    <Link href="#" className="block py-1 px-3">
-                      Action
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Comedy
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Adventure
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Romance
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Fantasy
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Drama
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Mecha
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Sports
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
+                    {CategoriesOptions.map((category) => (
+                      <Link
+                        href="#"
+                        key={category.id}
+                        className="block py-3 px-3 border-b text-gray-900"
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+
+                    <Link href="#" className="block py-1 px-3 text-gray-900">
                       Others
                     </Link>
                   </motion.div>
@@ -316,18 +276,15 @@ export default function Header() {
                     exit={{ opacity: 0, height: 0 }}
                     className="bg-background shadow-md p-2 w-full rounded-lg"
                   >
-                    <Link href="#" className="block py-1 px-3">
-                      Favorites
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Planning
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Watching
-                    </Link>
-                    <Link href="#" className="block py-1 px-3">
-                      Completed
-                    </Link>
+                    {MyListOptions.map((option) => (
+                      <Link
+                        href="#"
+                        key={option.id}
+                        className="block py-3 px-3 border-b text-gray-900"
+                      >
+                        {option.name}
+                      </Link>
+                    ))}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -339,6 +296,6 @@ export default function Header() {
           </ul>
         </motion.div>
       )}
-    </>
+    </div>
   );
 }

@@ -1,0 +1,80 @@
+import React, { ElementType } from "react";
+import SubTitle from "../Text/SubTitles";
+import Slider from "react-slick";
+import { CaretCircleLeft, CaretCircleRight } from "@phosphor-icons/react";
+import AnimeCard from "../AnimeCard";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+interface Props {
+  AnimeData: any;
+  Title: string;
+  Icon: ElementType;
+}
+
+export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
+  const settings = {
+    className: "slider variable-width",
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 4,
+    initialSlide: 1,
+    prevArrow: (
+      <CaretCircleLeft color={"#1e1e1e"} weight="fill" className="slick-prev" />
+    ),
+    nextArrow: (
+      <CaretCircleRight
+        color={"#1e1e1e"}
+        weight="fill"
+        className="slick-next"
+      />
+    ),
+
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  return (
+    <div className="w-full col-span-12">
+      <SubTitle>
+        {Title}
+        <Icon size={24} weight="fill" color="#ffa500" />
+      </SubTitle>
+      <Slider {...settings} className="z-20 h-96">
+        {AnimeData &&
+          AnimeData.map((data: any, index: any) => (
+            <div
+              key={index}
+              className="h-full py-10 hover:scale-110 mx-6 transition-all"
+            >
+              <AnimeCard data={data} />
+            </div>
+          ))}
+      </Slider>
+    </div>
+  );
+}
