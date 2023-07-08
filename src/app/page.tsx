@@ -5,6 +5,8 @@ import { Heart, Lightning, Planet, Smiley } from "@phosphor-icons/react";
 import { useJikanAPI } from "@/hooks/useJikanApi";
 import GenreCarousel from "@/components/GenreCarousel";
 import SuperCarousel from "@/components/SuperCarousel";
+import Head from "next/head";
+import Link from "next/link";
 
 export default function Home() {
   const api = useJikanAPI();
@@ -38,7 +40,8 @@ export default function Home() {
   );
 
   return (
-    <main className="flex w-full min-h-screen flex-col items-center pt-36 pb-20 bg-gradient-to-b from-background to-[#e3e8f4] px-20">
+    <main>
+      <title>AnimeZeta</title>
       <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
         <SuperCarousel data={topAnimes} />
 

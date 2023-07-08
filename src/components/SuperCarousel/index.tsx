@@ -8,15 +8,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function SuperCarousel({ data }: any) {
-  const settings = {
+  const settings: any = {
     dots: true,
+    fade: true,
+    lazyLoad: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 10000,
-    cssEase: "linear in-out",
+    autoplay: true,
+    autoplaySpeed: 5000,
   };
 
   return (
@@ -53,7 +54,7 @@ export default function SuperCarousel({ data }: any) {
                     alt={anime.title}
                     width={176}
                     height={256}
-                    className="rounded md:mr-16 mr-0"
+                    className="rounded-lg md:mr-16 mr-0"
                   />
                 </div>
               </div>

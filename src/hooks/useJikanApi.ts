@@ -6,13 +6,24 @@ export const useJikanAPI = () => ({
       return res.data;
     },
 
-    getAnimesByGenre: async (genreId: number) => {
-      const res = await jikanAPI.get(`/anime?genres=${genreId}`);
+    getAnimesByGenre: async (genreId: number | string, page: number = 1) => {
+      const res = await jikanAPI.get(`/anime?genres=${genreId}&page=${page}`);
       return res.data;
     },
 
-    getCurrentSeasonAnimes: async () => {
-      const res = await jikanAPI.get(`/seasons/now`);
+    getAnimeById: async (id: number) => {
+      const res = await jikanAPI.get(`/anime/${id}/full`);
       return res.data;
-    }
+    },
+
+    getCharacterById: async (characterId: number) => {
+      const res = await jikanAPI.get(`/characters/${characterId}/full`);
+      return res.data;
+    },
+
+    getAnimeInfoByType: async (animeId: number, type:  string) => {
+      const res = await jikanAPI.get(`/anime/${animeId}/${type}`);
+      return res.data;
+    },
+
 });

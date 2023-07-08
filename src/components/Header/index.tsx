@@ -93,9 +93,9 @@ export default function Header() {
                   >
                     <div className="grid grid-cols-3 gap-2 text-gray-200">
                       {CategoriesOptions.map((category) => (
-                        <HeaderOptions key={category.id} onClick="">
-                          {category.name}
-                        </HeaderOptions>
+                        <Link href={`/genre/${category.id}`} key={category.id}>
+                          <HeaderOptions>{category.name}</HeaderOptions>
+                        </Link>
                       ))}
                       <HeaderOptions>Others</HeaderOptions>
                     </div>
@@ -246,7 +246,7 @@ export default function Header() {
                   >
                     {CategoriesOptions.map((category) => (
                       <Link
-                        href="#"
+                        href=""
                         key={category.id}
                         className="block py-3 px-3 border-b text-gray-900"
                       >
@@ -254,7 +254,7 @@ export default function Header() {
                       </Link>
                     ))}
 
-                    <Link href="#" className="block py-1 px-3 text-gray-900">
+                    <Link href="" className="block py-1 px-3 text-gray-900">
                       Others
                     </Link>
                   </motion.div>

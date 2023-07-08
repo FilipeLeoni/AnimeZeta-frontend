@@ -5,6 +5,7 @@ import { CaretCircleLeft, CaretCircleRight } from "@phosphor-icons/react";
 import AnimeCard from "../AnimeCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 interface Props {
   AnimeData: any;
@@ -66,13 +67,14 @@ export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
       </SubTitle>
       <Slider {...settings} className="z-20 h-96">
         {AnimeData &&
-          AnimeData.map((data: any, index: any) => (
-            <div
-              key={index}
-              className="h-full py-10 hover:scale-110 mx-6 transition-all"
+          AnimeData.map((data: any) => (
+            <Link
+              key={data.mal_id}
+              href={`/anime/${data.mal_id}`}
+              className="h-full py-10 mx-6 "
             >
               <AnimeCard data={data} />
-            </div>
+            </Link>
           ))}
       </Slider>
     </div>

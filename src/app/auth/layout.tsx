@@ -1,9 +1,6 @@
 "use client";
 
-import Header from "@/components/Header";
-import "./globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { poppins } from "./fonts";
 
 export const metadata = {
   title: "AnimeZeta",
@@ -12,7 +9,7 @@ export const metadata = {
 
 const queryClient = new QueryClient();
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -20,8 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryClientProvider client={queryClient}>
-        <body className={poppins.className}>
-          <Header />
+        <body>
           <div className="flex w-full min-h-screen flex-col items-center pt-36 pb-20 bg-gradient-to-b from-background to-[#e3e8f4] px-20">
             {children}
           </div>

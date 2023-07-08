@@ -2,10 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: primary;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #f9c91f;
+  border-radius: 14px;
+  border: 3px solid white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1e1e1e;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
 }
 
 .super-carousel {
   background-image: url("../assets/images/bg-super-carousel.jpg");
+}
+
+.slick-list {
+  padding-bottom: 40px !important;
 }

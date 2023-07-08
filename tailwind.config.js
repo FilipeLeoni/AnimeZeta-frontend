@@ -23,5 +23,6 @@ module.exports = {
   },
   plugins: [
     require("tailwindcss-radix")(),
+    require("daisyui"),
   ],
 }
