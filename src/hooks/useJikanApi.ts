@@ -26,4 +26,14 @@ export const useJikanAPI = () => ({
       return res.data;
     },
 
+    searchAnime: async (search: string) => {
+      const res = await jikanAPI.get(`/anime?q=${search}`);
+      return res.data;
+    },
+
+    getGenres: async () => {
+      const res = await jikanAPI.get(`/genres/anime`);
+      return res.data;
+    },
+
 });

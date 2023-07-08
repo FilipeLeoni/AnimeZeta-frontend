@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { CaretDown, List, X } from "@phosphor-icons/react";
 import clsx from "clsx";
-import SearchBar from "../SearchBar";
+import SearchBar from "../SearchBar/HeaderSearchBar";
 import UserProfileIcon from "../UserProfileIcon";
 import Logo from "@/assets/images/Logo.svg";
 import Image from "next/image";
