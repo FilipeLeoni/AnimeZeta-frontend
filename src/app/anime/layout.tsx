@@ -3,11 +3,6 @@
 import Header from "@/components/Header";
 import "../globals.css";
 
-export const metadata = {
-  title: "AnimeZeta",
-  description: "An unofficial anime site",
-};
-
 export default function RootLayout({
   children,
 }: {
