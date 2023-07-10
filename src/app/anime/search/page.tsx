@@ -2,8 +2,8 @@
 import SearchBar from "@/components/SearchBar/GlobalSearchBar";
 import SelectCustom from "@/components/Select";
 import { useJikanAPI } from "@/hooks/useJikanApi";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { Suspense } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { Suspense, useState, useCallback, useEffect } from "react";
 import { useQuery } from "react-query";
 import clsx from "clsx";
 import TypeOptions from "@/utils/FormatOptions/TypeOptions";
@@ -12,8 +12,18 @@ import Spinner from "@/components/SpinnerLoading";
 import Link from "next/link";
 
 export default function AnimeSearch() {
-  const searchParams = useSearchParams();
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [genre, setGenre] = useState<any>([]);
+
+  const router: any = useRouter();
+
+  const pathname = usePathname();
+
+  const searchParams: any = useSearchParams();
   const searchQuery: any = searchParams ? searchParams.get("q") : null;
+  const searchGenres: any = searchParams ? searchParams.get("genres") : null;
+  const searchType: any = searchParams ? searchParams.get("type") : null;
 
   const api = useJikanAPI();
 
@@ -21,22 +31,88 @@ export default function AnimeSearch() {
     return <>{searchQuery}</>;
   }
 
-  const { data: Genre } = useQuery("genre", async () => {
+  const { data: Genre, isSuccess } = useQuery("genre", async () => {
     const res = await api.getGenres();
     return res.data;
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      const selectedGenresIds = searchGenres ? searchGenres.split(",") : [];
+
+      const selectedGenresOptions = selectedGenresIds?.map((genreId: any) => {
+        const genreoption = Genre?.find(
+          (genre: any) => genre.mal_id === parseInt(genreId)
+        );
+        return { value: genreoption?.mal_id, label: genreoption?.name };
+      });
+      setSelectedGenres(selectedGenresOptions);
+    }
+  }, [searchGenres, isSuccess, Genre]);
+
+  useEffect(() => {
+    const selectedTypeOption: any = TypeOptions.find(
+      (type: any) => type.value.toString() === searchType
+    );
+    if (selectedTypeOption) {
+      setSelectedType(selectedTypeOption);
+    } else {
+      setSelectedType(null);
+    }
+  }, [searchType]);
 
   const {
     data: Results,
     isLoading,
     error,
-  } = useQuery(["results", searchQuery], async () => {
-    const res = await api.searchAnime(searchQuery);
-    return res.data;
-  });
+  } = useQuery(
+    ["searchResults", searchQuery, selectedGenres, selectedType],
+    async () => {
+      const response = await api.searchAnime(
+        searchQuery,
+        selectedGenres,
+        selectedType
+      );
+      return response.data;
+    }
+  );
+
+  const CreateQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      if (value) {
+        params.set(name, value);
+      } else {
+        params.delete(name);
+      }
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const handleGenreChange = (selectedOption: any) => {
+    const genreParams = selectedOption
+      .map((genre: any) => genre.value)
+      .join(",");
+
+    const queryString = CreateQueryString("genres", genreParams);
+    const newUrl = `${pathname}?${queryString}`;
+
+    router.push(newUrl);
+  };
+
+  const handleTypeChange = (selectedOption: any) => {
+    const typeParams = selectedOption ? selectedOption.value : null;
+    const queryString = CreateQueryString("type", typeParams);
+    const newUrl = `${pathname}?${queryString}`;
+    router.push(newUrl);
+  };
 
   return (
     <div>
+      <header>
+        <title>Search Animes - AnimeZeta</title>
+      </header>
       <h1 className="text-center text-gray-600 font-medium text-4xl mb-10">
         Search
       </h1>
@@ -50,6 +126,8 @@ export default function AnimeSearch() {
         <div className="w-64 drop-shadow-lg z-10">
           <SelectCustom
             isMulti={true}
+            onChange={handleGenreChange}
+            value={selectedGenres}
             options={Genre?.map((genre: any) => ({
               value: genre.mal_id,
               label: genre.name,
@@ -59,9 +137,11 @@ export default function AnimeSearch() {
         </div>
         <div className="w-64 drop-shadow-lg z-10">
           <SelectCustom
+            onChange={handleTypeChange}
+            value={selectedType}
             options={TypeOptions.map((type: any) => ({
-              value: type.id,
-              label: type.name,
+              value: type.value,
+              label: type.label,
             }))}
             placeholder="Type"
           />

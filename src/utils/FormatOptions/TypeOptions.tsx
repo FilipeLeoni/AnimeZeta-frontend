@@ -1,9 +1,9 @@
 const TypeOptions = [
-  { id: 1, name: "TV show" },
-  { id: 2, name: "Movie" },
-  { id: 3, name: "OVA" },
-  { id: 4, name: "Music" },
-  { id: 5, name: "Special" },
+  { label: "TV Show", value: "tv" },
+  { label: "Movie", value: "movie" },
+  { label: "OVA", value: "ova" },
+  { label: "Music", value: "music" },
+  { label: "Special", value: "special" },
 ];
 
 export default TypeOptions;

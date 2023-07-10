@@ -43,7 +43,7 @@ export default function Home() {
     <main>
       <title>AnimeZeta</title>
       <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
-        <SuperCarousel data={topAnimes} />
+        {/* <SuperCarousel data={topAnimes} />
 
         <GenreCarousel
           AnimeData={actionAnimes}
@@ -67,7 +67,7 @@ export default function Home() {
           AnimeData={isekaiAnimes}
           Title="Dive into Otherworldly Adventures with Isekai Anime!"
           Icon={Planet}
-        />
+        /> */}
       </div>
     </main>
   );
