@@ -7,11 +7,6 @@ import { poppins } from "./fonts";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
-export const metadata = {
-  title: "AnimeZeta",
-  description: "An unofficial anime site",
-};
-
 const queryClient = new QueryClient();
 
 export default function RootLayout({
