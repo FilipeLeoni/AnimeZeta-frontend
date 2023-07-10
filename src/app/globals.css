@@ -37,3 +37,7 @@ body {
 .slick-list {
   padding-bottom: 40px !important;
 }
+
+.login-bg {
+  background-image: url("../assets/images/Login.svg");
+}

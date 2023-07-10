@@ -1,11 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 import Select from "react-select";
+
 import { CaretDown, X } from "@phosphor-icons/react";
+import makeAnimated from "react-select/animated";
 
 export default function SelectCustom({
   options,
   placeholder,
+  onChange,
+  value,
   isMulti = false,
 }: any) {
   const DropdownIndicator = () => {
@@ -20,15 +24,7 @@ export default function SelectCustom({
     );
   };
 
-  const ClearIndicator = () => {
-    return (
-      <X
-        size={16}
-        weight="bold"
-        className="text-gray-500 mr-1 hover:text-red-500"
-      />
-    );
-  };
+  const animatedComponents: any = makeAnimated();
 
   const controlStyles = {
     base: "rounded-lg bg-white hover:cursor-pointer w-64 text-gray-700 transition-all",
@@ -45,8 +41,6 @@ export default function SelectCustom({
   const multiValueRemoveStyles =
     "border border-gray-200 bg-white hover:bg-red-50 hover:text-red-800 text-gray-800 hover:border-red-300 rounded-md";
   const indicatorsContainerStyles = "p-1 gap-1";
-  const clearIndicatorStyles =
-    "text-gray-800 p-1 rounded-md hover:bg-red-50 hover:text-red-800";
   const indicatorSeparatorStyles = "bg-gray-300 text-gray-200";
   const dropdownIndicatorStyles =
     "p-1 hover:bg-gray-100 text-gray-200 rounded-md ";
@@ -66,8 +60,11 @@ export default function SelectCustom({
       isMulti={isMulti}
       name="Genres"
       options={options}
+      onChange={onChange}
+      value={value}
+      isClearable
       placeholder={placeholder}
-      components={{ DropdownIndicator, ClearIndicator }}
+      components={{ ...animatedComponents, DropdownIndicator }}
       hideSelectedOptions={false}
       unstyled
       styles={{
@@ -101,7 +98,6 @@ export default function SelectCustom({
         multiValueLabel: () => multiValueLabelStyles,
         multiValueRemove: () => multiValueRemoveStyles,
         indicatorsContainer: () => indicatorsContainerStyles,
-        clearIndicator: () => clearIndicatorStyles,
         indicatorSeparator: () => indicatorSeparatorStyles,
         dropdownIndicator: () => dropdownIndicatorStyles,
         menu: () => menuStyles,

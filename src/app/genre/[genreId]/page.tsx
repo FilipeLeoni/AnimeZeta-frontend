@@ -16,8 +16,6 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
     (category: any) => category.id == genreId
   );
 
-  console.log(genre);
-
   const fetchAnimesByGenre = async (genre: number, page: number) => {
     const res = await api.getAnimesByGenre(genre, page);
     return res.data;

@@ -128,7 +128,7 @@ export default function SearchBar() {
             ) : isSearchPerformed && suggestions.length === 0 ? (
               <div className="text-center text-gray-500 p-4">Not found...</div>
             ) : (
-              suggestions.slice(0, 6).map((suggestion: any) => (
+              suggestions?.slice(0, 6).map((suggestion: any) => (
                 <motion.li
                   key={suggestion}
                   initial={{ opacity: 0, y: -5 }}
