@@ -27,7 +27,7 @@ export default function RootLayout({
           {showHeader && <Header />}
           <div
             className={clsx(
-              "flex w-full min-h-screen flex-col items-center pt-36 pb-20 bg-gradient-to-b from-background to-[#e3e8f4]",
+              "flex w-full min-h-screen flex-col items-center bg-gradient-to-b from-background to-[#e3e8f4]",
               showHeader ? "pt-36 pb-20 px-20" : "pt-0 pb-0 px-0"
             )}
           >

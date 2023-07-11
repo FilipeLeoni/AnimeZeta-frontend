@@ -27,6 +27,9 @@ export default function AnimePage({
 
   return (
     <div>
+      <head>
+        <title>AnimeZeta</title>
+      </head>
       <main>
         {isLoading ? (
           <Spinner />
@@ -89,14 +92,19 @@ export default function AnimePage({
             </motion.li>
           </ul>
           <div className="flex flex-wrap gap-6 justify-center mt-12">
-            {data?.anime?.slice(0, 25).map((appearances: any) => (
-              <Link
-                key={appearances.anime.mal_id}
-                href={`/anime/${appearances.anime.mal_id}`}
-              >
-                <AnimeCard data={appearances.anime} />
-              </Link>
-            ))}
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              data?.anime?.slice(0, 25).map((appearances: any) => (
+                <Link
+                  key={appearances.anime.mal_id}
+                  href={`/anime/${appearances.anime.mal_id}`}
+                  prefetch={false}
+                >
+                  <AnimeCard data={appearances.anime} />
+                </Link>
+              ))
+            )}
           </div>
         </section>
       </main>

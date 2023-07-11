@@ -30,12 +30,16 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
   const api = useJikanAPI();
   const animeId = params.animeId;
 
-  const { data, isLoading, error } = useQuery("anime", async () => {
+  const {
+    data,
+    isLoading: isLoadingAnime,
+    error,
+  } = useQuery("anime", async () => {
     const res = await api.getAnimeById(animeId);
     return res.data;
   });
 
-  const { data: InfoData, isLoading: isLoadingCharacters } = useQuery(
+  const { data: InfoData, isLoading } = useQuery(
     ["animeInfo", selectedItem, animeId],
     async () => {
       const res = await api.getAnimeInfoByType(
@@ -53,7 +57,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
   return (
     <div className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
       <main>
-        {isLoading ? (
+        {isLoadingAnime ? (
           <Spinner />
         ) : (
           <div className="w-full flex gap-24">
@@ -113,9 +117,8 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
         <div className="mt-2">
           <ul className="flex justify-around">
             {AnimeOtherOptions.map((options) => (
-              <motion.li
+              <li
                 key={options.id}
-                layout
                 className="cursor-pointer hover:bg-slate-300 px-8 py-3 rounded relative transition-all"
                 onClick={() => handleItemClick(options.endpoint)}
               >
@@ -127,43 +130,107 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                     className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-400 rounded-full"
                   />
                 )}
-              </motion.li>
+              </li>
             ))}
           </ul>
         </div>
         <div className="flex flex-wrap justify-center gap-6 mt-12">
-          {selectedItem === "characters" &&
-            InfoData &&
-            InfoData.slice(0, itemsToShow).map((characterData: any) => (
-              <Link
-                key={characterData.character.mal_id}
-                href={`/anime/character/${characterData.character.mal_id}`}
-              >
-                <AnimeCard data={characterData.character} />
-              </Link>
-            ))}
-
-          {selectedItem === "staff" &&
-            InfoData &&
-            InfoData.slice(0, 25).map((person: any) => (
-              <StaffCard key={person.person.mal_id} data={person} />
-            ))}
-
-          {selectedItem === "reviews" && InfoData && (
-            <div className="flex flex-col gap-10 items-center">
-              {InfoData.slice(0, 8).map((review: any) => (
-                <Accordion key={review.mal_id} data={review} />
-              ))}
-            </div>
+          {selectedItem === "characters" && (
+            <>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                InfoData &&
+                InfoData.slice(0, itemsToShow).map(
+                  (characterData: any, index: number) => (
+                    <Link
+                      key={characterData.character.mal_id}
+                      href={`/anime/character/${characterData.character.mal_id}`}
+                    >
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1, duration: 0.5 }}
+                      >
+                        <AnimeCard data={characterData.character} />
+                      </motion.div>
+                    </Link>
+                  )
+                )
+              )}
+            </>
           )}
 
-          {selectedItem === "recommendations" &&
-            InfoData &&
-            InfoData.slice(0, 15).map((anime: any) => (
-              <AnimeCard key={anime.entry.mal_id} data={anime.entry} />
-            ))}
+          {selectedItem === "staff" && (
+            <>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                InfoData &&
+                InfoData.slice(0, 25).map((person: any, index: number) => (
+                  <motion.div
+                    key={person.person.mal_id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <StaffCard data={person} />
+                  </motion.div>
+                ))
+              )}
+            </>
+          )}
 
-          <button onClick={handleLoadMore}>Show more</button>
+          {selectedItem === "reviews" && (
+            <>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                InfoData && (
+                  <div className="flex flex-col gap-10 items-center">
+                    {InfoData.slice(0, 7).map((review: any, index: number) => (
+                      <motion.div
+                        key={review.mal_id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <Accordion data={review} />
+                      </motion.div>
+                    ))}
+                  </div>
+                )
+              )}
+            </>
+          )}
+
+          {selectedItem === "recommendations" && (
+            <>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                InfoData && (
+                  <>
+                    {InfoData.slice(0, 15).map((anime: any, index: any) => (
+                      <motion.div
+                        key={anime.entry.mal_id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <AnimeCard
+                          key={anime.entry.mal_id}
+                          data={anime.entry}
+                        />
+                      </motion.div>
+                    ))}
+                  </>
+                )
+              )}
+            </>
+          )}
+
+          {/* <button onClick={handleLoadMore}>Show more</button> */}
         </div>
       </section>
     </div>

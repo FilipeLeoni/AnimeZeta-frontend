@@ -70,8 +70,9 @@ export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
           AnimeData.map((data: any) => (
             <Link
               key={data.mal_id}
+              prefetch={false}
               href={`/anime/${data.mal_id}`}
-              className="h-full py-10 mx-6 "
+              className="h-full py-10 mx-6"
             >
               <AnimeCard data={data} />
             </Link>
