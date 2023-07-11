@@ -11,6 +11,7 @@ export default function SuperCarousel({ data }: any) {
   const settings: any = {
     dots: true,
     fade: true,
+    arrows: false,
     lazyLoad: true,
     infinite: true,
     speed: 500,
@@ -29,8 +30,8 @@ export default function SuperCarousel({ data }: any) {
               key={anime.mal_id}
               className="flex super-carousel bg-cover h-96 rounded-xl bg-center"
             >
-              <div className="flex md:flex-row flex-col items-center md:items-start md:justify-between w-full bg-gradient-to-r from-background/95 via-white/75 to-backgroundSecondary/60 h-full backdrop-blur-sm px-14 md:pt-14 pt-4 relative rounded-lg bg-center">
-                <div className="flex flex-col gap-2 text-grayDark">
+              <div className="flex md:flex-row flex-col items-center md:items-start md:justify-between w-full bg-gradient-to-r from-grayDark/95 via-grayDark/75 to-grayDark/60 h-full backdrop-blur-sm px-14 md:pt-14 pt-4 relative rounded-lg bg-center">
+                <div className="flex flex-col gap-2 text-backgroundSecondary">
                   <h3 className="text-sm md:text-3xl mb-2 text-center md:text-start">
                     {anime.title}
                   </h3>

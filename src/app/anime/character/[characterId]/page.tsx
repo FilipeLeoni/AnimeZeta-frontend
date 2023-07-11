@@ -8,12 +8,16 @@ import Link from "next/link";
 import { useQuery } from "react-query";
 import { motion } from "framer-motion";
 import AnimeCard from "@/components/AnimeCard";
+import { Heart, Star } from "@phosphor-icons/react";
+import { useState } from "react";
+import clsx from "clsx";
 
 export default function AnimePage({
   params,
 }: {
   params: { characterId: number };
 }) {
+  const [showFullText, setShowFullText] = useState(false);
   const api = useJikanAPI();
   const characterId = params.characterId;
 
@@ -55,34 +59,40 @@ export default function AnimePage({
                     <p key={nickname}>{nickname} -</p>
                   ))}
                 </div>
-                <div className="w-1 h-1 rounded-full bg-gray-600" />
+                <div className="w-1 h-1 rounded-full bg-gray-600 " />
                 <p>{data.favorites}</p>
+                <Heart size={22} className="text-red-600" />
               </div>
               <div className="w-full h-0.5 rounded bg-gray-300" />
               <div className="max-w-xl hover:bg-slate-200 rounded-lg mt-2 pt-2 px-2 relative">
-                <p className="text-overflow-ellipsis line-clamp-6 text-gray-700">
+                <p
+                  className={clsx(
+                    "text-overflow-ellipsis text-gray-700",
+                    showFullText ? "" : "line-clamp-6"
+                  )}
+                >
                   {data.about}
                 </p>
-                <a
-                  href="#"
-                  className="text-xs text-right text-gray-500 hover:underline absolute -bottom-6 right-0"
+                <div
+                  className="text-xs text-right text-gray-500 hover:underline absolute -bottom-6 right-0 cursor-pointer"
+                  onClick={() => setShowFullText(!showFullText)}
                 >
-                  Show more
-                </a>
+                  {showFullText ? "Show less" : "Show more"}
+                </div>
               </div>
-              <div className="flex mt-20 gap-14">
+              {/* <div className="flex mt-20 gap-14">
                 <AddToList />
-              </div>
+              </div> */}
             </div>
           </div>
         )}
 
-        <section className="w-full pt-20">
-          <div className="w-full h-1 rounded-full bg-gray-300" />
+        <section className="w-full pt-36">
+          <div className="w-full h-0.5 rounded-full bg-gray-300" />
           <ul className="flex justify-around mt-2">
             <motion.li
               layout
-              className="cursor-pointer hover:bg-slate-300 px-8 py-3 rounded relative transition-all"
+              className="cursor-pointer hover:bg-slate-300 px-8 py-3 rounded relative transition-all text-gray-600 font-medium"
             >
               Appearances
               <motion.div

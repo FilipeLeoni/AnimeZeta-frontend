@@ -31,6 +31,7 @@ body {
 }
 
 .super-carousel {
+  lazyload: "ondemand";
   background-image: url("../assets/images/bg-super-carousel.jpg");
 }
 

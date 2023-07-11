@@ -13,10 +13,12 @@ import AnimeCard from "@/components/AnimeCard";
 import StaffCard from "@/components/StaffCard";
 import Accordion from "@/components/AccordionCustom";
 import Link from "next/link";
+import clsx from "clsx";
 
 export default function AnimePage({ params }: { params: { animeId: number } }) {
   const [selectedItem, setSelectedItem] = useState("characters");
   const [itemsToShow, setItemsToShow] = useState(20);
+  const [showFullText, setShowFullText] = useState(false);
 
   function handleWatchTrailer(link: any) {
     const trailerUrl = link;
@@ -88,15 +90,20 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
               </div>
               <div className="w-full h-0.5 rounded bg-gray-300" />
               <div className="max-w-xl hover:bg-slate-200 rounded-lg mt-2 pt-2 px-2 relative">
-                <p className="text-overflow-ellipsis line-clamp-6 text-gray-700">
+                <p
+                  className={clsx(
+                    "text-overflow-ellipsis text-gray-700",
+                    showFullText ? "" : "line-clamp-6"
+                  )}
+                >
                   {data.synopsis}
                 </p>
-                <a
-                  href="#"
-                  className="text-xs text-right text-gray-500 hover:underline absolute -bottom-6 right-0"
+                <div
+                  className="text-xs text-right text-gray-500 hover:underline absolute -bottom-6 right-0 cursor-pointer"
+                  onClick={() => setShowFullText(!showFullText)}
                 >
-                  Show more
-                </a>
+                  {showFullText ? "Show less" : "Show more"}
+                </div>
               </div>
               <div className="flex mt-20 gap-14">
                 <SecondaryButton
@@ -113,9 +120,9 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
       </main>
 
       <section className="w-full pt-20">
-        <div className="w-full h-1 rounded-full bg-gray-300" />
+        <div className="divider h-0.5 bg-gray-300" />
         <div className="mt-2">
-          <ul className="flex justify-around">
+          <ul className="flex justify-around text-gray-500 font-medium">
             {AnimeOtherOptions.map((options) => (
               <li
                 key={options.id}
