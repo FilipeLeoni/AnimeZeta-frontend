@@ -55,6 +55,9 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
 
   return (
     <main className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
+      <header>
+        <title>Genre - AnimeZeta</title>
+      </header>
       <h1 className="font-medium text-2xl text-gray-800 mb-12">
         {genre?.name}
       </h1>

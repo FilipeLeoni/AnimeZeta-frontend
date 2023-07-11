@@ -8,6 +8,9 @@ import React from "react";
 function page() {
   return (
     <>
+      <header>
+        <title>Sign Up - AnimeZeta</title>
+      </header>
       <div className="mb-10">
         <p>Welcome to AnimeZeta!</p>
         <h1 className="text-grayDark font-bold text-5xl">Sign Up</h1>

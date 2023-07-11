@@ -154,7 +154,11 @@ export default function AnimeSearch() {
           <Spinner />
         ) : (
           Results?.map((results: any) => (
-            <Link key={results.mal_id} href={`/anime/${results.mal_id}`}>
+            <Link
+              key={results.mal_id}
+              href={`/anime/${results.mal_id}`}
+              prefetch={false}
+            >
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}

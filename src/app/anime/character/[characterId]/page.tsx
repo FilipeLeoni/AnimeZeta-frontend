@@ -11,6 +11,7 @@ import AnimeCard from "@/components/AnimeCard";
 import { Heart, Star } from "@phosphor-icons/react";
 import { useState } from "react";
 import clsx from "clsx";
+import Loading from "./loading";
 
 export default function AnimePage({
   params,
@@ -36,7 +37,7 @@ export default function AnimePage({
       </head>
       <main>
         {isLoading ? (
-          <Spinner />
+          <Loading />
         ) : (
           <div className="w-full flex gap-24 justify-center">
             <div className="drop-shadow-lg">
@@ -80,9 +81,6 @@ export default function AnimePage({
                   {showFullText ? "Show less" : "Show more"}
                 </div>
               </div>
-              {/* <div className="flex mt-20 gap-14">
-                <AddToList />
-              </div> */}
             </div>
           </div>
         )}
@@ -90,16 +88,13 @@ export default function AnimePage({
         <section className="w-full pt-36">
           <div className="w-full h-0.5 rounded-full bg-gray-300" />
           <ul className="flex justify-around mt-2">
-            <motion.li
-              layout
-              className="cursor-pointer hover:bg-slate-300 px-8 py-3 rounded relative transition-all text-gray-600 font-medium"
-            >
+            <li className="cursor-pointer hover:bg-slate-300 px-8 py-3 rounded relative transition-all text-gray-600 font-medium">
               Appearances
               <motion.div
                 layoutId="underline"
                 className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-400 rounded-full"
               />
-            </motion.li>
+            </li>
           </ul>
           <div className="flex flex-wrap gap-6 justify-center mt-12">
             {isLoading ? (

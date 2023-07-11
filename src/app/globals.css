@@ -12,7 +12,7 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
+  background: white;
   border-radius: 5px;
 }
 
@@ -22,16 +22,15 @@
   border: 3px solid white;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #1e1e1e;
-}
+/* ::-webkit-scrollbar-thumb:hover {
+  background-color: #f0cf0f;
+} */
 
 body {
   -webkit-font-smoothing: antialiased;
 }
 
 .super-carousel {
-  lazyload: "ondemand";
   background-image: url("../assets/images/bg-super-carousel.jpg");
 }
 
@@ -40,5 +39,6 @@ body {
 }
 
 .login-bg {
+  lazyload: ;
   background-image: url("../assets/images/Login.svg");
 }
