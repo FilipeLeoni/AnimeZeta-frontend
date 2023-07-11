@@ -141,9 +141,12 @@ export default function Header() {
                   >
                     <div className="w-full flex flex-col space-y-2 text-center">
                       {MyListOptions.map((option) => (
-                        <HeaderOptions key={option.id} onClick="">
-                          {option.name}
-                        </HeaderOptions>
+                        <Link
+                          key={option.id}
+                          href={`/mylist/${option.name.toLowerCase()}`}
+                        >
+                          <HeaderOptions>{option.name}</HeaderOptions>
+                        </Link>
                       ))}
                     </div>
                   </motion.div>

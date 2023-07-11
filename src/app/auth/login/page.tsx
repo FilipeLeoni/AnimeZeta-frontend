@@ -2,14 +2,15 @@
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import Input from "@/components/Input";
 import React from "react";
-import LoginBg from "@/assets/images/Login.svg";
-import Image from "next/image";
 import Link from "next/link";
 import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 
 function page() {
   return (
     <>
+      <header>
+        <title>Login - AnimeZeta</title>
+      </header>
       <div className="mb-20">
         <p>Welcome Back!</p>
         <h1 className="text-grayDark font-bold text-5xl">Login</h1>

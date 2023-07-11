@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useState, useCallback, useEffect } from "react";
 import { useQuery } from "react-query";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import TypeOptions from "@/utils/FormatOptions/TypeOptions";
 import AnimeCard from "@/components/AnimeCard";
 import Spinner from "@/components/SpinnerLoading";
@@ -116,6 +117,7 @@ export default function AnimeSearch() {
       <h1 className="text-center text-gray-600 font-medium text-4xl mb-10">
         Search
       </h1>
+
       <div className="flex items-center gap-8 justify-center">
         <div className="shadow-lg">
           <Suspense fallback={<SearchBarFallback />}>
@@ -152,8 +154,18 @@ export default function AnimeSearch() {
           <Spinner />
         ) : (
           Results?.map((results: any) => (
-            <Link key={results.mal_id} href={`/anime/${results.mal_id}`}>
-              <AnimeCard data={results} />
+            <Link
+              key={results.mal_id}
+              href={`/anime/${results.mal_id}`}
+              prefetch={false}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7 }}
+              >
+                <AnimeCard data={results} />
+              </motion.div>
             </Link>
           ))
         )}

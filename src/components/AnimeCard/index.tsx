@@ -1,12 +1,4 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Badges from "../Badges";
-import AddToList from "../Buttons/AddToList";
-import { Star } from "@phosphor-icons/react";
-import clsx from "clsx";
-import Link from "next/link";
-import Popover from "../Popover";
+import React from "react";
 
 export default function AnimeCard({ data }: any) {
   const image =
