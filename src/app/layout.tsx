@@ -10,6 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import clsx from "clsx";
+import { AuthProvider } from "@/context/AuthContext";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -26,20 +28,22 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <QueryClientProvider client={queryClient}>
-        <body className={poppins.className}>
-          {showHeader && <Header />}
-          <div
-            className={clsx(
-              "flex w-full min-h-screen flex-col items-center bg-gradient-to-b from-background to-[#e3e8f4]",
-              showHeader ? "pt-36 pb-20 px-20" : "pt-0 pb-0 px-0"
-            )}
-          >
-            {children}
-          </div>
-          <ToastContainer />
-        </body>
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <body className={poppins.className}>
+            {showHeader && <Header />}
+            <div
+              className={clsx(
+                "flex w-full min-h-screen flex-col items-center bg-gradient-to-b from-background to-[#e3e8f4]",
+                showHeader ? "pt-36 pb-20 px-20" : "pt-0 pb-0 px-0"
+              )}
+            >
+              {children}
+            </div>
+            <ToastContainer />
+          </body>
+        </QueryClientProvider>
+      </AuthProvider>
     </html>
   );
 }

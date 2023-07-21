@@ -5,17 +5,16 @@ import { Heart, Lightning, Planet, Smiley } from "@phosphor-icons/react";
 import { useJikanAPI } from "@/hooks/useJikanApi";
 import GenreCarousel from "@/components/GenreCarousel";
 import SuperCarousel from "@/components/SuperCarousel";
-import Head from "next/head";
-import Link from "next/link";
 import Spinner from "@/components/SpinnerLoading";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const api = useJikanAPI();
+  const { isAuthenticated } = useAuth();
 
   const {
     data: topAnimes,
     isLoading: isLoadingTopAnimes,
-    isFetching: isFetchingTopAnimes,
     error,
   } = useQuery("topAnimes", async () => {
     const res = await api.getTopAnimes();
@@ -27,33 +26,31 @@ export default function Home() {
     return res.data;
   };
 
-  const {
-    data: actionAnimes,
-    isLoading: isLoadingActionAnimes,
-    isFetching: isFetchingAction,
-  } = useQuery("actionAnimes", () => fetchAnimesByGenre(1));
+  const { data: actionAnimes, isLoading: isLoadingActionAnimes } = useQuery(
+    "actionAnimes",
+    () => fetchAnimesByGenre(1)
+  );
 
-  const {
-    data: comedyAnimes,
-    isLoading: isLoadingComedyAnimes,
-    isFetching: isFetchingComedy,
-  } = useQuery("comedyAnimes", () => fetchAnimesByGenre(4));
-  const {
-    data: romanceAnimes,
-    isLoading: isLoadingRomanceAnimes,
-    isFetching: isFetchingRomance,
-  } = useQuery("romanceAnimes", () => fetchAnimesByGenre(22));
-  const {
-    data: isekaiAnimes,
-    isLoading: isLoadingIsekaiAnimes,
-    isFetching: isFetchingIsekai,
-  } = useQuery("isekaiAnimes", () => fetchAnimesByGenre(62));
+  const { data: comedyAnimes, isLoading: isLoadingComedyAnimes } = useQuery(
+    "comedyAnimes",
+    () => fetchAnimesByGenre(4)
+  );
+  const { data: romanceAnimes, isLoading: isLoadingRomanceAnimes } = useQuery(
+    "romanceAnimes",
+    () => fetchAnimesByGenre(22)
+  );
+  const { data: isekaiAnimes, isLoading: isLoadingIsekaiAnimes } = useQuery(
+    "isekaiAnimes",
+    () => fetchAnimesByGenre(62)
+  );
+
+  console.log();
 
   return (
     <main>
       <title>AnimeZeta</title>
       <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
-        {isLoadingTopAnimes || isFetchingTopAnimes ? (
+        {isLoadingTopAnimes ? (
           <div className="flex justify-center items-center w-full col-span-12 h-64">
             <Spinner />
           </div>
@@ -61,7 +58,7 @@ export default function Home() {
           <SuperCarousel data={topAnimes} />
         )}
 
-        {isLoadingActionAnimes || isFetchingAction ? (
+        {isLoadingActionAnimes ? (
           <div className="flex justify-center items-center w-full col-span-12 h-64">
             <Spinner />
           </div>
@@ -72,7 +69,7 @@ export default function Home() {
             Icon={Lightning}
           />
         )}
-        {isLoadingComedyAnimes || isFetchingComedy ? (
+        {isLoadingComedyAnimes ? (
           <div className="flex justify-center items-center w-full col-span-12 h-64">
             <Spinner />
           </div>
@@ -84,7 +81,7 @@ export default function Home() {
           />
         )}
 
-        {isLoadingRomanceAnimes || isFetchingRomance ? (
+        {isLoadingRomanceAnimes ? (
           <div className="flex justify-center items-center w-full col-span-12 h-64">
             <Spinner />
           </div>
@@ -96,7 +93,7 @@ export default function Home() {
           />
         )}
 
-        {isLoadingIsekaiAnimes || isFetchingIsekai ? (
+        {isLoadingIsekaiAnimes ? (
           <div className="flex justify-center items-center w-full col-span-12 h-64">
             <Spinner />
           </div>

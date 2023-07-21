@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext";
 import api from "@/services/api";
 
 export const useApi = () => ({
@@ -14,8 +15,6 @@ export const useApi = () => ({
       email,
       password,
     });
-    const accessToken = res.data.accessToken;
-    localStorage.setItem("accessToken", accessToken);
     return res;
   },
 });

@@ -10,6 +10,7 @@ import { LoginSchema } from "@/utils/Schemas/LoginSchema";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 function LoginPage() {
   const {
@@ -23,20 +24,19 @@ function LoginPage() {
   });
 
   const router = useRouter();
-
+  const { handleLogin } = useAuth();
   const api = useApi();
 
   async function handleSubmitForm(data: any) {
-    const Response = await api.login(data.email, data.password);
+    const response = await api.login(data.email, data.password);
 
     try {
-      if (Response) {
+      if (response) {
         toast.success("Login Successfully!", {
           position: "top-right",
           theme: "light",
         });
-
-        router.push("/");
+        handleLogin(response.data.accessToken);
       }
     } catch (error) {
       toast.error("Error, Try again", {
