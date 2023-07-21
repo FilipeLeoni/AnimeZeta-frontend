@@ -39,6 +39,5 @@ body {
 }
 
 .login-bg {
-  lazyload: ;
-  background-image: url("../assets/images/Login.svg");
+  background-image: url("../assets/images/test.jpg");
 }

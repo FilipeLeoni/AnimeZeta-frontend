@@ -5,6 +5,10 @@ import "./globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { poppins } from "./fonts";
 import { usePathname } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 import clsx from "clsx";
 
 const queryClient = new QueryClient();
@@ -33,6 +37,7 @@ export default function RootLayout({
           >
             {children}
           </div>
+          <ToastContainer />
         </body>
       </QueryClientProvider>
     </html>
