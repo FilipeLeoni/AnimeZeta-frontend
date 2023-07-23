@@ -16,6 +16,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import Loading from "./loading";
 import Head from "next/head";
+import useAddToList from "@/hooks/useAddToList";
 
 export default function AnimePage({ params }: { params: { animeId: number } }) {
   const [selectedItem, setSelectedItem] = useState("characters");
@@ -120,7 +121,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   >
                     Watch trailer
                   </SecondaryButton>
-                  <AddToList />
+                  <AddToList animeData={data} />
                 </div>
               </div>
             </div>

@@ -17,4 +17,45 @@ export const useApi = () => ({
     });
     return res;
   },
+
+  getAnimeList: async () => {
+    const token = localStorage.getItem("accessToken");
+    const res = await api.get("/mylist", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(res);
+    return res;
+  },
+
+  AddAnimeToList: async (
+    jikanId: string,
+    title: string,
+    imageUrl: string,
+    status: string
+  ) => {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await api.post(
+      "/mylist",
+      { jikanId, title, imageUrl, status },
+      { headers }
+    );
+
+    console.log(res);
+    return res;
+  },
+
+  getUser: async () => {
+    const token = localStorage.getItem("accessToken");
+    const res = await api.get("/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  },
 });

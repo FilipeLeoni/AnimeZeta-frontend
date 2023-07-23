@@ -2,7 +2,9 @@ import React from "react";
 
 export default function AnimeCard({ data }: any) {
   const image =
-    data.images?.webp?.large_image_url || data.images?.webp?.image_url;
+    data.images?.webp?.large_image_url ||
+    data.images?.webp?.image_url ||
+    data.imageUrl;
   const title = data.title || data.name;
 
   return (

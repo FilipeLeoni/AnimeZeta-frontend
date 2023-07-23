@@ -5,13 +5,14 @@ import "./globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { poppins } from "./fonts";
 import { usePathname } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import clsx from "clsx";
 import { AuthProvider } from "@/context/AuthContext";
-import { useEffect } from "react";
+import { checkIsPrivateRoute } from "@/utils/checkIsPrivateRoute";
+import PrivateRoute from "@/utils/PrivateRoute";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,8 @@ export default function RootLayout({
       ? false
       : true;
 
+  const isPrivatePage = checkIsPrivateRoute(pathname);
+
   return (
     <html lang="en">
       <AuthProvider>
@@ -38,7 +41,8 @@ export default function RootLayout({
                 showHeader ? "pt-36 pb-20 px-20" : "pt-0 pb-0 px-0"
               )}
             >
-              {children}
+              {isPrivatePage && <PrivateRoute>{children}</PrivateRoute>}
+              {!isPrivatePage && children}
             </div>
             <ToastContainer />
           </body>

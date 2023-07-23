@@ -10,7 +10,6 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const api = useJikanAPI();
-  const { isAuthenticated } = useAuth();
 
   const {
     data: topAnimes,

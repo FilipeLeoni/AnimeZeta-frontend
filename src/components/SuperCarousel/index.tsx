@@ -46,7 +46,7 @@ export default function SuperCarousel({ data }: any) {
                     ))}
                   </div>
                   <div className="absolute bottom-8 md:bottom-12">
-                    <AddToList />
+                    <AddToList animeData={anime} />
                   </div>
                 </div>
                 <div className="absolute top-1/2 translate-y-[-50%] inset-y-0 w-1/2 md:static md:translate-y-0 md:w-auto drop-shadow-lg">

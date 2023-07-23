@@ -7,7 +7,8 @@ export const useAuth: any = () => {
 };
 
 export const AuthProvider = ({ children }: any) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
