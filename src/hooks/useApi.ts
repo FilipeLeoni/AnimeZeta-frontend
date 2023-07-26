@@ -13,7 +13,6 @@ export const useApi = () => ({
       email,
       password,
     });
-    console.log(res);
     return res;
   },
   login: async (email: string, password: string) => {
@@ -26,7 +25,7 @@ export const useApi = () => ({
 
   getAnimeList: async (accessToken: string) => {
     const headers = { Authorization: `Bearer ${accessToken}` };
-    return fetchApi("mylist", { headers });
+    return fetchApi("mylist", { headers, method: "GET" });
   },
 
   AddAnimeToList: async (
