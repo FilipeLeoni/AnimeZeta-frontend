@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { toast } from "react-toastify";
 import { useApi } from "./useApi";
 
 const useAddToList = () => {
@@ -19,8 +19,27 @@ const useAddToList = () => {
       );
 
       console.log(response);
+
+      if (response) {
+        toast.success("Anime added to list!", {
+          position: "top-right",
+          theme: "light",
+        });
+      }
     } catch (error: any) {
       console.log(error);
+
+      if (error.response) {
+        toast.error(error.response.data.error, {
+          position: "top-right",
+          theme: "light",
+        });
+      } else {
+        toast.error("An error occurred", {
+          position: "top-right",
+          theme: "light",
+        });
+      }
     }
   };
 

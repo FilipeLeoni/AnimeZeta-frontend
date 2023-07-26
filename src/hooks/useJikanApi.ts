@@ -1,28 +1,25 @@
 import jikanAPI from "@/services/JikanAPI";
+import { fetchWrapper } from "@/services/fetch";
 
 export const useJikanAPI = () => ({
   getTopAnimes: async () => {
-    const res = await jikanAPI.get("/top/anime?filter=bypopularity");
-    return res.data;
+    return fetchWrapper("top/anime?filter=bypopularity");
   },
 
-  getAnimesByGenre: async (genreId: number | string, page: number = 1) => {
-    const res = await jikanAPI.get(`/anime?genres=${genreId}&page=${page}`);
-    return res.data;
+  getAnimesByGenre: async (genreId: number, page: number = 1) => {
+    return fetchWrapper(`anime?genres=${genreId}&page=${page}`);
+  },
+
+  getCharacterById: async (characterId: number) => {
+    return fetchWrapper(`characters/${characterId}/full`);
+  },
+
+  getAnimeInfoByType: async (animeId: number, type: string) => {
+    return fetchWrapper(`anime/${animeId}/${type}`);
   },
 
   getAnimeById: async (id: number) => {
     const res = await jikanAPI.get(`/anime/${id}/full`);
-    return res.data;
-  },
-
-  getCharacterById: async (characterId: number) => {
-    const res = await jikanAPI.get(`/characters/${characterId}/full`);
-    return res.data;
-  },
-
-  getAnimeInfoByType: async (animeId: number, type: string) => {
-    const res = await jikanAPI.get(`/anime/${animeId}/${type}`);
     return res.data;
   },
 

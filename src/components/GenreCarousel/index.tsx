@@ -1,3 +1,4 @@
+"use client";
 import React, { ElementType } from "react";
 import SubTitle from "../Text/SubTitles";
 import Slider from "react-slick";
@@ -10,7 +11,7 @@ import Link from "next/link";
 interface Props {
   AnimeData: any;
   Title: string;
-  Icon: ElementType;
+  Icon?: ElementType;
 }
 
 export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
@@ -63,7 +64,7 @@ export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
     <div className="w-full col-span-12">
       <SubTitle>
         {Title}
-        <Icon size={24} weight="fill" color="#ffa500" />
+        {/* <Icon size={24} weight="fill" color="#ffa500" /> */}
       </SubTitle>
       <Slider {...settings} className="z-20 h-96">
         {AnimeData &&

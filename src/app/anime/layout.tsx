@@ -1,7 +1,3 @@
-"use client";
-
-import "../globals.css";
-
 export default function RootLayout({
   children,
 }: {
@@ -9,7 +5,7 @@ export default function RootLayout({
 }) {
   return (
     <div>
-      <div className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
+      <div className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 pt-36 pb-20">
         <main>{children}</main>
       </div>
     </div>

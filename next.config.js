@@ -2,6 +2,7 @@
 const nextConfig = {
   env:{
     API_URL: process.env.API_URL,
+    JIKAN_URL: process.env.JIKAN_URL,
   },
     images: {
         domains: ['cdn.myanimelist.net'],

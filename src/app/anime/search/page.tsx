@@ -5,7 +5,6 @@ import { useJikanAPI } from "@/hooks/useJikanApi";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useState, useCallback, useEffect } from "react";
 import { useQuery } from "react-query";
-import clsx from "clsx";
 import { motion } from "framer-motion";
 import TypeOptions from "@/utils/FormatOptions/TypeOptions";
 import AnimeCard from "@/components/AnimeCard";

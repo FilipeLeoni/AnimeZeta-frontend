@@ -30,6 +30,7 @@
     "eslint-config-next": "13.4.6",
     "framer-motion": "^10.12.18",
     "fuse.js": "^6.6.2",
+    "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
     "next": "13.4.6",
     "postcss": "8.4.24",
@@ -50,6 +51,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.3",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "daisyui": "^3.2.1"
