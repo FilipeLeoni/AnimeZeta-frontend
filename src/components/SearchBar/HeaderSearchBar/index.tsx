@@ -27,30 +27,6 @@ export default function HeaderSearchBar() {
     };
   }, [query]);
 
-  //   useEffect(() => {
-  //     const fetchSuggestions = async () => {
-  //       setIsFetching(true);
-
-  //       if (debouncedQuery.trim() !== "") {
-  //         try {
-  //           const response = await api.searchAnime(debouncedQuery);
-  //           const data = response.data.map((result) => result.title);
-  //           setIsSearchPerformed(true);
-  //           setSuggestions(data);
-  //         } catch (error) {
-  //           // Tratar erros, se necessário
-  //         }
-  //       } else {
-  //         setIsSearchPerformed(false);
-  //         setSuggestions([]);
-  //       }
-
-  //       setIsFetching(false);
-  //     };
-
-  //     fetchSuggestions();
-  //   }, [debouncedQuery]);
-
   const {
     data: suggestions,
     isLoading,
@@ -86,6 +62,8 @@ export default function HeaderSearchBar() {
       setIsInputFocused(false);
     }
   };
+
+  console.log(suggestions);
 
   const clearText = () => {
     setQuery("");
@@ -145,7 +123,7 @@ export default function HeaderSearchBar() {
             ) : isSearchPerformed && suggestions.length === 0 ? (
               <div className="text-center text-gray-500 p-4">Not found...</div>
             ) : (
-              suggestions.slice(0, 6).map((suggestion: any) => (
+              suggestions?.slice(0, 6).map((suggestion: any) => (
                 <motion.li
                   key={suggestion}
                   initial={{ opacity: 0, y: -5 }}

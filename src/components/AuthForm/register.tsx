@@ -4,28 +4,35 @@ import { Input } from "../Input";
 import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/utils/Schemas/registerSchema";
 import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "react-toastify";
 
+interface FormData {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export default function RegisterForm() {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onChange",
     criteriaMode: "all",
     resolver: zodResolver(RegisterSchema),
   });
 
-  const { handleLogin } = useAuth();
+  const auth = useAuth();
   const api = useApi();
 
-  async function handleSubmitForm(data: any) {
+  const handleSubmitForm: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await api.createUser(
         data.username,
@@ -38,7 +45,7 @@ export default function RegisterForm() {
           position: "top-right",
           theme: "light",
         });
-        handleLogin(response.data.accessToken);
+        auth?.handleLogin(response.data.accessToken);
       }
     } catch (error: any) {
       if (error.response) {
@@ -53,7 +60,7 @@ export default function RegisterForm() {
         });
       }
     }
-  }
+  };
 
   return (
     <div className="h-full">

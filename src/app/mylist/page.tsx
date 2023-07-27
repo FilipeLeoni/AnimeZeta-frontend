@@ -2,6 +2,7 @@ import AnimeCard from "@/components/AnimeCard";
 import { useApi } from "@/hooks/useApi";
 import React from "react";
 import { cookies } from "next/headers";
+import { AnimeTypes } from "@/@types/anime";
 
 export default async function MyList() {
   const api = useApi();
@@ -19,8 +20,8 @@ export default async function MyList() {
       <div className="col-span-12 flex justify-center items-center w-full flex-col">
         <h1 className="font-medium text-2xl text-gray-800 mb-12">MyList</h1>
         <div className="flex gap-8">
-          {anime?.map((anime: any) => (
-            <AnimeCard key={anime.id} data={anime} />
+          {anime?.map((anime: AnimeTypes) => (
+            <AnimeCard key={anime.mal_id} data={anime} />
           ))}
         </div>
       </div>

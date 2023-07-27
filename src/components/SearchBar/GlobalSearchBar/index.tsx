@@ -5,7 +5,7 @@ import { useJikanAPI } from "@/hooks/useJikanApi";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 
 export default function SearchBar() {
@@ -15,9 +15,14 @@ export default function SearchBar() {
   const [isSearchPerformed, setIsSearchPerformed] = useState(false);
 
   const searchParams = useSearchParams();
-  const searchQuery: any = searchParams ? searchParams.get("q") : null;
+  const searchQuery = searchParams ? searchParams.get("q") : null;
 
   const api = useJikanAPI();
+  const router = useRouter();
+
+  useEffect(() => {
+    setQuery(searchQuery);
+  }, [searchQuery]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -28,10 +33,6 @@ export default function SearchBar() {
       clearTimeout(timeoutId);
     };
   }, [query]);
-
-  useEffect(() => {
-    setQuery(searchQuery);
-  }, [searchQuery]);
 
   const {
     data: suggestions,
@@ -52,13 +53,11 @@ export default function SearchBar() {
     }
   );
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
 
-  const router = useRouter();
-
-  const handleSuggestionSubmit = (query: any) => {
+  const handleSuggestionSubmit = (query: string) => {
     const queryString = encodeURIComponent(query);
     router.push(`/anime/search?q=${queryString}`);
   };
@@ -82,6 +81,37 @@ export default function SearchBar() {
   const handleInputBlur = () => {
     setIsInputFocused(false);
   };
+
+  const SuggestionsList = useMemo(() => {
+    if (isLoading || isFetching) {
+      return (
+        <div className="w-full h-full flex justify-center">
+          <Spinner />
+        </div>
+      );
+    } else if (isSearchPerformed && suggestions.length === 0) {
+      return <div className="text-center text-gray-500 p-4">Not found...</div>;
+    } else {
+      return (
+        <>
+          {suggestions?.slice(0, 6).map((suggestion: any) => (
+            <motion.li
+              key={suggestion}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ delay: 0.3 }}
+              onMouseDown={() => handleSuggestionSubmit(suggestion)}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+            >
+              {suggestion}
+            </motion.li>
+          ))}
+        </>
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, isFetching, isSearchPerformed, suggestions]);
 
   return (
     <div className="relative text-gray-600">
@@ -121,27 +151,7 @@ export default function SearchBar() {
             }}
             exit={{ opacity: 0 }}
           >
-            {isLoading || isFetching ? (
-              <div className="w-full h-full flex justify-center ">
-                <Spinner />
-              </div>
-            ) : isSearchPerformed && suggestions.length === 0 ? (
-              <div className="text-center text-gray-500 p-4">Not found...</div>
-            ) : (
-              suggestions?.slice(0, 6).map((suggestion: any) => (
-                <motion.li
-                  key={suggestion}
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  transition={{ delay: 0.3 }}
-                  onMouseDown={() => handleSuggestionSubmit(suggestion)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                >
-                  {suggestion}
-                </motion.li>
-              ))
-            )}
+            {SuggestionsList}
           </motion.ul>
         )}
       </AnimatePresence>

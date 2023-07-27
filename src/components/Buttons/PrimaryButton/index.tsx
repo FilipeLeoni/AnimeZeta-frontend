@@ -1,14 +1,12 @@
-import React from "react";
-import { twMerge } from "tailwind-merge";
+import React, { ButtonHTMLAttributes } from "react";
 
-export default function PrimaryButton({ children, ...rest }: any) {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+}
+
+export default function PrimaryButton({ children }: Props) {
   return (
-    <button
-      className={twMerge(
-        "bg-primary text-grayDark p-2 font-medium text-lg rounded-md hover:bg-yellow-500 transition-all w-full",
-        rest.className
-      )}
-    >
+    <button className="bg-primary text-grayDark p-2 font-medium text-lg rounded-md hover:bg-yellow-500 transition-all w-full">
       {children}
     </button>
   );

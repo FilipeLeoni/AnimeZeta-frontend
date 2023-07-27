@@ -4,17 +4,20 @@ import { useJikanAPI } from "@/hooks/useJikanApi";
 import React, { useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
-import CategoriesOptions from "@/utils/HeaderOptions/CategoriesOptions";
+import CategoriesOptions, {
+  CategoriesTypes,
+} from "@/utils/HeaderOptions/CategoriesOptions";
 import Spinner from "@/components/SpinnerLoading";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { AnimeTypes } from "@/@types/anime";
 
 export default function GenrePage({ params }: { params: { genreId: number } }) {
   const api = useJikanAPI();
   const genreId = params.genreId;
 
   const genre = CategoriesOptions.find(
-    (category: any) => category.id == genreId
+    (category: CategoriesTypes) => category.id == genreId
   );
 
   const fetchAnimesByGenre = async (genre: number, page: number) => {
@@ -22,23 +25,15 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
     return res.data;
   };
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    isRefetching,
-    isPreviousData,
-  } = useInfiniteQuery({
-    queryKey: ["genreAnime"],
-    queryFn: ({ pageParam = 1 }) => fetchAnimesByGenre(genreId, pageParam),
-    keepPreviousData: false,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length ? allPages.length + 1 : undefined;
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery({
+      queryKey: ["genreAnime"],
+      queryFn: ({ pageParam = 1 }) => fetchAnimesByGenre(genreId, pageParam),
+      keepPreviousData: false,
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length ? allPages.length + 1 : undefined;
+      },
+    });
 
   const genreAnime = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
@@ -67,7 +62,7 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
       ) : (
         <div className="flex flex-wrap gap-5 justify-center">
           {genreAnime &&
-            genreAnime.map((anime: any) => (
+            genreAnime.map((anime: AnimeTypes) => (
               <Link
                 key={anime.mal_id}
                 href={`/anime/${anime.mal_id}`}

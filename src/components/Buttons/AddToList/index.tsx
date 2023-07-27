@@ -5,8 +5,6 @@ import useAddToList from "@/hooks/useAddToList";
 export default function AddToList({ animeData }: any) {
   const { addToMyList } = useAddToList();
 
-  console.log(animeData);
-
   const handleAddToList = () => {
     const { title } = animeData;
     const jikanId = animeData.mal_id;

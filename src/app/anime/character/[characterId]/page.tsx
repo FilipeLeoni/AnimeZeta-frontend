@@ -43,7 +43,7 @@ export default async function AnimePage({
             <div className="w-full h-0.5 rounded bg-gray-300" />
             <div className="flex gap-2 items-center text-gray-700 my-2 pl-2">
               <div className="flex gap-2">
-                {data.nicknames?.slice(0, 3).map((nickname: any) => (
+                {data.nicknames?.slice(0, 3).map((nickname: string) => (
                   <p key={nickname}>{nickname} -</p>
                 ))}
               </div>

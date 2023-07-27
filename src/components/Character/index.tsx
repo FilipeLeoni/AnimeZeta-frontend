@@ -2,7 +2,11 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 
-export default function CharacterDescription({ children }: any) {
+type Props = {
+  children: React.ReactNode;
+};
+
+export default function CharacterDescription({ children }: Props) {
   const [showFullText, setShowFullText] = useState(false);
 
   return (

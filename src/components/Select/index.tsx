@@ -5,13 +5,21 @@ import Select from "react-select";
 import { CaretDown, X } from "@phosphor-icons/react";
 import makeAnimated from "react-select/animated";
 
+interface Props {
+  options: any;
+  placeholder: string;
+  onChange: any;
+  value: any;
+  isMulti?: boolean;
+}
+
 export default function SelectCustom({
   options,
   placeholder,
   onChange,
   value,
   isMulti = false,
-}: any) {
+}: Props) {
   const DropdownIndicator = () => {
     return (
       <div>
