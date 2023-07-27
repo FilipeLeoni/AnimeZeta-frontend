@@ -1,112 +1,67 @@
-"use client";
-import { useQuery } from "react-query";
-import { Heart, Lightning, Planet, Smiley } from "@phosphor-icons/react";
-
 import { useJikanAPI } from "@/hooks/useJikanApi";
-import GenreCarousel from "@/components/GenreCarousel";
 import SuperCarousel from "@/components/SuperCarousel";
-import Head from "next/head";
-import Link from "next/link";
-import Spinner from "@/components/SpinnerLoading";
+import GenreCarousel from "@/components/GenreCarousel";
 
-export default function Home() {
+export default async function Home() {
   const api = useJikanAPI();
+  const [topAnime, actionAnime, comedyAnime, romanceAnime] = await Promise.all([
+    topAnimes(),
+    actionAnimes(),
+    comedyAnimes(),
+    romanceAnimes(),
+  ]);
 
-  const {
-    data: topAnimes,
-    isLoading: isLoadingTopAnimes,
-    isFetching: isFetchingTopAnimes,
-    error,
-  } = useQuery("topAnimes", async () => {
+  async function topAnimes() {
     const res = await api.getTopAnimes();
     return res.data;
-  });
+  }
 
-  const fetchAnimesByGenre = async (genre: number) => {
-    const res = await api.getAnimesByGenre(genre);
+  async function actionAnimes() {
+    const res = await api.getAnimesByGenre(1);
     return res.data;
-  };
+  }
 
-  const {
-    data: actionAnimes,
-    isLoading: isLoadingActionAnimes,
-    isFetching: isFetchingAction,
-  } = useQuery("actionAnimes", () => fetchAnimesByGenre(1));
+  async function comedyAnimes() {
+    const res = await api.getAnimesByGenre(4);
+    return res.data;
+  }
 
-  const {
-    data: comedyAnimes,
-    isLoading: isLoadingComedyAnimes,
-    isFetching: isFetchingComedy,
-  } = useQuery("comedyAnimes", () => fetchAnimesByGenre(4));
-  const {
-    data: romanceAnimes,
-    isLoading: isLoadingRomanceAnimes,
-    isFetching: isFetchingRomance,
-  } = useQuery("romanceAnimes", () => fetchAnimesByGenre(22));
-  const {
-    data: isekaiAnimes,
-    isLoading: isLoadingIsekaiAnimes,
-    isFetching: isFetchingIsekai,
-  } = useQuery("isekaiAnimes", () => fetchAnimesByGenre(62));
+  async function romanceAnimes() {
+    const res = await api.getAnimesByGenre(22);
+    return res.data;
+  }
 
   return (
     <main>
       <title>AnimeZeta</title>
-      <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
-        {isLoadingTopAnimes || isFetchingTopAnimes ? (
-          <div className="flex justify-center items-center w-full col-span-12 h-64">
-            <Spinner />
-          </div>
-        ) : (
-          <SuperCarousel data={topAnimes} />
-        )}
+      <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 pt-36 pb-20">
+        <SuperCarousel data={topAnime} />
 
-        {isLoadingActionAnimes || isFetchingAction ? (
-          <div className="flex justify-center items-center w-full col-span-12 h-64">
-            <Spinner />
-          </div>
-        ) : (
-          <GenreCarousel
-            AnimeData={actionAnimes}
-            Title="Get Ready for Thrilling Action Anime!"
-            Icon={Lightning}
-          />
-        )}
-        {isLoadingComedyAnimes || isFetchingComedy ? (
-          <div className="flex justify-center items-center w-full col-span-12 h-64">
-            <Spinner />
-          </div>
-        ) : (
-          <GenreCarousel
-            AnimeData={comedyAnimes}
-            Title="Laugh Out Loud with Comedy Anime!"
-            Icon={Smiley}
-          />
-        )}
+        <GenreCarousel
+          AnimeData={actionAnime}
+          Title="Get Ready for Thrilling Action Anime!"
+        />
 
-        {isLoadingRomanceAnimes || isFetchingRomance ? (
-          <div className="flex justify-center items-center w-full col-span-12 h-64">
-            <Spinner />
-          </div>
-        ) : (
-          <GenreCarousel
-            AnimeData={romanceAnimes}
-            Title="Delve into Romance Anime!"
-            Icon={Heart}
-          />
-        )}
+        <GenreCarousel
+          AnimeData={actionAnime}
+          Title="Get Ready for Thrilling Action Anime!"
+        />
 
-        {isLoadingIsekaiAnimes || isFetchingIsekai ? (
-          <div className="flex justify-center items-center w-full col-span-12 h-64">
-            <Spinner />
-          </div>
-        ) : (
-          <GenreCarousel
+        <GenreCarousel
+          AnimeData={comedyAnime}
+          Title="Laugh Out Loud with Comedy Anime!"
+        />
+
+        <GenreCarousel
+          AnimeData={romanceAnime}
+          Title="Delve into Romance Anime!"
+        />
+
+        {/* <GenreCarousel
             AnimeData={isekaiAnimes}
             Title="Dive into Otherworldly Adventures with Isekai Anime!"
-            Icon={Planet}
-          />
-        )}
+            // Icon={Planet}
+          /> */}
       </div>
     </main>
   );

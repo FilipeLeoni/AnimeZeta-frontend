@@ -6,8 +6,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import User from "@/assets/images/User.svg";
+import { useAuth } from "@/context/AuthContext";
 
 export default function UserProfileIcon() {
+  const { isAuthenticated, logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+  }
+
   return (
     <div className="relative inline-block text-left">
       <PopoverPrimitive.Root>
@@ -32,19 +39,42 @@ export default function UserProfileIcon() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            <Link href={"/auth/register"}>
-              <div className="text-md font-medium text-gray-200 hover:bg-neutral-950 hover:text-primary p-4 rounded-lg ">
-                <h3>Create an account</h3>
-                <p className="text-gray-400 text-sm">Join today for free</p>
-              </div>
-            </Link>
+            {isAuthenticated ? (
+              <Link href={"/profile"}>
+                <div className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg ">
+                  <h3>Profile</h3>
+                  <p className="text-gray-400 text-sm">
+                    See or edit your profile
+                  </p>
+                </div>
+              </Link>
+            ) : (
+              <Link href={"/auth/register"}>
+                <div className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg ">
+                  <h3>Create an account</h3>
+                  <p className="text-gray-400 text-sm">Join today for free</p>
+                </div>
+              </Link>
+            )}
+
             <div className="mx-1 my-1 h-[2px] bg-gray-500 rounded-lg" />
-            <Link href={"/auth/login"}>
-              <div className="text-md font-medium text-gray-200 hover:bg-neutral-950 hover:text-primary p-4 rounded-lg">
-                <h3>Log In</h3>
-                <p className="text-gray-400 text-sm">Alredy joined us?</p>
+
+            {isAuthenticated ? (
+              <div
+                className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg cursor-pointer"
+                onClick={handleLogout}
+              >
+                <h3>Logout</h3>
+                <p className="text-gray-400 text-sm">End your session</p>
               </div>
-            </Link>
+            ) : (
+              <Link href={"/auth/login"}>
+                <div className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg">
+                  <h3>Log In</h3>
+                  <p className="text-gray-400 text-sm">Alredy joined us?</p>
+                </div>
+              </Link>
+            )}
           </motion.div>
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Root>

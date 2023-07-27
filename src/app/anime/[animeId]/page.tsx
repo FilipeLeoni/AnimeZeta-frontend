@@ -15,11 +15,9 @@ import Accordion from "@/components/AccordionCustom";
 import Link from "next/link";
 import clsx from "clsx";
 import Loading from "./loading";
-import Head from "next/head";
 
 export default function AnimePage({ params }: { params: { animeId: number } }) {
   const [selectedItem, setSelectedItem] = useState("characters");
-  const [itemsToShow, setItemsToShow] = useState(20);
   const [showFullText, setShowFullText] = useState(false);
 
   function handleWatchTrailer(link: any) {
@@ -27,12 +25,6 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
     window.open(trailerUrl, "_blank");
   }
 
-  const handleLoadMore = () => {
-    console.log("fui chamado");
-    setItemsToShow((prevItems) => prevItems + 20);
-  };
-
-  console.log(itemsToShow);
   const api = useJikanAPI();
   const animeId = params.animeId;
 
@@ -66,7 +58,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
         <header>
           <title>AnimeZeta</title>
         </header>
-        <main>
+        <div>
           {isLoadingAnime ? (
             <Loading />
           ) : (
@@ -120,12 +112,12 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   >
                     Watch trailer
                   </SecondaryButton>
-                  <AddToList />
+                  <AddToList animeData={data} />
                 </div>
               </div>
             </div>
           )}
-        </main>
+        </div>
 
         <section className="w-full pt-20">
           <div className="divider h-0.5 bg-gray-300" />
@@ -156,7 +148,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   <Spinner />
                 ) : (
                   InfoData &&
-                  InfoData.slice(0, itemsToShow).map(
+                  InfoData.slice(0, 25).map(
                     (characterData: any, index: number) => (
                       <Link
                         key={characterData.character.mal_id}

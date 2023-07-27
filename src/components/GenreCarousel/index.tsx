@@ -1,3 +1,4 @@
+"use client";
 import React, { ElementType } from "react";
 import SubTitle from "../Text/SubTitles";
 import Slider from "react-slick";
@@ -10,10 +11,9 @@ import Link from "next/link";
 interface Props {
   AnimeData: any;
   Title: string;
-  Icon: ElementType;
 }
 
-export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
+export default function GenreCarousel({ AnimeData, Title }: Props) {
   const settings = {
     className: "slider variable-width",
     infinite: false,
@@ -61,10 +61,7 @@ export default function GenreCarousel({ AnimeData, Title, Icon }: Props) {
 
   return (
     <div className="w-full col-span-12">
-      <SubTitle>
-        {Title}
-        <Icon size={24} weight="fill" color="#ffa500" />
-      </SubTitle>
+      <SubTitle>{Title}</SubTitle>
       <Slider {...settings} className="z-20 h-96">
         {AnimeData &&
           AnimeData.map((data: any) => (

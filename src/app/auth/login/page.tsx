@@ -1,49 +1,27 @@
-"use client";
-import PrimaryButton from "@/components/Buttons/PrimaryButton";
-import Input from "@/components/Input";
 import React from "react";
-import Link from "next/link";
-import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 
-function page() {
+import LoginForm from "@/components/AuthForm/login";
+import Image from "next/image";
+import Logo from "@/assets/images/Logo.svg";
+import Link from "next/link";
+
+function LoginPage() {
   return (
     <>
       <header>
         <title>Login - AnimeZeta</title>
       </header>
-      <div className="mb-20">
-        <p>Welcome Back!</p>
-        <h1 className="text-grayDark font-bold text-5xl">Login</h1>
-      </div>
-      <div className="flex flex-col gap-6 text-gray-500 text-sm font-medium">
-        <div>
-          <label className="pl-1">Email</label>
-          <Input type="text" Icon={EnvelopeSimple} />
-        </div>
-        <div>
-          <label className="pl-1">Password</label>
-          <Input type="password" Icon={Eye} />
-          <div className="form-control flex gap-2 mt-1">
-            <label className="cursor-pointer label flex gap-2 justify-start">
-              <input
-                type="checkbox"
-                className="checkbox checkbox-warning checkbox-xs bg-gray-200 border-gray-300 rounded"
-              />
-              <span className="label-text text-xs font-medium text-gray-500">
-                Remember me
-              </span>
-            </label>
+      <div className="h-[500px] px-10 w-full relative">
+        <div className="flex-col flex gap-16 h-full">
+          <div className="">
+            <p>Welcome Back!</p>
+            <div className="flex items-center gap-4">
+              <h1 className="text-grayDark font-bold text-5xl">Login</h1>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="mt-16 w-full">
-        <PrimaryButton>Login</PrimaryButton>
-        <div className="text-gray-500 font-medium text-sm text-center mt-2">
-          New here?{" "}
-          <Link href="/auth/register">
-            <span className="text-blue-600 hover:text-blue-800">
-              Create an account
-            </span>
+          <LoginForm />
+          <Link href={"/"} className="absolute top-3 right-10">
+            <Image src={Logo} alt="Logo" width={50} height={50} />
           </Link>
         </div>
       </div>
@@ -51,4 +29,4 @@ function page() {
   );
 }
 
-export default page;
+export default LoginPage;

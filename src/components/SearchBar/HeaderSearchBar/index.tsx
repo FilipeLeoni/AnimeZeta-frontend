@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { useQuery } from "react-query";
@@ -25,6 +26,30 @@ export default function HeaderSearchBar() {
       clearTimeout(timeoutId);
     };
   }, [query]);
+
+  //   useEffect(() => {
+  //     const fetchSuggestions = async () => {
+  //       setIsFetching(true);
+
+  //       if (debouncedQuery.trim() !== "") {
+  //         try {
+  //           const response = await api.searchAnime(debouncedQuery);
+  //           const data = response.data.map((result) => result.title);
+  //           setIsSearchPerformed(true);
+  //           setSuggestions(data);
+  //         } catch (error) {
+  //           // Tratar erros, se necessário
+  //         }
+  //       } else {
+  //         setIsSearchPerformed(false);
+  //         setSuggestions([]);
+  //       }
+
+  //       setIsFetching(false);
+  //     };
+
+  //     fetchSuggestions();
+  //   }, [debouncedQuery]);
 
   const {
     data: suggestions,
