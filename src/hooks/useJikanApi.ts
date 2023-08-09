@@ -9,12 +9,9 @@ export const useJikanAPI = () => ({
   },
 
   getAnimesByGenre: async (genreId: number, page: number = 1) => {
-    return fetchWrapper(
-      `anime?genres=${genreId}&page=${page}&order_by=popularity`,
-      {
-        method: "GET",
-      }
-    );
+    return fetchWrapper(`anime?genres=${genreId}&page=${page}`, {
+      method: "GET",
+    });
   },
 
   getCharacterById: async (characterId: number) => {
