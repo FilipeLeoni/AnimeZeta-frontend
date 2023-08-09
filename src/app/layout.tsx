@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import clsx from "clsx";
 import Providers from "@/providers/providers";
+import { Footer } from "@/components/Layout/Footer";
 
 export default function RootLayout({
   children,
@@ -25,6 +26,7 @@ export default function RootLayout({
           >
             {children}
           </div>
+          <Footer />
           <ToastContainer />
         </Providers>
       </body>

@@ -3,9 +3,23 @@ import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookie from "js-cookie";
 
-const AuthContext: any = createContext(null);
+interface AuthContextData {
+  isAuthenticated: boolean | null;
+  checkAuthentication: () => void;
+  logout: () => void;
+  handleLogin: (accessToken: string) => void;
+  isAuthRoute: () => boolean;
+}
 
-export const AuthProvider = ({ children }: any) => {
+const AuthContext = createContext<AuthContextData>({
+  isAuthenticated: null,
+  checkAuthentication: () => {},
+  logout: () => {},
+  handleLogin: () => {},
+  isAuthRoute: () => false,
+});
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const pathname = usePathname();
 
@@ -54,6 +68,6 @@ export const AuthProvider = ({ children }: any) => {
   );
 };
 
-export const useAuth: any = () => {
+export const useAuth = (): AuthContextData => {
   return useContext(AuthContext);
 };

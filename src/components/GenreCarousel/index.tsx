@@ -7,9 +7,10 @@ import AnimeCard from "../AnimeCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
+import { AnimeTypes } from "@/@types/anime";
 
 interface Props {
-  AnimeData: any;
+  AnimeData: AnimeTypes[];
   Title: string;
 }
 

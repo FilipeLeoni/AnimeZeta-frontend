@@ -5,10 +5,10 @@ const useAddToList = () => {
   const api = useApi();
 
   const addToMyList = async (
-    jikanId: any,
-    title: any,
-    imageUrl: any,
-    status: any
+    jikanId: string,
+    title: string,
+    imageUrl: string,
+    status: string
   ) => {
     try {
       const response = await api.AddAnimeToList(

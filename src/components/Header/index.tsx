@@ -13,13 +13,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import HeaderOptions from "../HeaderOptions";
 import CategoriesOptions from "@/utils/HeaderOptions/CategoriesOptions";
 import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isMyListOpen, setMyListOpen] = useState(false);
+
+  const router = useRouter();
   const pathname = usePathname();
 
   const showHeader =
@@ -39,6 +42,10 @@ export default function Header() {
     setMyListOpen(!isMyListOpen);
   };
   const queryClient = new QueryClient();
+
+  const handleFilterClick = (status: string) => {
+    // router.push(`/mylist/${status}`);
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -154,12 +161,12 @@ export default function Header() {
                     >
                       <div className="w-full flex flex-col space-y-2 text-center">
                         {MyListOptions.map((option) => (
-                          <Link
+                          <HeaderOptions
                             key={option.id}
-                            href={`/mylist/${option.name.toLowerCase()}`}
+                            onClick={handleFilterClick(option.name)}
                           >
-                            <HeaderOptions>{option.name}</HeaderOptions>
-                          </Link>
+                            {option.name}
+                          </HeaderOptions>
                         ))}
                       </div>
                     </motion.div>

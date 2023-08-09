@@ -6,21 +6,23 @@ import { useJikanAPI } from "@/hooks/useJikanApi";
 import { Play } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useQuery } from "react-query";
-import { motion } from "framer-motion";
+import { LazyMotion, m, domAnimation } from "framer-motion";
 import { useState } from "react";
 import AnimeOtherOptions from "@/utils/AnimeOptions/OthersOptions";
-import AnimeCard from "@/components/AnimeCard";
-import StaffCard from "@/components/StaffCard";
-import Accordion from "@/components/AccordionCustom";
 import Link from "next/link";
-import clsx from "clsx";
 import Loading from "./loading";
+import { GenreTypes, ReviewTypes } from "@/@types/anime";
+import dynamic from "next/dynamic";
+import CharacterDescription from "@/components/Character";
+
+const AnimeCard = dynamic(() => import("@/components/AnimeCard"));
+const StaffCard = dynamic(() => import("@/components/StaffCard"));
+const Accordion = dynamic(() => import("@/components/AccordionCustom"));
 
 export default function AnimePage({ params }: { params: { animeId: number } }) {
   const [selectedItem, setSelectedItem] = useState("characters");
-  const [showFullText, setShowFullText] = useState(false);
 
-  function handleWatchTrailer(link: any) {
+  function handleWatchTrailer(link: string | undefined) {
     const trailerUrl = link;
     window.open(trailerUrl, "_blank");
   }
@@ -28,11 +30,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
   const api = useJikanAPI();
   const animeId = params.animeId;
 
-  const {
-    data,
-    isLoading: isLoadingAnime,
-    error,
-  } = useQuery("anime", async () => {
+  const { data, isLoading: isLoadingAnime } = useQuery("anime", async () => {
     const res = await api.getAnimeById(animeId);
     return res.data;
   });
@@ -48,7 +46,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
     }
   );
 
-  const handleItemClick = (item: any) => {
+  const handleItemClick = (item: string) => {
     setSelectedItem(item);
   };
 
@@ -70,6 +68,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   width={176}
                   height={256}
                   className="rounded-lg drop-shadow-lg"
+                  loading="lazy"
                 />
               </div>
               <div className="max-w-xl flex flex-col flex-wrap">
@@ -81,7 +80,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   <p>{data.year}</p>
                   <div className="w-1 h-1 rounded-full bg-gray-600" />
                   <div className="flex gap-2">
-                    {data.genres?.slice(0, 3).map((genre: any) => (
+                    {data.genres?.slice(0, 3).map((genre: GenreTypes) => (
                       <p key={genre.mal_id}>{genre.name} -</p>
                     ))}
                   </div>
@@ -89,22 +88,7 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   <p>{data.duration}</p>
                 </div>
                 <div className="w-full h-0.5 rounded bg-gray-300" />
-                <div className="max-w-xl hover:bg-slate-200 rounded-lg mt-2 pt-2 px-2 relative">
-                  <p
-                    className={clsx(
-                      "text-overflow-ellipsis text-gray-700",
-                      showFullText ? "" : "line-clamp-6"
-                    )}
-                  >
-                    {data.synopsis}
-                  </p>
-                  <div
-                    className="text-xs text-right text-gray-500 hover:underline absolute -bottom-6 right-0 cursor-pointer"
-                    onClick={() => setShowFullText(!showFullText)}
-                  >
-                    {showFullText ? "Show less" : "Show more"}
-                  </div>
-                </div>
+                <CharacterDescription>{data.synopsis}</CharacterDescription>
                 <div className="flex mt-20 gap-14">
                   <SecondaryButton
                     icon={Play}
@@ -132,10 +116,12 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   {options.name}
 
                   {selectedItem === options.endpoint && (
-                    <motion.div
-                      layoutId="underline"
-                      className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-400 rounded-full"
-                    />
+                    <LazyMotion features={domAnimation}>
+                      <m.div
+                        layoutId="underline"
+                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-400 rounded-full"
+                      />
+                    </LazyMotion>
                   )}
                 </li>
               ))}
@@ -155,13 +141,15 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                         href={`/anime/character/${characterData.character.mal_id}`}
                         prefetch={false}
                       >
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1, duration: 0.5 }}
-                        >
-                          <AnimeCard data={characterData.character} />
-                        </motion.div>
+                        <LazyMotion features={domAnimation}>
+                          <m.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                          >
+                            <AnimeCard data={characterData.character} />
+                          </m.div>
+                        </LazyMotion>
                       </Link>
                     )
                   )
@@ -176,14 +164,18 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                 ) : (
                   InfoData &&
                   InfoData.slice(0, 25).map((person: any, index: number) => (
-                    <motion.div
+                    <LazyMotion
+                      features={domAnimation}
                       key={person.person.mal_id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
                     >
-                      <StaffCard data={person} />
-                    </motion.div>
+                      <m.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <StaffCard data={person} />
+                      </m.div>
+                    </LazyMotion>
                   ))
                 )}
               </>
@@ -197,15 +189,19 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   InfoData && (
                     <div className="flex flex-col gap-10 items-center">
                       {InfoData.slice(0, 7).map(
-                        (review: any, index: number) => (
-                          <motion.div
+                        (review: ReviewTypes, index: number) => (
+                          <LazyMotion
+                            features={domAnimation}
                             key={review.mal_id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
                           >
-                            <Accordion data={review} />
-                          </motion.div>
+                            <m.div
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: index * 0.1 }}
+                            >
+                              <Accordion data={review} />
+                            </m.div>
+                          </LazyMotion>
                         )
                       )}
                     </div>
@@ -222,18 +218,23 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                   InfoData && (
                     <>
                       {InfoData.slice(0, 15).map((anime: any, index: any) => (
-                        <motion.div
+                        <LazyMotion
+                          features={domAnimation}
                           key={anime.entry.mal_id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
                         >
-                          <Link href={`/anime/${anime.entry.mal_id}`}></Link>
-                          <AnimeCard
-                            key={anime.entry.mal_id}
-                            data={anime.entry}
-                          />
-                        </motion.div>
+                          <m.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                          >
+                            <Link href={`/anime/${anime.entry.mal_id}`}>
+                              <AnimeCard
+                                key={anime.entry.mal_id}
+                                data={anime.entry}
+                              />
+                            </Link>
+                          </m.div>
+                        </LazyMotion>
                       ))}
                     </>
                   )

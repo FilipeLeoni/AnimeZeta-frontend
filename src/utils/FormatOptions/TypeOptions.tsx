@@ -1,4 +1,9 @@
-const TypeOptions = [
+export interface TypeOption {
+  label: string;
+  value: string;
+}
+
+const TypeOptions: TypeOption[] = [
   { label: "TV Show", value: "tv" },
   { label: "Movie", value: "movie" },
   { label: "OVA", value: "ova" },

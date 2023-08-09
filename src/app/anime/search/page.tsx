@@ -1,29 +1,31 @@
 "use client";
 import SearchBar from "@/components/SearchBar/GlobalSearchBar";
-import SelectCustom from "@/components/Select";
 import { useJikanAPI } from "@/hooks/useJikanApi";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useState, useCallback, useEffect } from "react";
 import { useQuery } from "react-query";
 import { motion } from "framer-motion";
-import TypeOptions from "@/utils/FormatOptions/TypeOptions";
-import AnimeCard from "@/components/AnimeCard";
+import TypeOptions, { TypeOption } from "@/utils/FormatOptions/TypeOptions";
 import Spinner from "@/components/SpinnerLoading";
 import Link from "next/link";
+import { AnimeTypes, GenreTypes } from "@/@types/anime";
+import dynamic from "next/dynamic";
+
+const SelectCustom = dynamic(() => import("@/components/Select"));
+const AnimeCard = dynamic(() => import("@/components/AnimeCard"));
 
 export default function AnimeSearch() {
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [selectedType, setSelectedType] = useState(null);
-  const [genre, setGenre] = useState<any>([]);
+  const [selectedType, setSelectedType] = useState<TypeOption | null>(null);
 
-  const router: any = useRouter();
+  const router = useRouter();
 
   const pathname = usePathname();
 
   const searchParams: any = useSearchParams();
-  const searchQuery: any = searchParams ? searchParams.get("q") : null;
-  const searchGenres: any = searchParams ? searchParams.get("genres") : null;
-  const searchType: any = searchParams ? searchParams.get("type") : null;
+  const searchQuery = searchParams ? searchParams.get("q") : null;
+  const searchGenres = searchParams ? searchParams.get("genres") : null;
+  const searchType = searchParams ? searchParams.get("type") : null;
 
   const api = useJikanAPI();
 
@@ -40,19 +42,21 @@ export default function AnimeSearch() {
     if (isSuccess) {
       const selectedGenresIds = searchGenres ? searchGenres.split(",") : [];
 
-      const selectedGenresOptions = selectedGenresIds?.map((genreId: any) => {
-        const genreoption = Genre?.find(
-          (genre: any) => genre.mal_id === parseInt(genreId)
-        );
-        return { value: genreoption?.mal_id, label: genreoption?.name };
-      });
+      const selectedGenresOptions = selectedGenresIds?.map(
+        (genreId: string) => {
+          const genreoption = Genre?.find(
+            (genre: GenreTypes) => genre.mal_id === parseInt(genreId)
+          );
+          return { value: genreoption?.mal_id, label: genreoption?.name };
+        }
+      );
       setSelectedGenres(selectedGenresOptions);
     }
   }, [searchGenres, isSuccess, Genre]);
 
   useEffect(() => {
-    const selectedTypeOption: any = TypeOptions.find(
-      (type: any) => type.value.toString() === searchType
+    const selectedTypeOption: TypeOption | undefined = TypeOptions.find(
+      (type: TypeOption) => type.value.toString() === searchType
     );
     if (selectedTypeOption) {
       setSelectedType(selectedTypeOption);
@@ -61,11 +65,7 @@ export default function AnimeSearch() {
     }
   }, [searchType]);
 
-  const {
-    data: Results,
-    isLoading,
-    error,
-  } = useQuery(
+  const { data: Results, isLoading } = useQuery(
     ["searchResults", searchQuery, selectedGenres, selectedType],
     async () => {
       const response = await api.searchAnime(
@@ -90,7 +90,8 @@ export default function AnimeSearch() {
     [searchParams]
   );
 
-  const handleGenreChange = (selectedOption: any) => {
+  const handleGenreChange = (selectedOption: TypeOption[]) => {
+    console.log(selectedOption);
     const genreParams = selectedOption
       .map((genre: any) => genre.value)
       .join(",");
@@ -129,7 +130,7 @@ export default function AnimeSearch() {
             isMulti={true}
             onChange={handleGenreChange}
             value={selectedGenres}
-            options={Genre?.map((genre: any) => ({
+            options={Genre?.map((genre: GenreTypes) => ({
               value: genre.mal_id,
               label: genre.name,
             }))}
@@ -140,7 +141,7 @@ export default function AnimeSearch() {
           <SelectCustom
             onChange={handleTypeChange}
             value={selectedType}
-            options={TypeOptions.map((type: any) => ({
+            options={TypeOptions.map((type: TypeOption) => ({
               value: type.value,
               label: type.label,
             }))}
@@ -152,7 +153,7 @@ export default function AnimeSearch() {
         {isLoading ? (
           <Spinner />
         ) : (
-          Results?.map((results: any) => (
+          Results?.map((results: AnimeTypes) => (
             <Link
               key={results.mal_id}
               href={`/anime/${results.mal_id}`}

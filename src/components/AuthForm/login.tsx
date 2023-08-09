@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Input } from "../Input";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/utils/Schemas/LoginSchema";
 import { toast } from "react-toastify";
@@ -11,21 +11,26 @@ import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 import Link from "next/link";
 import PrimaryButton from "../Buttons/PrimaryButton";
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 export default function LoginForm() {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onChange",
     criteriaMode: "all",
     resolver: zodResolver(LoginSchema),
   });
 
-  const { handleLogin } = useAuth();
+  const auth = useAuth();
   const api = useApi();
 
-  async function handleSubmitForm(data: any) {
+  const handleSubmitForm: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await api.login(data.email, data.password);
 
@@ -34,7 +39,7 @@ export default function LoginForm() {
           position: "top-right",
           theme: "light",
         });
-        handleLogin(response.data.accessToken);
+        auth?.handleLogin(response.data.accessToken);
       }
     } catch (error: any) {
       if (error.response) {
@@ -49,7 +54,7 @@ export default function LoginForm() {
         });
       }
     }
-  }
+  };
 
   return (
     <div className="h-full">
@@ -79,7 +84,6 @@ export default function LoginForm() {
               <input
                 type="checkbox"
                 className="checkbox checkbox-warning checkbox-xs bg-gray-200 border-gray-300 rounded"
-                {...register("checkbox")}
               />
               <span className="label-text text-xs font-medium text-gray-500">
                 Remember me

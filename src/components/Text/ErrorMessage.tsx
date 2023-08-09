@@ -1,5 +1,9 @@
 import React from "react";
 
-export default function ErrorMessage({ children }: any) {
+type Props = {
+  children: React.ReactNode;
+};
+
+export default function ErrorMessage({ children }: Props) {
   return <p className="text-red-500 text-xs mt-1">{children}</p>;
 }
