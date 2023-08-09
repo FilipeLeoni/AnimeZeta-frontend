@@ -9,7 +9,7 @@ export default function AddToList({ animeData }: any) {
     const { title } = animeData;
     const jikanId = animeData.mal_id;
     const imageUrl = animeData.images.webp.image_url;
-    const status = "watching";
+    const status = "Completed";
 
     addToMyList(jikanId.toString(), title, imageUrl, status);
   };

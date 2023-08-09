@@ -10,8 +10,8 @@ export default function AnimeCard({ data }: any) {
 
   return (
     <div className="w-44 h-full flex text-grayDark hover:scale-110 transition-all">
-      <div className="w-44 h-full rounded-lg relative cursor-pointer flex flex-col items-center text-center gap-2 ">
-        <div className="w-44 h-64 bg-cover bg-center rounded-lg drop-shadow-md overflow-hidden">
+      <div className="w-44 h-full rounded-md relative cursor-pointer flex flex-col items-center text-center gap-2 ">
+        <div className="w-44 h-64 bg-cover bg-center rounded-md drop-shadow-md overflow-hidden">
           <Image src={image} alt={title} fill style={{ objectFit: "cover" }} />
         </div>
         <div className="font-medium text-sm">{title}</div>

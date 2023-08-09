@@ -4,12 +4,14 @@ import GenreCarousel from "@/components/GenreCarousel";
 
 export default async function Home() {
   const api = useJikanAPI();
-  const [topAnime, actionAnime, comedyAnime, romanceAnime] = await Promise.all([
-    topAnimes(),
-    actionAnimes(),
-    comedyAnimes(),
-    romanceAnimes(),
-  ]);
+  const [topAnime, actionAnime, comedyAnime, romanceAnime, isekaiAnime] =
+    await Promise.all([
+      topAnimes(),
+      actionAnimes(),
+      comedyAnimes(),
+      romanceAnimes(),
+      isekaiAnimes(),
+    ]);
 
   async function topAnimes() {
     const res = await api.getTopAnimes();
@@ -31,16 +33,16 @@ export default async function Home() {
     return res.data;
   }
 
+  async function isekaiAnimes() {
+    const res = await api.getAnimesByGenre(62);
+    return res.data;
+  }
+
   return (
     <main>
       <title>AnimeZeta</title>
       <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 pt-36 pb-20">
         <SuperCarousel data={topAnime} />
-
-        <GenreCarousel
-          AnimeData={actionAnime}
-          Title="Get Ready for Thrilling Action Anime!"
-        />
 
         <GenreCarousel
           AnimeData={actionAnime}
@@ -57,11 +59,10 @@ export default async function Home() {
           Title="Delve into Romance Anime!"
         />
 
-        {/* <GenreCarousel
-            AnimeData={isekaiAnimes}
-            Title="Dive into Otherworldly Adventures with Isekai Anime!"
-            // Icon={Planet}
-          /> */}
+        <GenreCarousel
+          AnimeData={isekaiAnime}
+          Title="Dive into Otherworldly Adventures with Isekai Anime!"
+        />
       </div>
     </main>
   );
