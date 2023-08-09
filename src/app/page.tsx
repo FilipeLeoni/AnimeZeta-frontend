@@ -4,14 +4,12 @@ import GenreCarousel from "@/components/GenreCarousel";
 
 export default async function Home() {
   const api = useJikanAPI();
-  const [topAnime, actionAnime, comedyAnime, romanceAnime, isekaiAnime] =
-    await Promise.all([
-      topAnimes(),
-      actionAnimes(),
-      comedyAnimes(),
-      romanceAnimes(),
-      isekaiAnimes(),
-    ]);
+  const [topAnime, actionAnime, comedyAnime, isekaiAnime] = await Promise.all([
+    topAnimes(),
+    actionAnimes(),
+    comedyAnimes(),
+    isekaiAnimes(),
+  ]);
 
   async function topAnimes() {
     const res = await api.getTopAnimes();
@@ -25,11 +23,6 @@ export default async function Home() {
 
   async function comedyAnimes() {
     const res = await api.getAnimesByGenre(4);
-    return res.data;
-  }
-
-  async function romanceAnimes() {
-    const res = await api.getAnimesByGenre(22);
     return res.data;
   }
 
@@ -52,11 +45,6 @@ export default async function Home() {
         <GenreCarousel
           AnimeData={comedyAnime}
           Title="Laugh Out Loud with Comedy Anime!"
-        />
-
-        <GenreCarousel
-          AnimeData={romanceAnime}
-          Title="Delve into Romance Anime!"
         />
 
         <GenreCarousel
