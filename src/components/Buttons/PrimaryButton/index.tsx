@@ -6,7 +6,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function PrimaryButton({ children }: Props) {
   return (
-    <button className="bg-primary text-grayDark p-2 font-medium text-lg rounded-md hover:bg-yellow-500 transition-all w-full">
+    <button className="bg-primary flex justify-center items-center text-grayDark p-2 font-medium text-lg rounded-md hover:bg-yellow-500 transition-all w-full">
       {children}
     </button>
   );

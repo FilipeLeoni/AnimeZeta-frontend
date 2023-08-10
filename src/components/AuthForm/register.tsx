@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../Input";
 import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 import PrimaryButton from "../Buttons/PrimaryButton";
@@ -10,6 +10,7 @@ import { RegisterSchema } from "@/utils/Schemas/registerSchema";
 import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "react-toastify";
+import Spinner from "../SpinnerLoading";
 
 interface FormData {
   username: string;
@@ -28,12 +29,15 @@ export default function RegisterForm() {
     criteriaMode: "all",
     resolver: zodResolver(RegisterSchema),
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const auth = useAuth();
   const api = useApi();
 
   const handleSubmitForm: SubmitHandler<FormData> = async (data) => {
     try {
+      setIsLoading(true);
+
       const response = await api.createUser(
         data.username,
         data.email,
@@ -59,6 +63,8 @@ export default function RegisterForm() {
           theme: "light",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,9 +114,11 @@ export default function RegisterForm() {
           />
         </div>
         <div className="mt-auto w-full text-center pb-2">
-          <PrimaryButton type="submit">Sing Up</PrimaryButton>
+          <PrimaryButton type="submit">
+            {isLoading ? <Spinner /> : <p>Sing Up</p>}
+          </PrimaryButton>
           <div className="text-gray-500 font-medium text-sm mt-2">
-            Alredy have an account?{" "}
+            Alredy have an account?
             <Link href="/auth/login">
               <span className="text-blue-600 hover:text-blue-800">Log in</span>
             </Link>
