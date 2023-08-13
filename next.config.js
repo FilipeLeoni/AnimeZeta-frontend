@@ -4,27 +4,17 @@ const nextConfig = {
     API_URL: process.env.API_URL,
     JIKAN_URL: process.env.JIKAN_URL,
   },
+  fastRefresh: true,
     images: {
         domains: ['cdn.myanimelist.net'],
       },
-      async headers() {
-        return [
-            {
-                source: "/",
-                headers: [
-                    { key: "Access-Control-Allow-Credentials", value: "true" },
-                    { key: "Access-Control-Allow-Origin", value: "*" },
-                    { key: "Access-Control-Allow-Methods", value: "GET,DELETE,PATCH,POST,PUT" },
-                    { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
-                ]
-            }
-        ]
-    }
     
 }
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true',
-})
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//     enabled: process.env.ANALYZE === 'true',
+// })
 
-module.exports = withBundleAnalyzer(nextConfig);
+// module.exports = withBundleAnalyzer(nextConfig);
+
+module.exports = nextConfig;

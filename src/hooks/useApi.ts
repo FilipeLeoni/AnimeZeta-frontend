@@ -32,17 +32,42 @@ export const useApi = () => ({
     jikanId: string,
     title: string,
     imageUrl: string,
-    status: string
+    status: string,
+    episodes: number
   ) => {
     const accessToken = Cookies.get("accessToken");
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };
     const res = await api.post(
-      "/mylist",
-      { jikanId, title, imageUrl, status },
+      "mylist",
+      { jikanId, title, imageUrl, status, episodes },
       { headers }
     );
+    return res;
+  },
+
+  UpdateAnime: async (id: string, status?: string, episodes?: number) => {
+    const accessToken = Cookies.get("accessToken");
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    const res = await api.patch(
+      `status/${id}`,
+      { status, episodes },
+      { headers }
+    );
+    return res;
+  },
+
+  RemoveAnime: async (id: string) => {
+    const accessToken = Cookies.get("accessToken");
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    const res = await api.delete(`anime/${id}`, { headers });
     return res;
   },
 

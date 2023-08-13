@@ -1,7 +1,7 @@
 "use client";
 import AnimeCard from "@/components/AnimeCard";
 import { useApi } from "@/hooks/useApi";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Fuse from "fuse.js";
 import { cookies } from "next/headers";
 import { AnimeTypes } from "@/@types/anime";
@@ -9,9 +9,13 @@ import Cookies from "js-cookie";
 import { useQuery } from "react-query";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { useSearchParams } from "next/navigation";
+import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
+import EditAnimeCard from "@/components/AnimeCard/EditAnimeCard";
+import { UpdateAnime } from "@/components/Modal/UpdateAnime";
 
 export default function MyList() {
   // const [animeList, setAnimeList] = useState([]);
+  const [selectedAnime, setSelectedAnime] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [filteredAnimeList, setFilteredAnimeList] = useState<any>([]);
@@ -61,7 +65,10 @@ export default function MyList() {
     return <div>Loading...</div>;
   }
 
-  console.log(filteredAnimeList);
+  const handleOpenModal = (animeData: any) => {
+    setSelectedAnime(animeData);
+    window.my_modal_2.showModal();
+  };
 
   return (
     <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 h-auto">
@@ -91,9 +98,9 @@ export default function MyList() {
         </div>
         <div className="flex gap-4 mb-4">
           <button
-            className={`px-4 py-2 rounded drop-shadow-lg ${
+            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
               filterStatus === "all"
-                ? "bg-yellow-500 text-white"
+                ? "bg-yellow-500 text-white font-medium"
                 : "bg-white text-gray-800"
             }`}
             onClick={() => setFilterStatus("all")}
@@ -101,29 +108,29 @@ export default function MyList() {
             All
           </button>
           <button
-            className={`px-4 py-2 rounded drop-shadow-lg ${
-              filterStatus === "planToWatch"
-                ? "bg-yellow-500 text-white"
+            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
+              filterStatus === "Planning"
+                ? "bg-yellow-500 text-white font-medium"
                 : "bg-white text-gray-800"
             }`}
-            onClick={() => setFilterStatus("planToWatch")}
+            onClick={() => setFilterStatus("Planning")}
           >
-            To Watch
+            Planning
           </button>
           <button
-            className={`px-4 py-2 rounded drop-shadow-lg ${
-              filterStatus === "watching"
-                ? "bg-yellow-500 text-white"
+            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
+              filterStatus === "Watching"
+                ? "bg-yellow-500 text-white font-medium"
                 : "bg-white text-gray-800"
             }`}
-            onClick={() => setFilterStatus("watching")}
+            onClick={() => setFilterStatus("Watching")}
           >
             Watching
           </button>
           <button
-            className={`px-4 py-2 rounded drop-shadow-lg ${
+            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
               filterStatus === "Completed"
-                ? "bg-yellow-500 text-white"
+                ? "bg-yellow-500 text-white font-medium"
                 : "bg-white text-gray-800"
             }`}
             onClick={() => setFilterStatus("Completed")}
@@ -134,9 +141,14 @@ export default function MyList() {
         <div className="flex gap-8 mt-3 flex-wrap justify-center">
           {filteredAnimeList?.map((anime: AnimeTypes) => (
             <div key={anime.mal_id}>
-              <AnimeCard data={anime} />
+              <EditAnimeCard
+                data={anime}
+                onClick={() => handleOpenModal(anime)}
+              />
             </div>
           ))}
+
+          <UpdateAnime animeData={selectedAnime} />
         </div>
       </div>
     </div>

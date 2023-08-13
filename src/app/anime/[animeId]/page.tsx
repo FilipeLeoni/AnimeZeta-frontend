@@ -1,5 +1,5 @@
 "use client";
-import AddToList from "@/components/Buttons/AddToList";
+// import AddToList from "@/components/Buttons/AddToList";
 import SecondaryButton from "@/components/Buttons/SecondaryButton";
 import Spinner from "@/components/SpinnerLoading";
 import { useJikanAPI } from "@/hooks/useJikanApi";
@@ -7,13 +7,15 @@ import { Play } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useQuery } from "react-query";
 import { LazyMotion, m, domAnimation } from "framer-motion";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import AnimeOtherOptions from "@/utils/AnimeOptions/OthersOptions";
 import Link from "next/link";
 import Loading from "./loading";
 import { GenreTypes, ReviewTypes } from "@/@types/anime";
 import dynamic from "next/dynamic";
 import CharacterDescription from "@/components/Character";
+import { AddToList } from "@/components/AddToList";
+import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
 
 const AnimeCard = dynamic(() => import("@/components/AnimeCard"));
 const StaffCard = dynamic(() => import("@/components/StaffCard"));
@@ -53,9 +55,6 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
   return (
     <>
       <div className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
-        <header>
-          <title>AnimeZeta</title>
-        </header>
         <div>
           {isLoadingAnime ? (
             <Loading />
@@ -128,34 +127,27 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
             </ul>
           </div>
           <div className="flex flex-wrap justify-center gap-6 mt-12">
-            {selectedItem === "characters" && (
-              <>
-                {isLoading ? (
-                  <Spinner />
-                ) : (
-                  InfoData &&
-                  InfoData.slice(0, 25).map(
-                    (characterData: any, index: number) => (
-                      <Link
-                        key={characterData.character.mal_id}
-                        href={`/anime/character/${characterData.character.mal_id}`}
-                        prefetch={false}
-                      >
-                        <LazyMotion features={domAnimation}>
-                          <m.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
-                          >
-                            <AnimeCard data={characterData.character} />
-                          </m.div>
-                        </LazyMotion>
-                      </Link>
-                    )
-                  )
-                )}
-              </>
-            )}
+            {selectedItem === "characters" &&
+              InfoData &&
+              InfoData.slice(0, 25).map((characterData: any, index: number) => (
+                <Link
+                  key={characterData.character.mal_id}
+                  href={`/anime/character/${characterData.character.mal_id}`}
+                  prefetch={false}
+                >
+                  <LazyMotion features={domAnimation}>
+                    <m.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                    >
+                      <Suspense fallback={<LoadingAnimeCard />}>
+                        <AnimeCard data={characterData.character} />
+                      </Suspense>
+                    </m.div>
+                  </LazyMotion>
+                </Link>
+              ))}
 
             {selectedItem === "staff" && (
               <>
@@ -228,10 +220,12 @@ export default function AnimePage({ params }: { params: { animeId: number } }) {
                             transition={{ delay: index * 0.1 }}
                           >
                             <Link href={`/anime/${anime.entry.mal_id}`}>
-                              <AnimeCard
-                                key={anime.entry.mal_id}
-                                data={anime.entry}
-                              />
+                              <Suspense fallback={<LoadingAnimeCard />}>
+                                <AnimeCard
+                                  key={anime.entry.mal_id}
+                                  data={anime.entry}
+                                />
+                              </Suspense>
                             </Link>
                           </m.div>
                         </LazyMotion>

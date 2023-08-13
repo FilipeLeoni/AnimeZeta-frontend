@@ -1,5 +1,5 @@
 "use client";
-import React, { ElementType } from "react";
+import React, { ElementType, Suspense } from "react";
 import SubTitle from "../Text/SubTitles";
 import Slider from "react-slick";
 import { CaretCircleLeft, CaretCircleRight } from "@phosphor-icons/react";
@@ -8,13 +8,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { AnimeTypes } from "@/@types/anime";
+import { LoadingAnimeCard } from "../AnimeCard/AnimeCardLoading";
 
 interface Props {
   AnimeData: AnimeTypes[];
-  Title: string;
 }
 
-export default function GenreCarousel({ AnimeData, Title }: Props) {
+export default function GenreCarousel({ AnimeData }: Props) {
   const settings = {
     className: "slider variable-width",
     infinite: false,
@@ -62,19 +62,19 @@ export default function GenreCarousel({ AnimeData, Title }: Props) {
 
   return (
     <div className="w-full col-span-12">
-      <SubTitle>{Title}</SubTitle>
-      <Slider {...settings} className="z-20 h-96">
-        {AnimeData &&
-          AnimeData.map((data: any) => (
-            <Link
-              key={data.mal_id}
-              prefetch={false}
-              href={`/anime/${data.mal_id}`}
-              className="h-full py-10 mx-6"
-            >
+      <Slider {...settings} className="z-20 h-96 w-full">
+        {AnimeData?.map((data: any) => (
+          <Link
+            key={data.mal_id}
+            prefetch={false}
+            href={`/anime/${data.mal_id}`}
+            className="h-full py-10 mx-6"
+          >
+            <Suspense fallback={<LoadingAnimeCard />}>
               <AnimeCard data={data} />
-            </Link>
-          ))}
+            </Suspense>
+          </Link>
+        ))}
       </Slider>
     </div>
   );

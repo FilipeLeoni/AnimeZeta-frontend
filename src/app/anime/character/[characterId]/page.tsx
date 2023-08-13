@@ -5,6 +5,7 @@ import Link from "next/link";
 import AnimeCard from "@/components/AnimeCard";
 
 import CharacterDescription from "@/components/Character";
+import { AddToList } from "@/components/AddToList";
 
 export default async function AnimePage({
   params,
@@ -29,8 +30,8 @@ export default async function AnimePage({
         <div className="w-full flex gap-24 justify-center">
           <div className="drop-shadow-lg">
             <Image
-              src={data.images.webp.image_url}
-              alt={data.name}
+              src={data?.images.webp.image_url}
+              alt={data?.name}
               width={176}
               height={256}
               className="rounded-xl drop-shadow-lg"
@@ -53,6 +54,9 @@ export default async function AnimePage({
             <div className="w-full h-0.5 rounded bg-gray-300" />
 
             <CharacterDescription> {data.about}</CharacterDescription>
+          </div>
+          <div>
+            <AddToList animeData={data} />
           </div>
         </div>
 

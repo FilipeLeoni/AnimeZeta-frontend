@@ -91,7 +91,6 @@ export default function AnimeSearch() {
   );
 
   const handleGenreChange = (selectedOption: TypeOption[]) => {
-    console.log(selectedOption);
     const genreParams = selectedOption
       .map((genre: any) => genre.value)
       .join(",");
@@ -111,13 +110,6 @@ export default function AnimeSearch() {
 
   return (
     <div>
-      <header>
-        <title>Search Animes - AnimeZeta</title>
-      </header>
-      <h1 className="text-center text-gray-600 font-medium text-4xl mb-10">
-        Search
-      </h1>
-
       <div className="flex items-center gap-8 justify-center">
         <div className="shadow-lg">
           <Suspense fallback={<SearchBarFallback />}>
@@ -150,25 +142,21 @@ export default function AnimeSearch() {
         </div>
       </div>
       <div className="flex flex-wrap gap-6 justify-center mt-16">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          Results?.map((results: AnimeTypes) => (
-            <Link
-              key={results.mal_id}
-              href={`/anime/${results.mal_id}`}
-              prefetch={false}
+        {Results?.map((results: AnimeTypes) => (
+          <Link
+            key={results.mal_id}
+            href={`/anime/${results.mal_id}`}
+            prefetch={false}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7 }}
-              >
-                <AnimeCard data={results} />
-              </motion.div>
-            </Link>
-          ))
-        )}
+              <AnimeCard data={results} />
+            </motion.div>
+          </Link>
+        ))}
       </div>
     </div>
   );

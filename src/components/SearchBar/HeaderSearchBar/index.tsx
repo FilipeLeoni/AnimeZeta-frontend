@@ -63,8 +63,6 @@ export default function HeaderSearchBar() {
     }
   };
 
-  console.log(suggestions);
-
   const clearText = () => {
     setQuery("");
     setDebouncedQuery("");

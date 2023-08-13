@@ -1,27 +1,15 @@
 import { toast } from "react-toastify";
 import { useApi } from "./useApi";
 
-const useAddToList = () => {
+const useRemoveAnime = () => {
   const api = useApi();
 
-  const addToMyList = async (
-    jikanId: string,
-    title: string,
-    imageUrl: string,
-    status: string,
-    episodes: number
-  ) => {
+  const RemoveAnimeFromList = async (id: string) => {
     try {
-      const response = await api.AddAnimeToList(
-        jikanId,
-        title,
-        imageUrl,
-        status,
-        episodes
-      );
+      const response = await api.RemoveAnime(id);
 
       if (response) {
-        toast.success("Anime Added to list successfully", {
+        toast.success("Anime Removed from list successfully", {
           position: "top-right",
           theme: "light",
         });
@@ -42,7 +30,7 @@ const useAddToList = () => {
     }
   };
 
-  return { addToMyList };
+  return { RemoveAnimeFromList };
 };
 
-export default useAddToList;
+export default useRemoveAnime;

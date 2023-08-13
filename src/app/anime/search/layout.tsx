@@ -1,16 +1,17 @@
-"use client";
-import { QueryClient, QueryClientProvider } from "react-query";
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const queryClient = new QueryClient();
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <div>
+      <header>
+        <title>Search Animes - AnimeZeta</title>
+      </header>
+      <h1 className="text-center text-gray-600 font-medium text-4xl mb-10">
+        Search
+      </h1>
       <div>{children}</div>
-    </QueryClientProvider>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import AnimeCard from "@/components/AnimeCard";
 import { useJikanAPI } from "@/hooks/useJikanApi";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Suspense, startTransition, useEffect, useMemo } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
 import CategoriesOptions, {
@@ -11,6 +11,7 @@ import Spinner from "@/components/SpinnerLoading";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimeTypes } from "@/@types/anime";
+import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
 
 export default function GenrePage({ params }: { params: { genreId: number } }) {
   const api = useJikanAPI();
@@ -27,7 +28,7 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["genreAnime"],
+      queryKey: ["genreAnime", genreId],
       queryFn: ({ pageParam = 1 }) => fetchAnimesByGenre(genreId, pageParam),
       keepPreviousData: false,
       getNextPageParam: (lastPage, allPages) => {
@@ -42,9 +43,12 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
   }, [data]);
 
   const { ref, inView } = useInView();
+
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+      startTransition(() => {
+        fetchNextPage();
+      });
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
@@ -57,30 +61,27 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
         {genre?.name}
       </h1>
 
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <div className="flex flex-wrap gap-5 justify-center">
-          {genreAnime &&
-            genreAnime.map((anime: AnimeTypes) => (
-              <Link
-                key={anime.mal_id}
-                href={`/anime/${anime.mal_id}`}
-                prefetch={false}
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.7 }}
-                >
-                  <AnimeCard data={anime} />
-                </motion.div>
-              </Link>
-            ))}
+      <div className="flex flex-wrap gap-5 justify-center">
+        {genreAnime?.map((anime: AnimeTypes) => (
+          <Link
+            key={anime.mal_id}
+            href={`/anime/${anime.mal_id}`}
+            prefetch={false}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+            >
+              <Suspense fallback={<LoadingAnimeCard />}>
+                <AnimeCard data={anime} />
+              </Suspense>
+            </motion.div>
+          </Link>
+        ))}
 
-          <div ref={ref} />
-        </div>
-      )}
+        <div ref={ref} />
+      </div>
     </main>
   );
 }
