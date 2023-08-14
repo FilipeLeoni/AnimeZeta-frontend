@@ -42,7 +42,8 @@ export default function LoginForm() {
           position: "top-right",
           theme: "light",
         });
-        auth?.handleLogin(response.data.accessToken);
+
+        auth?.handleLogin(response.data);
       }
     } catch (error: any) {
       if (error.response) {

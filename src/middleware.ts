@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export default async function Middleware(request: NextRequest) {
   const token = request.cookies.get("accessToken")?.value;
-
   const loginUrl = new URL("/auth/login", request.url);
 
   if (!token) {
@@ -14,5 +13,5 @@ export default async function Middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mylist"],
+  matcher: ["/mylist", "/profile"],
 };

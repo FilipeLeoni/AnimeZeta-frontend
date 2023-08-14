@@ -7,7 +7,7 @@ interface SubTitleProps {
 
 export default function SubTitle({ children }: SubTitleProps) {
   return (
-    <h2 className="text-grayDark text-xl w-full flex items-center gap-2 font-medium">
+    <h2 className="text-grayDark text-xl w-full flex gap-2 font-medium">
       {children}
     </h2>
   );

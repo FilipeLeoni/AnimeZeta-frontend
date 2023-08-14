@@ -18,6 +18,7 @@ export default async function AnimeCard({ data }: any) {
             fill
             sizes="100%"
             style={{ objectFit: "cover" }}
+            loading="lazy"
           />
         </div>
         <div className="font-medium text-sm">{title}</div>

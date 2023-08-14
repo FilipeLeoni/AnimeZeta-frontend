@@ -27,9 +27,8 @@ const useAddToList = () => {
         });
       }
     } catch (error: any) {
-      console.log(error);
       if (error.response) {
-        toast.error(error.response.data.error, {
+        toast.error(error.response.data.message, {
           position: "top-right",
           theme: "light",
         });

@@ -1,8 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 const api = axios.create({
   baseURL: process.env.API_URL,
+  withCredentials: true,
 });
 
 export default api;

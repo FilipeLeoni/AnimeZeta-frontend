@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export default function SuperCarousel({ data }: any) {
+export default async function SuperCarousel({ data }: any) {
   const settings: any = {
     dots: true,
     fade: true,
@@ -29,7 +29,7 @@ export default function SuperCarousel({ data }: any) {
   };
 
   return (
-    <div className="w-full col-span-12 mb-20 drop-shadow-xl rounded-lg">
+    <div className="w-full mb-20 drop-shadow-xl rounded-lg">
       <Slider {...settings}>
         {data &&
           data.slice(0, 6).map((anime: any) => (

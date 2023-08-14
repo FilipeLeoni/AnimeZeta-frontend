@@ -6,13 +6,13 @@ import React, { Suspense, useState, useCallback, useEffect } from "react";
 import { useQuery } from "react-query";
 import { motion } from "framer-motion";
 import TypeOptions, { TypeOption } from "@/utils/FormatOptions/TypeOptions";
-import Spinner from "@/components/SpinnerLoading";
 import Link from "next/link";
 import { AnimeTypes, GenreTypes } from "@/@types/anime";
 import dynamic from "next/dynamic";
+import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
+import AnimeCard from "@/components/AnimeCard";
 
 const SelectCustom = dynamic(() => import("@/components/Select"));
-const AnimeCard = dynamic(() => import("@/components/AnimeCard"));
 
 export default function AnimeSearch() {
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -28,10 +28,6 @@ export default function AnimeSearch() {
   const searchType = searchParams ? searchParams.get("type") : null;
 
   const api = useJikanAPI();
-
-  function SearchBarFallback() {
-    return <>{searchQuery}</>;
-  }
 
   const { data: Genre, isSuccess } = useQuery("genre", async () => {
     const res = await api.getGenres();
@@ -112,9 +108,7 @@ export default function AnimeSearch() {
     <div>
       <div className="flex items-center gap-8 justify-center">
         <div className="shadow-lg">
-          <Suspense fallback={<SearchBarFallback />}>
-            <SearchBar />
-          </Suspense>
+          <SearchBar />
         </div>
 
         <div className="w-64 drop-shadow-lg z-10">
@@ -146,14 +140,16 @@ export default function AnimeSearch() {
           <Link
             key={results.mal_id}
             href={`/anime/${results.mal_id}`}
-            prefetch={false}
+            prefetch={true}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
             >
-              <AnimeCard data={results} />
+              <Suspense fallback={<LoadingAnimeCard />}>
+                <AnimeCard data={results} />
+              </Suspense>
             </motion.div>
           </Link>
         ))}

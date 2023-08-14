@@ -1,11 +1,10 @@
-import useAddToList from "@/hooks/useAddToList";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ListForm } from "../ListForm";
-import { useApi } from "@/hooks/useApi";
 import useUpdateAnime from "@/hooks/useUpdateAnime";
 import useRemoveAnime from "@/hooks/useRemoveAnime";
+import { useMutation, useQueryClient } from "react-query";
 
 declare global {
   interface Window {
@@ -14,22 +13,45 @@ declare global {
 }
 
 export const UpdateAnime = ({ animeData }: any) => {
-  const { control, handleSubmit, register, setValue } = useForm();
+  const { control, handleSubmit, setValue } = useForm();
   const [episodeProgress, setEpisodeProgress] = useState(0);
 
   const { RemoveAnimeFromList } = useRemoveAnime();
   const { updateAnime } = useUpdateAnime();
 
+  const queryClient = useQueryClient();
+
+  const removeAnimeMutation = useMutation(RemoveAnimeFromList, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("animeList");
+    },
+  });
+
+  const updateAnimeMutation = useMutation(
+    (params: { id: string; status: string; episodes: number }) =>
+      updateAnime(params.id, params.status, params.episodes),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("animeList");
+      },
+    }
+  );
+
   useEffect(() => {
     setValue("status", { value: animeData?.status, label: animeData?.status });
     setEpisodeProgress(animeData?.episodes);
     setValue("episodes", episodeProgress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animeData, setValue]);
 
   const onSubmit = async (data: any) => {
     const { status, episodes } = data;
     try {
-      await updateAnime(animeData?.id, status.value, episodes);
+      await updateAnimeMutation.mutateAsync({
+        id: animeData?.id,
+        status: status.value,
+        episodes,
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -39,7 +61,7 @@ export const UpdateAnime = ({ animeData }: any) => {
 
   const handleRemove = async () => {
     try {
-      await RemoveAnimeFromList(animeData.id);
+      await removeAnimeMutation.mutateAsync(animeData.id);
     } catch (error) {
       console.log(error);
     } finally {
@@ -80,12 +102,7 @@ export const UpdateAnime = ({ animeData }: any) => {
               <h3 className="font-semibold text-2xl text-white mb-7">
                 {animeData?.title}
               </h3>
-              <ListForm
-                episodeProgress={episodeProgress}
-                setEpisodeProgress={setEpisodeProgress}
-                control={control}
-                register={register}
-              />
+              <ListForm control={control} />
             </div>
           </div>
         </div>

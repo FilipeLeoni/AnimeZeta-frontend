@@ -1,34 +1,37 @@
 "use client";
-import AnimeCard from "@/components/AnimeCard";
-import { useApi } from "@/hooks/useApi";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Fuse from "fuse.js";
-import { cookies } from "next/headers";
+import { useApi } from "@/hooks/useApi";
 import { AnimeTypes } from "@/@types/anime";
-import Cookies from "js-cookie";
 import { useQuery } from "react-query";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
-import { useSearchParams } from "next/navigation";
-import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
+import { useRouter, useSearchParams } from "next/navigation";
 import EditAnimeCard from "@/components/AnimeCard/EditAnimeCard";
 import { UpdateAnime } from "@/components/Modal/UpdateAnime";
+import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
 
 export default function MyList() {
   // const [animeList, setAnimeList] = useState([]);
-  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [selectedAnime, setSelectedAnime] = useState<AnimeTypes | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [filteredAnimeList, setFilteredAnimeList] = useState<any>([]);
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [filteredAnimeList, setFilteredAnimeList] = useState<
+    AnimeTypes[] | null
+  >([]);
 
   const searchParams: any = useSearchParams();
-  const status = searchParams ? searchParams.get("status") : null;
+  const status = searchParams.get("status");
   const api = useApi();
+  const router = useRouter();
 
-  const { data: animeList, isLoading } = useQuery("animeList", getAnimeList);
+  useEffect(() => {
+    setFilterStatus(status);
+  }, [status]);
+
+  const { data: animeList } = useQuery("animeList", getAnimeList);
 
   async function getAnimeList() {
-    const accessToken: any = Cookies.get("accessToken");
-    const res: any = await api.getAnimeList(accessToken);
+    const res: any = await api.getAnimeList();
     return res.animeList;
   }
 
@@ -41,8 +44,8 @@ export default function MyList() {
     });
 
     let filteredList = animeList?.anime;
-    if (filterStatus !== "all") {
-      filteredList = animeList.anime.filter(
+    if (filterStatus !== "All") {
+      filteredList = animeList?.anime.filter(
         (anime: any) => anime.status === filterStatus
       );
     }
@@ -55,19 +58,20 @@ export default function MyList() {
     setFilteredAnimeList(filteredList);
   }
 
-  // Atualiza a lista de animes filtrada com base no estado do filtro e da busca
   useEffect(() => {
-    // setFilterStatus(status || "all");
     filterAnimeList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animeList, filterStatus, searchTerm]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  const handleOpenModal = (animeData: any) => {
+  const handleOpenModal = (animeData: AnimeTypes) => {
     setSelectedAnime(animeData);
     window.my_modal_2.showModal();
+  };
+
+  const handleSelectOption = (option: string) => {
+    const pathname = `/mylist?status=${option}`;
+    router.push(pathname);
+    setFilterStatus(option);
   };
 
   return (
@@ -97,46 +101,19 @@ export default function MyList() {
           </div>
         </div>
         <div className="flex gap-4 mb-4">
-          <button
-            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
-              filterStatus === "all"
-                ? "bg-yellow-500 text-white font-medium"
-                : "bg-white text-gray-800"
-            }`}
-            onClick={() => setFilterStatus("all")}
-          >
-            All
-          </button>
-          <button
-            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
-              filterStatus === "Planning"
-                ? "bg-yellow-500 text-white font-medium"
-                : "bg-white text-gray-800"
-            }`}
-            onClick={() => setFilterStatus("Planning")}
-          >
-            Planning
-          </button>
-          <button
-            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
-              filterStatus === "Watching"
-                ? "bg-yellow-500 text-white font-medium"
-                : "bg-white text-gray-800"
-            }`}
-            onClick={() => setFilterStatus("Watching")}
-          >
-            Watching
-          </button>
-          <button
-            className={`px-4 py-2 rounded-lg drop-shadow-lg ${
-              filterStatus === "Completed"
-                ? "bg-yellow-500 text-white font-medium"
-                : "bg-white text-gray-800"
-            }`}
-            onClick={() => setFilterStatus("Completed")}
-          >
-            Completed
-          </button>
+          {MyListOptions.map((option) => (
+            <button
+              key={option.id}
+              className={`px-4 py-2 rounded-lg drop-shadow-lg ${
+                filterStatus === option.name
+                  ? "bg-yellow-500 text-white font-medium"
+                  : "bg-white text-gray-800"
+              }`}
+              onClick={() => handleSelectOption(option.name)}
+            >
+              {option.name}
+            </button>
+          ))}
         </div>
         <div className="flex gap-8 mt-3 flex-wrap justify-center">
           {filteredAnimeList?.map((anime: AnimeTypes) => (

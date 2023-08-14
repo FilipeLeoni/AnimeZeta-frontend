@@ -1,21 +1,14 @@
-import React, { useId, useState } from "react";
+import React, { useId } from "react";
 import { Control, Controller, useForm } from "react-hook-form";
-import SelectCustom from "../Select";
 import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
+import dynamic from "next/dynamic";
+const SelectCustom = dynamic(() => import("../Select"));
 
 interface FormFieldsProps {
-  episodeProgress: number | undefined;
-  setEpisodeProgress: any;
   control: Control;
-  register: any;
 }
 
-export const ListForm = ({
-  episodeProgress,
-  setEpisodeProgress,
-  control,
-  register,
-}: FormFieldsProps) => {
+export const ListForm = ({ control }: FormFieldsProps) => {
   const inputId = useId();
   const selectId = useId();
 

@@ -1,9 +1,7 @@
-import { useAuth } from "@/context/AuthContext";
-import { fetchApi } from "@/services/fetch";
+import { fetchApi, fetchWrapper } from "@/services/fetch";
 
 import api from "@/services/api";
-import Cookie from "js-cookie";
-import { cookies } from "next/headers";
+
 import Cookies from "js-cookie";
 
 export const useApi = () => ({
@@ -15,6 +13,17 @@ export const useApi = () => ({
     });
     return res;
   },
+
+  refreshToken: async () => {
+    try {
+      const res: any = await api.patch("/token/refresh");
+      return res;
+    } catch (error) {
+      console.error("Erro ao renovar o token:", error);
+      throw error;
+    }
+  },
+
   login: async (email: string, password: string) => {
     const res = await api.post("/sessions", {
       email,
@@ -23,9 +32,11 @@ export const useApi = () => ({
     return res;
   },
 
-  getAnimeList: async (accessToken: string) => {
+  getAnimeList: async () => {
+    const accessToken = Cookies.get("accessToken");
     const headers = { Authorization: `Bearer ${accessToken}` };
-    return fetchApi("mylist", { headers, method: "GET" });
+    const res: any = await api.get("/mylist", { headers });
+    return res.data;
   },
 
   AddAnimeToList: async (

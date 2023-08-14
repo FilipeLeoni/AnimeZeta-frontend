@@ -4,7 +4,11 @@ import { useApi } from "./useApi";
 const useUpdateAnime = () => {
   const api = useApi();
 
-  const updateAnime = async (id: string, status: string, episodes: number) => {
+  const updateAnime = async (
+    id: string,
+    status: string,
+    episodes: number
+  ): Promise<void> => {
     try {
       const response = await api.UpdateAnime(id, status, episodes);
 
