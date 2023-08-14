@@ -6,13 +6,13 @@ import React, { Suspense, useState, useCallback, useEffect } from "react";
 import { useQuery } from "react-query";
 import { motion } from "framer-motion";
 import TypeOptions, { TypeOption } from "@/utils/FormatOptions/TypeOptions";
-import Spinner from "@/components/SpinnerLoading";
 import Link from "next/link";
 import { AnimeTypes, GenreTypes } from "@/@types/anime";
 import dynamic from "next/dynamic";
+import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
+import AnimeCard from "@/components/AnimeCard";
 
 const SelectCustom = dynamic(() => import("@/components/Select"));
-const AnimeCard = dynamic(() => import("@/components/AnimeCard"));
 
 export default function AnimeSearch() {
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -28,10 +28,6 @@ export default function AnimeSearch() {
   const searchType = searchParams ? searchParams.get("type") : null;
 
   const api = useJikanAPI();
-
-  function SearchBarFallback() {
-    return <>{searchQuery}</>;
-  }
 
   const { data: Genre, isSuccess } = useQuery("genre", async () => {
     const res = await api.getGenres();
@@ -91,7 +87,6 @@ export default function AnimeSearch() {
   );
 
   const handleGenreChange = (selectedOption: TypeOption[]) => {
-    console.log(selectedOption);
     const genreParams = selectedOption
       .map((genre: any) => genre.value)
       .join(",");
@@ -111,18 +106,9 @@ export default function AnimeSearch() {
 
   return (
     <div>
-      <header>
-        <title>Search Animes - AnimeZeta</title>
-      </header>
-      <h1 className="text-center text-gray-600 font-medium text-4xl mb-10">
-        Search
-      </h1>
-
       <div className="flex items-center gap-8 justify-center">
         <div className="shadow-lg">
-          <Suspense fallback={<SearchBarFallback />}>
-            <SearchBar />
-          </Suspense>
+          <SearchBar />
         </div>
 
         <div className="w-64 drop-shadow-lg z-10">
@@ -150,25 +136,23 @@ export default function AnimeSearch() {
         </div>
       </div>
       <div className="flex flex-wrap gap-6 justify-center mt-16">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          Results?.map((results: AnimeTypes) => (
-            <Link
-              key={results.mal_id}
-              href={`/anime/${results.mal_id}`}
-              prefetch={false}
+        {Results?.map((results: AnimeTypes) => (
+          <Link
+            key={results.mal_id}
+            href={`/anime/${results.mal_id}`}
+            prefetch={true}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7 }}
-              >
+              <Suspense fallback={<LoadingAnimeCard />}>
                 <AnimeCard data={results} />
-              </motion.div>
-            </Link>
-          ))
-        )}
+              </Suspense>
+            </motion.div>
+          </Link>
+        ))}
       </div>
     </div>
   );

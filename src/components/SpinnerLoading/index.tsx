@@ -1,11 +1,15 @@
 import React from "react";
 
-export default function Spinner() {
+interface Props {
+  color?: string;
+}
+
+export default function Spinner({ color = "primary" }: Props) {
   return (
-    <div role="status" className="mt-5">
+    <div role="status">
       <svg
         aria-hidden="true"
-        className="w-8 h-8 mr-2 animate-spin fill-primary"
+        className={`w-8 h-8 mr-2 animate-spin fill-${color}`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

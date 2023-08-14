@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 import Link from "next/link";
 import PrimaryButton from "../Buttons/PrimaryButton";
+import Spinner from "../SpinnerLoading";
 
 interface FormData {
   email: string;
@@ -26,12 +27,14 @@ export default function LoginForm() {
     criteriaMode: "all",
     resolver: zodResolver(LoginSchema),
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const auth = useAuth();
   const api = useApi();
 
   const handleSubmitForm: SubmitHandler<FormData> = async (data) => {
     try {
+      setIsLoading(true);
       const response = await api.login(data.email, data.password);
 
       if (response) {
@@ -39,7 +42,8 @@ export default function LoginForm() {
           position: "top-right",
           theme: "light",
         });
-        auth?.handleLogin(response.data.accessToken);
+
+        auth?.handleLogin(response.data);
       }
     } catch (error: any) {
       if (error.response) {
@@ -53,6 +57,8 @@ export default function LoginForm() {
           theme: "light",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -98,7 +104,9 @@ export default function LoginForm() {
           </div>
         </div>
         <div className="mt-10 w-full">
-          <PrimaryButton type="submit">Login</PrimaryButton>
+          <PrimaryButton type="submit">
+            {isLoading ? <Spinner /> : <p>Login</p>}
+          </PrimaryButton>
           <div className="text-gray-500 font-medium text-sm text-center mt-2">
             New here?{" "}
             <Link href="/auth/register">

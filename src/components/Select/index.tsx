@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import clsx from "clsx";
 import Select from "react-select";
 
@@ -7,6 +7,8 @@ import makeAnimated from "react-select/animated";
 
 interface Props {
   options: any;
+  id?: string;
+  isSearchable?: boolean;
   placeholder: string;
   onChange: any;
   value: any;
@@ -16,7 +18,9 @@ interface Props {
 export default function SelectCustom({
   options,
   placeholder,
+  id,
   onChange,
+  isSearchable = true,
   value,
   isMulti = false,
 }: Props) {
@@ -31,6 +35,7 @@ export default function SelectCustom({
       </div>
     );
   };
+  const inputId = useId();
 
   const animatedComponents: any = makeAnimated();
 
@@ -66,11 +71,13 @@ export default function SelectCustom({
   return (
     <Select
       isMulti={isMulti}
-      name="Genres"
+      name="select"
       options={options}
       onChange={onChange}
       value={value}
+      id={id}
       isClearable
+      isSearchable={isSearchable}
       placeholder={placeholder}
       components={{ ...animatedComponents, DropdownIndicator }}
       hideSelectedOptions={false}

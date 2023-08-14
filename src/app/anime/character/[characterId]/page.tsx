@@ -5,6 +5,8 @@ import Link from "next/link";
 import AnimeCard from "@/components/AnimeCard";
 
 import CharacterDescription from "@/components/Character";
+import { Suspense } from "react";
+import { LoadingAnimeCard } from "@/components/AnimeCard/AnimeCardLoading";
 
 export default async function AnimePage({
   params,
@@ -13,12 +15,7 @@ export default async function AnimePage({
 }) {
   const api = useJikanAPI();
   const characterId = params.characterId;
-  const data = await getCharacterById(characterId);
-
-  async function getCharacterById(characterId: number) {
-    const res = await api.getCharacterById(characterId);
-    return res.data;
-  }
+  const data = await api.getCharacterById(characterId);
 
   return (
     <div>
@@ -29,8 +26,8 @@ export default async function AnimePage({
         <div className="w-full flex gap-24 justify-center">
           <div className="drop-shadow-lg">
             <Image
-              src={data.images.webp.image_url}
-              alt={data.name}
+              src={data?.images?.webp.image_url}
+              alt={data?.name}
               width={176}
               height={256}
               className="rounded-xl drop-shadow-lg"
@@ -52,7 +49,7 @@ export default async function AnimePage({
             </div>
             <div className="w-full h-0.5 rounded bg-gray-300" />
 
-            <CharacterDescription> {data.about}</CharacterDescription>
+            <CharacterDescription>{data.about}</CharacterDescription>
           </div>
         </div>
 
@@ -69,9 +66,10 @@ export default async function AnimePage({
               <Link
                 key={appearances.anime.mal_id}
                 href={`/anime/${appearances.anime.mal_id}`}
-                prefetch={false}
               >
-                <AnimeCard data={appearances.anime} />
+                <Suspense fallback={<LoadingAnimeCard />}>
+                  <AnimeCard data={appearances.anime} />
+                </Suspense>
               </Link>
             ))}
           </div>

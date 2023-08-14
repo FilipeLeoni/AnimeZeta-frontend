@@ -754,6 +754,19 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/query-core@5.0.0-beta.15":
+  version "5.0.0-beta.15"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.0.0-beta.15.tgz"
+  integrity sha512-NaL5qp1K5IhnDD5wEegYpXB0OMPsb+QZNcGR5hWQaDS+30Ga8+zKpfjDn7wHlCKPO2mHCTRqUbQnLWIlt5FKoQ==
+
+"@tanstack/react-query@^5.0.0-beta.15":
+  version "5.0.0-beta.15"
+  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.0.0-beta.15.tgz"
+  integrity sha512-kD6ZQ/5jf+0FmooIkeUMxMVaa2QLaZFiH0iosFC5YC8cGu2iquUWVV4T/2nyMOwa6nDc1RKRQE0QHDSbHnsD2A==
+  dependencies:
+    "@tanstack/query-core" "5.0.0-beta.15"
+    client-only "0.0.1"
+
 "@trendyol-js/react-carousel@^3.0.2":
   version "3.0.2"
   resolved "https://registry.npmjs.org/@trendyol-js/react-carousel/-/react-carousel-3.0.2.tgz"

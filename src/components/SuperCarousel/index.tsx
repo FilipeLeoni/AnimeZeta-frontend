@@ -3,12 +3,18 @@ import Image from "next/image";
 import React from "react";
 import Slider from "react-slick";
 import Badges from "../Badges";
-import AddToList from "../Buttons/AddToList";
 import { inter } from "@/app/fonts";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { AddToList } from "../AddToList";
 
-export default function SuperCarousel({ data }: any) {
+declare global {
+  interface Window {
+    my_modal_1: HTMLDialogElement;
+  }
+}
+
+export default async function SuperCarousel({ data }: any) {
   const settings: any = {
     dots: true,
     fade: true,
@@ -23,7 +29,7 @@ export default function SuperCarousel({ data }: any) {
   };
 
   return (
-    <div className="w-full col-span-12 mb-20 drop-shadow-xl rounded-lg">
+    <div className="w-full mb-20 drop-shadow-xl rounded-lg">
       <Slider {...settings}>
         {data &&
           data.slice(0, 6).map((anime: any) => (
@@ -46,7 +52,7 @@ export default function SuperCarousel({ data }: any) {
                       <Badges key={genre.mal_id}>{genre.name}</Badges>
                     ))}
                   </div>
-                  <div className="absolute bottom-8 md:bottom-12">
+                  <div className="absolute bottom-8 md:bottom-12 z-20">
                     <AddToList animeData={anime} />
                   </div>
                 </div>

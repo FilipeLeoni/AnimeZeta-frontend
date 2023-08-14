@@ -1,34 +1,27 @@
 import { toast } from "react-toastify";
 import { useApi } from "./useApi";
 
-const useAddToList = () => {
+const useUpdateAnime = () => {
   const api = useApi();
 
-  const addToMyList = async (
-    jikanId: string,
-    title: string,
-    imageUrl: string,
+  const updateAnime = async (
+    id: string,
     status: string,
     episodes: number
-  ) => {
+  ): Promise<void> => {
     try {
-      const response = await api.AddAnimeToList(
-        jikanId,
-        title,
-        imageUrl,
-        status,
-        episodes
-      );
+      const response = await api.UpdateAnime(id, status, episodes);
 
       if (response) {
-        toast.success("Anime Added to list successfully", {
+        toast.success("Anime updated successfully", {
           position: "top-right",
           theme: "light",
         });
       }
     } catch (error: any) {
+      console.log(error);
       if (error.response) {
-        toast.error(error.response.data.message, {
+        toast.error(error.response.data.error, {
           position: "top-right",
           theme: "light",
         });
@@ -41,7 +34,7 @@ const useAddToList = () => {
     }
   };
 
-  return { addToMyList };
+  return { updateAnime };
 };
 
-export default useAddToList;
+export default useUpdateAnime;

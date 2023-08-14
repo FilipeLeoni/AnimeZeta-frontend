@@ -3,18 +3,22 @@ import { fetchWrapper } from "@/services/fetch";
 
 export const useJikanAPI = () => ({
   getTopAnimes: async () => {
-    return fetchWrapper("top/anime?filter=bypopularity", {
+    return fetchWrapper("top/anime?filter=favorite", {
       method: "GET",
     });
   },
 
   getAnimesByGenre: async (genreId: number, page: number = 1) => {
-    return fetchWrapper(
-      `anime?genres=${genreId}&page=${page}&order_by=popularity`,
-      {
-        method: "GET",
-      }
+    const res = await jikanAPI.get(
+      `anime?genres=${genreId}&page=${page}&order_by=popularity`
     );
+    return res.data;
+    // return fetchWrapper(
+    //   `anime?genres=${genreId}&page=${page}&order_by=popularity`,
+    //   {
+    //     method: "GET",
+    //   }
+    // );
   },
 
   getCharacterById: async (characterId: number) => {
@@ -30,8 +34,11 @@ export const useJikanAPI = () => ({
   },
 
   getAnimeById: async (id: number) => {
-    const res = await jikanAPI.get(`/anime/${id}/full`);
-    return res.data;
+    // const res = await jikanAPI.get(`/anime/${id}/full`);
+    // return res.data;
+    return fetchWrapper(`anime/${id}/full`, {
+      method: "GET",
+    });
   },
 
   searchAnime: async (search: string, genres: any = "", type: any = null) => {
