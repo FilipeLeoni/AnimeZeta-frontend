@@ -34,11 +34,11 @@ export const useJikanAPI = () => ({
   },
 
   getAnimeById: async (id: number) => {
-    // const res = await jikanAPI.get(`/anime/${id}/full`);
-    // return res.data;
-    return fetchWrapper(`anime/${id}/full`, {
-      method: "GET",
-    });
+    const res = await jikanAPI.get(`/anime/${id}/full`);
+    return res.data;
+    // return fetchWrapper(`anime/${id}/full`, {
+    //   method: "GET",
+    // });
   },
 
   searchAnime: async (search: string, genres: any = "", type: any = null) => {
