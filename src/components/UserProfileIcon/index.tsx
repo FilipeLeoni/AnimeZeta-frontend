@@ -4,9 +4,8 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import User from "@/assets/images/User.svg";
 import { useAuth } from "@/context/AuthContext";
+import { FaCircleUser } from "react-icons/fa6";
 
 export default function UserProfileIcon() {
   const { isAuthenticated, logout } = useAuth();
@@ -20,7 +19,10 @@ export default function UserProfileIcon() {
       <PopoverPrimitive.Root>
         <PopoverPrimitive.Trigger asChild>
           <button className="flex justify-center items-center">
-            <Image src={User} alt="" width={46} height={46} />
+            <FaCircleUser
+              size={40}
+              className=" bg-grayDark/90 rounded-full p-0.5 text-[#F4D04D]"
+            />
           </button>
         </PopoverPrimitive.Trigger>
         <PopoverPrimitive.Content
@@ -41,7 +43,7 @@ export default function UserProfileIcon() {
           >
             {isAuthenticated ? (
               <Link href={"/profile"}>
-                <div className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg ">
+                <div className="text-md font-medium text-gray-200 hover:bg-neutral-800/90 hover:text-primary p-4 rounded-lg ">
                   <h3>Profile</h3>
                   <p className="text-gray-400 text-sm">
                     See or edit your profile
@@ -50,7 +52,7 @@ export default function UserProfileIcon() {
               </Link>
             ) : (
               <Link href={"/auth/register"}>
-                <div className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg ">
+                <div className="text-md font-medium text-gray-200 hover:bg-neutral-800/90 hover:text-primary p-4 rounded-lg ">
                   <h3>Create an account</h3>
                   <p className="text-gray-400 text-sm">Join today for free</p>
                 </div>
@@ -61,7 +63,7 @@ export default function UserProfileIcon() {
 
             {isAuthenticated ? (
               <div
-                className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg cursor-pointer"
+                className="text-md font-medium text-gray-200 hover:bg-neutral-800/90 hover:text-primary p-4 rounded-lg cursor-pointer"
                 onClick={handleLogout}
               >
                 <h3>Logout</h3>
@@ -69,7 +71,7 @@ export default function UserProfileIcon() {
               </div>
             ) : (
               <Link href={"/auth/login"}>
-                <div className="text-md font-medium text-gray-200 hover:bg-neutral-900 hover:text-primary p-4 rounded-lg">
+                <div className="text-md font-medium text-gray-200 hover:bg-neutral-800/90 hover:text-primary p-4 rounded-lg">
                   <h3>Log In</h3>
                   <p className="text-gray-400 text-sm">Alredy joined us?</p>
                 </div>

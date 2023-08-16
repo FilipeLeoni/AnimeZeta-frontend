@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="footer p-10 px-16 bg-gray-300 text-gray-800">
+    <footer className="footer p-10 px-16 bg-gray-300 text-blue-950 ">
       <div>
         <Image src={Logo} alt="AnimeZeta Logo" width={60} />
         <div className="mt-2">

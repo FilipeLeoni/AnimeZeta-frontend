@@ -44,7 +44,7 @@ export const useApi = () => ({
     title: string,
     imageUrl: string,
     status: string,
-    episodes: number
+    episodes?: number
   ) => {
     const accessToken = Cookies.get("accessToken");
     const headers = {

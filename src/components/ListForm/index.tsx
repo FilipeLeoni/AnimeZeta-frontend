@@ -22,7 +22,6 @@ export const ListForm = ({ control }: FormFieldsProps) => {
           <Controller
             name="status"
             control={control}
-            defaultValue={""}
             render={({ field }) => (
               <div className="drop-shadow-xl z-50">
                 <SelectCustom
@@ -31,7 +30,9 @@ export const ListForm = ({ control }: FormFieldsProps) => {
                     label: option.name,
                   }))}
                   id={selectId}
+                  hasDefault={true}
                   placeholder="Status"
+                  isClearable={false}
                   isSearchable={false}
                   value={field.value}
                   onChange={field.onChange}

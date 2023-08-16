@@ -1,3 +1,5 @@
+"use client";
+
 import React, { InputHTMLAttributes, forwardRef, useId, useState } from "react";
 import ErrorMessage from "../Text/ErrorMessage";
 

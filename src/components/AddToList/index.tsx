@@ -22,20 +22,21 @@ export const AddToList = ({ animeData }: any) => {
 
   const onSubmit = async (data: any) => {
     const { status, episodes } = data;
-    const jikanId = animeData?.mal_id;
-    const episodesAsNumber = parseInt(episodes);
+    console.log(data);
+    // const jikanId = animeData?.mal_id;
+    // const episodesAsNumber = parseInt(episodes);
 
-    try {
-      await addToMyList(
-        jikanId.toString(),
-        animeData?.title,
-        animeData?.images.webp.large_image_url,
-        status.value,
-        episodesAsNumber
-      );
-    } finally {
-      dialogRef.current.close();
-    }
+    // try {
+    //   await addToMyList(
+    //     jikanId.toString(),
+    //     animeData?.title,
+    //     animeData?.images.webp.large_image_url,
+    //     status.value,
+    //     episodesAsNumber
+    //   );
+    // } finally {
+    //   dialogRef.current.close();
+    // }
   };
 
   const dialogRef: any = useRef();
