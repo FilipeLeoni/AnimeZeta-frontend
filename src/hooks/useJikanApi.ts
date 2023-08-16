@@ -22,9 +22,11 @@ export const useJikanAPI = () => ({
   },
 
   getCharacterById: async (characterId: number) => {
-    return fetchWrapper(`characters/${characterId}/full`, {
-      method: "GET",
-    });
+    const res = await jikanAPI.get(`/characters/${characterId}/full`);
+    return res.data;
+    // return fetchWrapper(`characters/${characterId}/full`, {
+    //   method: "GET",
+    // });
   },
 
   getAnimeInfoByType: async (animeId: number, type: string) => {

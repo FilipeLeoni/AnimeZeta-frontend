@@ -44,7 +44,9 @@ export const useApi = () => ({
     title: string,
     imageUrl: string,
     status: string,
-    episodes?: number
+    episodeProgress: number,
+    episodes?: number,
+    rating?: number
   ) => {
     const accessToken = Cookies.get("accessToken");
     const headers = {
@@ -52,13 +54,18 @@ export const useApi = () => ({
     };
     const res = await api.post(
       "mylist",
-      { jikanId, title, imageUrl, status, episodes },
+      { jikanId, title, imageUrl, status, episodeProgress, episodes, rating },
       { headers }
     );
     return res;
   },
 
-  UpdateAnime: async (id: string, status?: string, episodes?: number) => {
+  UpdateAnime: async (
+    id: string,
+    status?: string,
+    episodeProgress?: number,
+    rating?: number
+  ) => {
     const accessToken = Cookies.get("accessToken");
     const headers = {
       Authorization: `Bearer ${accessToken}`,
@@ -66,7 +73,7 @@ export const useApi = () => ({
 
     const res = await api.patch(
       `status/${id}`,
-      { status, episodes },
+      { status, episodeProgress, rating },
       { headers }
     );
     return res;

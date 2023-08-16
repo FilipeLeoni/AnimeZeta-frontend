@@ -5,6 +5,8 @@ import { ListForm } from "../ListForm";
 import useUpdateAnime from "@/hooks/useUpdateAnime";
 import useRemoveAnime from "@/hooks/useRemoveAnime";
 import { useMutation, useQueryClient } from "react-query";
+import Link from "next/link";
+import { ListAnime } from "@/@types/AnimeList";
 
 declare global {
   interface Window {
@@ -12,9 +14,14 @@ declare global {
   }
 }
 
-export const UpdateAnime = ({ animeData }: any) => {
-  const { control, handleSubmit, setValue } = useForm();
-  const [episodeProgress, setEpisodeProgress] = useState(0);
+export const UpdateAnime: React.FC<ListAnime> = ({ animeData }: any) => {
+  const { control, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      status: { value: animeData?.status, label: animeData?.status },
+      episodeProgress: animeData?.episodes,
+      rating: animeData?.rating,
+    },
+  });
 
   const { RemoveAnimeFromList } = useRemoveAnime();
   const { updateAnime } = useUpdateAnime();
@@ -28,8 +35,18 @@ export const UpdateAnime = ({ animeData }: any) => {
   });
 
   const updateAnimeMutation = useMutation(
-    (params: { id: string; status: string; episodes: number }) =>
-      updateAnime(params.id, params.status, params.episodes),
+    (params: {
+      id: string;
+      status: string;
+      episodeProgress: number;
+      rating: number;
+    }) =>
+      updateAnime(
+        params.id,
+        params.status,
+        params.episodeProgress,
+        params.rating
+      ),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("animeList");
@@ -39,18 +56,18 @@ export const UpdateAnime = ({ animeData }: any) => {
 
   useEffect(() => {
     setValue("status", { value: animeData?.status, label: animeData?.status });
-    setEpisodeProgress(animeData?.episodes);
-    setValue("episodes", episodeProgress);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setValue("episodeProgress", animeData?.episodeProgress);
+    setValue("rating", animeData?.rating);
   }, [animeData, setValue]);
 
   const onSubmit = async (data: any) => {
-    const { status, episodes } = data;
+    const { status, episodeProgress, rating } = data;
     try {
       await updateAnimeMutation.mutateAsync({
         id: animeData?.id,
         status: status.value,
-        episodes,
+        episodeProgress,
+        rating,
       });
     } catch (error) {
       console.log(error);
@@ -74,35 +91,31 @@ export const UpdateAnime = ({ animeData }: any) => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="dialog"
-        className="modal-box overflow-hidden w-full max-w-4xl flex flex-col h-full max-h-[400px] bg-gradient-to-b px-16 from-background to-[#e3e8f4]"
+        className="modal-box overflow-hidden w-full flex flex-col h-full max-h-[520px] bg-gradient-to-b px-8 from-background to-[#e3e8f4]"
       >
-        <div className="w-full h-1/3 bg-gray overflow-hidden -z-20 absolute left-0 top-0">
-          <div
-            className="w-full bg-black h-full overflow-hidden opacity-90"
-            style={{
-              backgroundImage: `url(${animeData?.imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "top",
-              backgroundRepeat: "no-repeat",
-              filter: "brightness(50%) blur(4px)",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          />
-        </div>
         <div className="flex flex-wrap">
-          <div className="flex items-center gap-8 pt-5">
-            <Image
-              src={animeData?.imageUrl}
-              width={144}
-              height={192}
-              className="rounded-xl drop-shadow-lg"
-              alt={animeData?.title}
-            />
-            <div className="">
-              <h3 className="font-semibold text-2xl text-white mb-7">
+          <div className="flex gap-8 pt-5">
+            <div className="text-center">
+              <div className="w-40 h-56 flex overflow-hidden rounded-lg drop-shadow-lg">
+                <Image
+                  src={animeData?.imageUrl}
+                  fill
+                  sizes="100%"
+                  style={{ objectFit: "cover" }}
+                  alt={animeData?.title}
+                />
+              </div>
+              <Link href={`/anime/${animeData?.jikanId}`}>
+                <p className="mt-2 font-medium text-gray-600 hover:underline">
+                  See details
+                </p>
+              </Link>
+            </div>
+            <div className="mt-2">
+              <h3 className="font-semibold text-2xl text-gray-700 mb-7">
                 {animeData?.title}
               </h3>
-              <ListForm control={control} />
+              <ListForm control={control} episodes={animeData?.episodes} />
             </div>
           </div>
         </div>

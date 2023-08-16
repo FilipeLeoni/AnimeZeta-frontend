@@ -74,7 +74,6 @@ export default function SelectCustom({
   return (
     <Select
       isMulti={isMulti}
-      name="select"
       options={options}
       onChange={onChange}
       value={value}

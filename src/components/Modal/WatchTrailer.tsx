@@ -44,7 +44,11 @@ const WatchTrailer = ({ Link }: { Link: string | null }) => {
               ✕
             </button>
             {Link === null ? (
-              <h2>Traile não disponivel</h2>
+              <div className="flex justify-center items-center w-full h-full">
+                <h2 className="text-lg font-medium text-gray-600">
+                  Trailer not available
+                </h2>
+              </div>
             ) : (
               <iframe
                 width="100%"

@@ -7,10 +7,16 @@ const useUpdateAnime = () => {
   const updateAnime = async (
     id: string,
     status: string,
-    episodes: number
+    episodeProgress: number,
+    rating: number
   ): Promise<void> => {
     try {
-      const response = await api.UpdateAnime(id, status, episodes);
+      const response = await api.UpdateAnime(
+        id,
+        status,
+        episodeProgress,
+        rating
+      );
 
       if (response) {
         toast.success("Anime updated successfully", {

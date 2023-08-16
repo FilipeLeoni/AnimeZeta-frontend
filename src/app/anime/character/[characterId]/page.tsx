@@ -15,7 +15,7 @@ export default async function AnimePage({
 }) {
   const api = useJikanAPI();
   const characterId = params.characterId;
-  const data = await api.getCharacterById(characterId);
+  const { data } = await api.getCharacterById(characterId);
 
   return (
     <div>
