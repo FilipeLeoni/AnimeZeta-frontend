@@ -6,12 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Providers from "@/providers/providers";
 import { Footer } from "@/components/Layout/Footer";
 
-declare global {
-  interface Window {
-    my_modal_1: HTMLDialogElement;
-  }
-}
-
 export default function RootLayout({
   children,
 }: {
@@ -22,7 +16,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         <Providers>
           <Header />
-          <div className="flex w-full min-h-screen flex-col items-center bg-gradient-to-b from-background to-[#e3e8f4] px-20">
+          <div className="flex w-full min-h-screen h-full flex-col items-center bg-gradient-to-b from-background to-[#e3e8f4] px-4 md:px-20">
             {children}
           </div>
           <Footer />

@@ -1,29 +1,31 @@
 "use client";
 
-import { PlusCircle } from "@phosphor-icons/react";
-import React, { useId, useRef, useState } from "react";
-import SelectCustom from "../Select";
-import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
+import React, { useEffect, useRef } from "react";
+import { BsPlusCircleFill } from "react-icons/bs";
+
 import Image from "next/image";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import useAddToList from "@/hooks/useAddToList";
 import { ListForm } from "../ListForm";
-import { toast } from "react-toastify";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
-declare global {
-  interface Window {
-    my_modal_1: HTMLDialogElement;
-  }
-}
+export const AddToList = ({ animeData, children }: any) => {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      status: { value: "All", label: "All" },
+      episodeProgress: 0,
+      rating: 0,
+    },
+  });
 
-export const AddToList = ({ animeData }: any) => {
-  const { control, handleSubmit } = useForm();
+  const { isAuthenticated } = useAuth();
   const { addToMyList } = useAddToList();
+  const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    const { status, episodes } = data;
+    const { status, episodeProgress, rating } = data;
     const jikanId = animeData?.mal_id;
-    const episodesAsNumber = parseInt(episodes);
 
     try {
       await addToMyList(
@@ -31,7 +33,9 @@ export const AddToList = ({ animeData }: any) => {
         animeData?.title,
         animeData?.images.webp.large_image_url,
         status.value,
-        episodesAsNumber
+        parseInt(episodeProgress),
+        animeData?.episodes,
+        rating
       );
     } finally {
       dialogRef.current.close();
@@ -41,7 +45,11 @@ export const AddToList = ({ animeData }: any) => {
   const dialogRef: any = useRef();
 
   const handleClick = () => {
-    dialogRef.current.showModal();
+    if (!isAuthenticated) {
+      router.push("/auth/login");
+    } else {
+      dialogRef.current.showModal();
+    }
   };
 
   const handleCancel = () => {
@@ -50,13 +58,24 @@ export const AddToList = ({ animeData }: any) => {
 
   return (
     <>
-      <button
-        className="flex items-center cursor-pointer hover:text-primary gap-1 transition-colors text-sm md:text-base"
-        onClick={handleClick}
-      >
-        <PlusCircle size={32} weight="fill" />
-        <p>Add to list</p>
-      </button>
+      {isAuthenticated ? (
+        <button
+          className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
+          onClick={handleClick}
+        >
+          <BsPlusCircleFill size={22} />
+          <p>Add to list</p>
+        </button>
+      ) : (
+        <button
+          className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
+          onClick={() => router.push("/auth/login")}
+        >
+          <BsPlusCircleFill size={22} />
+          <p>Login To Add to list</p>
+        </button>
+      )}
+
       <dialog
         id="my_modal_1"
         ref={dialogRef}
@@ -66,35 +85,24 @@ export const AddToList = ({ animeData }: any) => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           method="dialog"
-          className="modal-box overflow-hidden w-full max-w-4xl flex flex-col h-full max-h-[400px] bg-gradient-to-b px-16 from-background to-[#e3e8f4]"
+          className="modal-box overflow-hidden w-full flex flex-col h-full max-h-[520px] bg-gradient-to-b px-8 from-background to-[#e3e8f4]"
         >
-          <div className="w-full h-1/3 bg-gray overflow-hidden -z-20 absolute left-0 top-0">
-            <div
-              className="w-full bg-black h-full overflow-hidden opacity-90"
-              style={{
-                backgroundImage: `url(${animeData?.images.webp.image_url})`,
-                backgroundSize: "cover",
-                backgroundPosition: "top",
-                backgroundRepeat: "no-repeat",
-                filter: "brightness(50%) blur(4px)",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              }}
-            />
-          </div>
           <div className="flex flex-wrap">
-            <div className="flex items-center gap-8 pt-5">
-              <Image
-                src={animeData?.images.webp.image_url}
-                width={144}
-                height={192}
-                className="rounded-xl drop-shadow-lg"
-                alt={animeData?.title}
-              />
-              <div className="">
-                <h3 className="font-semibold text-2xl text-white mb-7">
+            <div className="flex gap-8 pt-5">
+              <div className="w-36 h-48 flex overflow-hidden rounded-lg drop-shadow-lg ">
+                <Image
+                  src={animeData?.images.webp.image_url}
+                  fill
+                  sizes="100%"
+                  alt={animeData?.title}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+              <div className="mt-2">
+                <h3 className="font-semibold text-2xl text-gray-700 mb-7">
                   {animeData?.title}
                 </h3>
-                <ListForm control={control} />
+                <ListForm control={control} episodes={animeData?.episodes} />
               </div>
             </div>
           </div>

@@ -8,6 +8,8 @@ import makeAnimated from "react-select/animated";
 interface Props {
   options: any;
   id?: string;
+  isClearable?: boolean;
+  hasDefault?: boolean;
   isSearchable?: boolean;
   placeholder: string;
   onChange: any;
@@ -19,6 +21,8 @@ export default function SelectCustom({
   options,
   placeholder,
   id,
+  hasDefault = false,
+  isClearable = true,
   onChange,
   isSearchable = true,
   value,
@@ -35,7 +39,6 @@ export default function SelectCustom({
       </div>
     );
   };
-  const inputId = useId();
 
   const animatedComponents: any = makeAnimated();
 
@@ -71,13 +74,13 @@ export default function SelectCustom({
   return (
     <Select
       isMulti={isMulti}
-      name="select"
       options={options}
       onChange={onChange}
       value={value}
       id={id}
-      isClearable
+      isClearable={isClearable}
       isSearchable={isSearchable}
+      defaultValue={hasDefault && options[0]}
       placeholder={placeholder}
       components={{ ...animatedComponents, DropdownIndicator }}
       hideSelectedOptions={false}

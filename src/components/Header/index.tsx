@@ -24,7 +24,9 @@ export default function Header() {
   const pathname = usePathname();
 
   const showHeader =
-    pathname.includes("/auth/login") || pathname.includes("/auth/register")
+    pathname.includes("/auth/login") ||
+    pathname.includes("/auth/register") ||
+    pathname.includes("/reset-password")
       ? false
       : true;
 
@@ -51,7 +53,7 @@ export default function Header() {
         <div className="flex justify-between items-center max-w-5xl w-full mx-auto">
           <div className="cursor-pointer lg:ml-0 ml-5">
             <Link href={"/"}>
-              <Image src={Logo} alt="" width={32} />
+              <Image src={Logo} alt="" width={38} />
             </Link>
           </div>
           <NavigationMenu.Root className="relative sm:flex hidden text-gray-600">

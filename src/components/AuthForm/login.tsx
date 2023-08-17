@@ -15,6 +15,7 @@ import Spinner from "../SpinnerLoading";
 interface FormData {
   email: string;
   password: string;
+  rememberMe: boolean;
 }
 
 export default function LoginForm() {
@@ -33,9 +34,10 @@ export default function LoginForm() {
   const api = useApi();
 
   const handleSubmitForm: SubmitHandler<FormData> = async (data) => {
+    const { email, password, rememberMe } = data;
     try {
       setIsLoading(true);
-      const response = await api.login(data.email, data.password);
+      const response = await api.login(email, password);
 
       if (response) {
         toast.success("Login Successfully!", {
@@ -43,7 +45,7 @@ export default function LoginForm() {
           theme: "light",
         });
 
-        auth?.handleLogin(response.data);
+        auth?.handleLogin(response.data, rememberMe);
       }
     } catch (error: any) {
       if (error.response) {
@@ -89,6 +91,7 @@ export default function LoginForm() {
             <label className="cursor-pointer label flex gap-2 justify-start max-w-[140px]">
               <input
                 type="checkbox"
+                {...register("rememberMe")}
                 className="checkbox checkbox-warning checkbox-xs bg-gray-200 border-gray-300 rounded"
               />
               <span className="label-text text-xs font-medium text-gray-500">
@@ -96,7 +99,7 @@ export default function LoginForm() {
               </span>
             </label>
             <Link
-              href={"/"}
+              href={"/reset-password"}
               className="absolute right-0 top-2 text-xs text-blue-600 cursor-pointer underline font-light"
             >
               Forgot Password ?

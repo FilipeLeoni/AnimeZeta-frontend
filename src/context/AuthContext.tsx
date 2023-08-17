@@ -9,7 +9,13 @@ interface AuthContextData {
   isAuthenticated: boolean | null;
   checkAuthentication: () => void;
   logout: () => void;
-  handleLogin: (data: { accessToken: string; username: string }) => void;
+  handleLogin: (
+    data: {
+      accessToken: string;
+      username: string;
+    },
+    rememberMe: boolean
+  ) => void;
   isAuthRoute: () => boolean;
   username: string | null;
 }
@@ -72,9 +78,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(false);
   };
 
-  const handleLogin = (data: { accessToken: string; username: string }) => {
+  const handleLogin = (
+    data: {
+      accessToken: string;
+      username: string;
+    },
+    rememberMe: boolean
+  ) => {
     const { accessToken, username } = data;
-    Cookie.set("accessToken", accessToken, { expires: 7 });
+    if (rememberMe) {
+      Cookie.set("accessToken", accessToken, { expires: 7 });
+    } else {
+      Cookie.set("accessToken", accessToken);
+    }
     localStorage.setItem("username", username);
     setUsername(username);
     router.push("/");

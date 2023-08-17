@@ -41,3 +41,7 @@ body {
 .login-bg {
   background-image: url("../assets/images/test.jpg");
 }
+
+.forgot-bg {
+  background-image: url("../assets/images/bg-forgot.webp");
+}

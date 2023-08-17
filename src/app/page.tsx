@@ -18,7 +18,7 @@ export default function Home() {
 
   const api = useJikanAPI();
 
-  const { data: topAnime, isLoading: isLoadingTopAnimes } = useQuery({
+  const { data: topAnime, isLoading } = useQuery({
     queryKey: ["topAnime"],
     queryFn: topAnimes,
   });
@@ -61,9 +61,11 @@ export default function Home() {
       <title>AnimeZeta</title>
       <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 pt-36 pb-20">
         <div className="col-span-12 w-full">
-          <Suspense fallback={<LoadingSuperCarousel />}>
+          {isLoading ? (
+            <LoadingSuperCarousel />
+          ) : (
             <SuperCarousel data={topAnime} />
-          </Suspense>
+          )}
 
           <div className="w-full">
             <SubTitle>Get Ready for Thrilling Action Anime!</SubTitle>

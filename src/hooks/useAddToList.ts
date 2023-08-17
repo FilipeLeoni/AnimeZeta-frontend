@@ -9,7 +9,9 @@ const useAddToList = () => {
     title: string,
     imageUrl: string,
     status: string,
-    episodes: number
+    episodeProgress: number,
+    episodes: number,
+    rating: number
   ) => {
     try {
       const response = await api.AddAnimeToList(
@@ -17,7 +19,9 @@ const useAddToList = () => {
         title,
         imageUrl,
         status,
-        episodes
+        episodeProgress,
+        episodes,
+        rating
       );
 
       if (response) {

@@ -44,12 +44,14 @@ export default function RegisterForm() {
         data.password
       );
 
+      const rememberMe = true;
+
       if (response) {
         toast.success("Account created Successfully!", {
           position: "top-right",
           theme: "light",
         });
-        auth?.handleLogin(response.data.accessToken);
+        auth?.handleLogin(response.data, rememberMe);
       }
     } catch (error: any) {
       if (error.response) {

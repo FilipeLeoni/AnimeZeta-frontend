@@ -1,5 +1,7 @@
 import Image from "next/image";
 import React from "react";
+import { BsFillPlusCircleFill } from "react-icons/bs";
+import { HiMiniPlus } from "react-icons/hi2";
 
 export default async function AnimeCard({ data }: any) {
   const image =
@@ -9,7 +11,7 @@ export default async function AnimeCard({ data }: any) {
   const title = data.title || data.name;
 
   return (
-    <div className="w-44 h-full flex text-grayDark hover:scale-110 transition-all">
+    <div className="w-44 h-full flex text-grayDark hover:scale-110 transition-all group">
       <div className="w-44 h-full rounded-md relative cursor-pointer flex flex-col items-center text-center gap-2">
         <div className="w-44 h-64 bg-cover bg-center rounded-md drop-shadow-md overflow-hidden">
           <Image
