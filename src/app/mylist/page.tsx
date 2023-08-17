@@ -9,15 +9,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import EditAnimeCard from "@/components/AnimeCard/EditAnimeCard";
 import { UpdateAnime } from "@/components/Modal/UpdateAnime";
 import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
+import { ListAnime } from "@/@types/AnimeList";
 
 export default function MyList() {
-  // const [animeList, setAnimeList] = useState([]);
-  const [selectedAnime, setSelectedAnime] = useState<AnimeTypes | null>(null);
+  const [selectedAnime, setSelectedAnime] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
-  const [filteredAnimeList, setFilteredAnimeList] = useState<
-    AnimeTypes[] | null
-  >([]);
+  const [filteredAnimeList, setFilteredAnimeList] = useState<ListAnime[] | []>(
+    []
+  );
 
   const searchParams: any = useSearchParams();
   const status = searchParams.get("status");
@@ -25,7 +25,9 @@ export default function MyList() {
   const router = useRouter();
 
   useEffect(() => {
-    setFilterStatus(status);
+    if (status) {
+      setFilterStatus(status);
+    }
   }, [status]);
 
   const { data: animeList } = useQuery("animeList", getAnimeList);
@@ -63,7 +65,7 @@ export default function MyList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animeList, filterStatus, searchTerm]);
 
-  const handleOpenModal = (animeData: AnimeTypes) => {
+  const handleOpenModal = (animeData: ListAnime) => {
     setSelectedAnime(animeData);
     window.my_modal_2.showModal();
   };
@@ -116,14 +118,35 @@ export default function MyList() {
           ))}
         </div>
         <div className="flex gap-8 mt-3 flex-wrap justify-center">
-          {filteredAnimeList?.map((anime: AnimeTypes) => (
-            <div key={anime.mal_id}>
+          {filteredAnimeList?.map((anime: ListAnime) => (
+            <div key={anime.jikanId}>
               <EditAnimeCard
                 data={anime}
                 onClick={() => handleOpenModal(anime)}
               />
             </div>
           ))}
+          {filteredAnimeList?.length == 0 && filterStatus === "All" && (
+            <div className="text-center text-gray-600 mt-2">
+              <h2 className="font-medium text-lg">Your list is empty.</h2>
+              <p className="text-gray-500">
+                Start adding anime series you want to watch by clicking
+                &quot;Add to List.&quot; Let the anime marathon begin!
+              </p>
+            </div>
+          )}
+
+          {filteredAnimeList?.length == 0 && filterStatus !== "All" && (
+            <div className="text-center text-gray-600 mt-2">
+              <h2 className="font-medium text-lg">
+                Your {filterStatus} list is empty.
+              </h2>
+              <p className="text-gray-500">
+                Start adding anime series you want to watch by clicking
+                &quot;Add to List.&quot; Let the anime marathon begin!
+              </p>
+            </div>
+          )}
 
           <UpdateAnime animeData={selectedAnime} />
         </div>

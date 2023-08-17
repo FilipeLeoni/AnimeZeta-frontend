@@ -1,4 +1,5 @@
 export interface ListAnime {
+  id: string;
   jikanId: string;
   title: string;
   imageUrl: string;

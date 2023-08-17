@@ -7,8 +7,10 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import useAddToList from "@/hooks/useAddToList";
 import { ListForm } from "../ListForm";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
-export const AddToList = ({ animeData }: any) => {
+export const AddToList = ({ animeData, children }: any) => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       status: { value: "All", label: "All" },
@@ -16,7 +18,10 @@ export const AddToList = ({ animeData }: any) => {
       rating: 0,
     },
   });
+
+  const { isAuthenticated } = useAuth();
   const { addToMyList } = useAddToList();
+  const router = useRouter();
 
   const onSubmit = async (data: any) => {
     const { status, episodeProgress, rating } = data;
@@ -40,7 +45,11 @@ export const AddToList = ({ animeData }: any) => {
   const dialogRef: any = useRef();
 
   const handleClick = () => {
-    dialogRef.current.showModal();
+    if (!isAuthenticated) {
+      router.push("/auth/login");
+    } else {
+      dialogRef.current.showModal();
+    }
   };
 
   const handleCancel = () => {
@@ -49,13 +58,24 @@ export const AddToList = ({ animeData }: any) => {
 
   return (
     <>
-      <button
-        className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
-        onClick={handleClick}
-      >
-        <BsPlusCircleFill size={22} />
-        <p>Add to list</p>
-      </button>
+      {isAuthenticated ? (
+        <button
+          className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
+          onClick={handleClick}
+        >
+          <BsPlusCircleFill size={22} />
+          <p>Add to list</p>
+        </button>
+      ) : (
+        <button
+          className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
+          onClick={() => router.push("/auth/login")}
+        >
+          <BsPlusCircleFill size={22} />
+          <p>Login To Add to list</p>
+        </button>
+      )}
+
       <dialog
         id="my_modal_1"
         ref={dialogRef}

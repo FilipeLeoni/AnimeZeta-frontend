@@ -58,10 +58,11 @@ export const ListForm = ({ control, episodes }: FormFieldsProps) => {
                   id={inputId}
                   type="number"
                   {...field}
+                  max={episodes !== null ? episodes : ""}
                   className="pl-4 pr-28 py-[7px] border text-gray-600 rounded-lg drop-shadow-xl focus:ring-2 focus:ring-primary outline-none w-full"
                 />
                 <div className="bg-primary text-sm font-medium text-gray-600 absolute py-[10px] px-4 top-0 right-0 rounded-lg">
-                  OF {episodes} EPS
+                  OF {episodes !== null ? episodes : "-"} EPS
                 </div>
               </div>
             </div>

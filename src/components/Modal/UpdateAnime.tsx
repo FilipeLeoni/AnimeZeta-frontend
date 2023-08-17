@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export const UpdateAnime: React.FC<ListAnime> = ({ animeData }: any) => {
+export const UpdateAnime = ({ animeData }: { animeData: ListAnime }) => {
   const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
       status: { value: animeData?.status, label: animeData?.status },

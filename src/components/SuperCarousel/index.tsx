@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export default async function SuperCarousel({ data }: any) {
+export default function SuperCarousel({ data }: any) {
   const settings: any = {
     dots: true,
     fade: true,

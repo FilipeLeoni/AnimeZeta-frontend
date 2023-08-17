@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import SecondaryButton from "@/components/Buttons/SecondaryButton";
 import { FaPlay } from "react-icons/fa6";
 import WatchTrailer from "@/components/Modal/WatchTrailer";
+import { BsPlusCircleFill } from "react-icons/bs";
 
 const ExtraInfo = dynamic(() => import("@/components/ExtraInfo"));
 
@@ -56,7 +57,7 @@ export default async function AnimePage({
             </div>
             <div className="w-full h-0.5 rounded bg-gray-300" />
             <CharacterDescription>{data.synopsis}</CharacterDescription>
-            <div className="flex mt-20 gap-14">
+            <div className="flex mt-20 gap-14 items-center">
               <WatchTrailer Link={data.trailer.embed_url} />
               <AddToList animeData={data} />
             </div>

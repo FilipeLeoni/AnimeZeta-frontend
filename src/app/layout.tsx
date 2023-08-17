@@ -6,12 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Providers from "@/providers/providers";
 import { Footer } from "@/components/Layout/Footer";
 
-declare global {
-  interface Window {
-    my_modal_1: HTMLDialogElement;
-  }
-}
-
 export default function RootLayout({
   children,
 }: {
