@@ -5,6 +5,11 @@
 * {
   scrollbar-width: thin;
   scrollbar-color: primary;
+  background: linear-gradient(
+    to bottom,
+    var(--from-background),
+    var(--to-[#e3e8f4])
+  );
 }
 
 *::-webkit-scrollbar {
@@ -22,9 +27,9 @@
   border: 3px solid white;
 }
 
-/* ::-webkit-scrollbar-thumb:hover {
-  background-color: #f0cf0f;
-} */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c0cf0f;
+}
 
 body {
   -webkit-font-smoothing: antialiased;

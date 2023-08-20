@@ -10,6 +10,7 @@ import EditAnimeCard from "@/components/AnimeCard/EditAnimeCard";
 import { UpdateAnime } from "@/components/Modal/UpdateAnime";
 import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
 import { ListAnime } from "@/@types/AnimeList";
+import Cookies from "js-cookie";
 
 export default function MyList() {
   const [selectedAnime, setSelectedAnime] = useState<any>(null);
@@ -33,7 +34,8 @@ export default function MyList() {
   const { data: animeList } = useQuery("animeList", getAnimeList);
 
   async function getAnimeList() {
-    const res: any = await api.getAnimeList();
+    const accessToken: any = Cookies.get("accessToken");
+    const res: any = await api.getAnimeList(accessToken);
     return res.animeList;
   }
 

@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { poppins } from "./fonts";
 import { ToastContainer } from "react-toastify";
@@ -16,7 +17,8 @@ export default function RootLayout({
       <body className={poppins.className}>
         <Providers>
           <Header />
-          <div className="flex w-full min-h-screen h-full flex-col items-center bg-gradient-to-b from-background to-[#e3e8f4] px-4 md:px-20">
+          <NextTopLoader color="#F9C91F" />
+          <div className="flex w-full min-h-screen h-full flex-col items-center px-4 md:px-20">
             {children}
           </div>
           <Footer />

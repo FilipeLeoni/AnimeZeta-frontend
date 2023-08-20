@@ -32,18 +32,28 @@ export const useApi = () => ({
     return res;
   },
 
-  getUser: async () => {
-    const accessToken = Cookies.get("accessToken");
-    const res = await api.get("/user", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  getUser: async (accessToken: string) => {
+    console.log(accessToken);
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+    const res = await api.get("user", { headers });
     return res.data;
   },
 
-  getAnimeList: async () => {
+  updateUser: async (userData: {
+    username?: string;
+    email?: string;
+    password?: string;
+    avatarUrl?: string;
+  }) => {
     const accessToken = Cookies.get("accessToken");
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    const res = await api.patch("/update-profile", userData, { headers });
+    return res.data;
+  },
+
+  getAnimeList: async (accessToken: string) => {
     const headers = { Authorization: `Bearer ${accessToken}` };
     const res: any = await api.get("/mylist", { headers });
     return res.data;
@@ -77,6 +87,7 @@ export const useApi = () => ({
     rating?: number
   ) => {
     const accessToken = Cookies.get("accessToken");
+    console.log(accessToken);
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };

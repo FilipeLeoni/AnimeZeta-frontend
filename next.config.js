@@ -7,7 +7,7 @@ const nextConfig = {
   concurrentFeatures: true,
   swcMinify: true,
     images: {
-        domains: ['cdn.myanimelist.net'],
+        domains: ['cdn.myanimelist.net', 'animezeta.onrender.com'],
       },
     
 }
