@@ -12,6 +12,7 @@ import {
 import { Suspense } from "react";
 import SubTitle from "@/components/Text/SubTitles";
 import { LoadingSuperCarousel } from "@/components/SuperCarousel/Loading";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const queryClient = useQueryClient();
@@ -59,7 +60,7 @@ export default function Home() {
   return (
     <main className="w-full flex justify-center">
       <title>AnimeZeta</title>
-      <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 pt-36 pb-20">
+      <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-full lg:mx-20 max-w-full mx-4 pt-36 pb-20">
         <div className="col-span-12 w-full">
           {isLoading ? (
             <LoadingSuperCarousel />

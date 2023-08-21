@@ -89,7 +89,7 @@ export default function HeaderSearchBar() {
           onKeyDown={handleKeyDown}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
-          className="w-64 bg-gray-200 h-auto focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent rounded-2xl p-1 pl-10 pr-10"
+          className="w-full md:w-64 bg-gray-200 h-auto focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent rounded-2xl p-1 pl-10 pr-10"
         />
         {query !== "" ? (
           <div

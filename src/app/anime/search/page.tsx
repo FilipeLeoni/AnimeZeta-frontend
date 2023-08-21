@@ -106,12 +106,12 @@ export default function AnimeSearch() {
 
   return (
     <div>
-      <div className="flex items-center gap-8 justify-center">
+      <div className="flex items-center gap-8 justify-center flex-wrap">
         <div className="shadow-lg">
           <SearchBar />
         </div>
 
-        <div className="w-64 drop-shadow-lg z-10">
+        <div className="w-64 drop-shadow-lg z-20">
           <SelectCustom
             isMulti={true}
             onChange={handleGenreChange}
@@ -135,7 +135,7 @@ export default function AnimeSearch() {
           />
         </div>
       </div>
-      <div className="flex flex-wrap gap-6 justify-center mt-16">
+      <div className="flex flex-wrap gap-4 md:gap-6 justify-center mt-16">
         {Results?.map((results: AnimeTypes) => (
           <Link
             key={results.mal_id}

@@ -14,12 +14,14 @@ import HeaderOptions from "../HeaderOptions";
 import CategoriesOptions from "@/utils/HeaderOptions/CategoriesOptions";
 import MyListOptions from "@/utils/HeaderOptions/MyListOptions";
 import { usePathname, useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMyListOpen, setMyListOpen] = useState(false);
 
+  const { status } = useSession();
   const router: any = useRouter();
   const pathname = usePathname();
 
@@ -35,7 +37,7 @@ export default function Header() {
   };
 
   const handleDrawerToggle = () => {
-    setDrawerOpen(!isDrawerOpen);
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
   const handleListToggle = () => {
@@ -45,6 +47,7 @@ export default function Header() {
   const handleFilterClick = (status: string) => {
     const pathname = `/mylist?status=${status}`;
     router.push(pathname);
+    setIsMenuOpen(false);
   };
 
   return (
@@ -209,7 +212,6 @@ export default function Header() {
           <div className="sm:flex hidden lg:mr-0 mr-5">
             <UserProfileIcon />
           </div>
-
           {isMenuOpen ? (
             <X
               size={32}
@@ -238,14 +240,16 @@ export default function Header() {
           <ul className="flex flex-col justify-center w-full">
             <p className="text-sm text-gray-300 px-8 pt-8">NAVIGATE</p>
             <li className="ml-4 pl-4 mt-2 py-4  gap-2 cursor-pointer hover:bg-background rounded-md">
-              <Link href={"/"}>Home</Link>
+              <Link href={"/"} onClick={() => setIsMenuOpen(false)}>
+                Home
+              </Link>
             </li>
             <li
               className="px-4 py-2 w-full flex flex-col items-center gap-2 cursor-pointer  after:bg-background"
               onClick={handleDrawerToggle}
             >
               <span className="flex justify-between items-center w-full p-4 cursor-pointer hover:bg-background rounded-md">
-                Categories{" "}
+                Categories
                 <CaretDown
                   size={16}
                   weight="bold"
@@ -265,9 +269,10 @@ export default function Header() {
                   >
                     {CategoriesOptions.map((category) => (
                       <Link
-                        href=""
+                        href={`/genre/${category.id}`}
                         key={category.id}
                         className="block py-3 px-3 border-b text-gray-900"
+                        onClick={() => setIsMenuOpen(false)}
                       >
                         {category.name}
                       </Link>
@@ -296,22 +301,35 @@ export default function Header() {
                     className="bg-background shadow-md p-2 w-full rounded-lg"
                   >
                     {MyListOptions.map((option) => (
-                      <Link
-                        href="#"
+                      <div
                         key={option.id}
                         className="block py-3 px-3 border-b text-gray-900"
+                        onClick={() => handleFilterClick(option.name)}
                       >
                         {option.name}
-                      </Link>
+                      </div>
                     ))}
                   </motion.div>
                 )}
               </AnimatePresence>
             </li>
+            <div className="w-full px-4 relative my-3">
+              <SearchBar />
+            </div>
             <div className="mx-5 my-1 h-[2px] bg-gray-500 rounded-lg" />
-            <li className="ml-4 pl-4 mb-4 mt-2 py-4 gap-2 cursor-pointer hover:bg-background rounded-md">
-              Login
-            </li>
+
+            {status === "authenticated" ? (
+              <li
+                className="ml-4 pl-4 mb-4 mt-2 py-4 gap-2 cursor-pointer hover:bg-background rounded-md"
+                onClick={() => signOut()}
+              >
+                Logout
+              </li>
+            ) : (
+              <li className="ml-4 pl-4 mb-4 mt-2 py-4 gap-2 cursor-pointer hover:bg-background rounded-md">
+                Login
+              </li>
+            )}
           </ul>
         </motion.div>
       )}

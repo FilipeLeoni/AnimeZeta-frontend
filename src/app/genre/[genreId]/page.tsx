@@ -53,7 +53,7 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <main className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0">
+    <main className="flex flex-col items-center gap-4 sm:gap-6 lg:max-w-5xl md:mx-20 max-w-full">
       <header>
         <title>Genre - AnimeZeta</title>
       </header>
@@ -61,7 +61,7 @@ export default function GenrePage({ params }: { params: { genreId: number } }) {
         {genre?.name}
       </h1>
 
-      <div className="flex flex-wrap gap-5 justify-center">
+      <div className="flex flex-wrap gap-2 md:gap-5 justify-center">
         {genreAnime?.map((anime: AnimeTypes) => (
           <Link
             key={anime.mal_id}

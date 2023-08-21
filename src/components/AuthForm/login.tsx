@@ -11,6 +11,7 @@ import { EnvelopeSimple, Eye } from "@phosphor-icons/react";
 import Link from "next/link";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import Spinner from "../SpinnerLoading";
+import { signIn } from "next-auth/react";
 
 interface FormData {
   email: string;
@@ -36,18 +37,26 @@ export default function LoginForm() {
   const handleSubmitForm: SubmitHandler<FormData> = async (data) => {
     const { email, password, rememberMe } = data;
     try {
-      setIsLoading(true);
-      const response = await api.login(email, password);
+      const response = await signIn("credentials", {
+        email,
+        password,
+        rememberMe,
+        callbackUrl: `/profile`,
+      });
 
-      if (response) {
-        toast.success("Login Successfully!", {
-          position: "top-right",
-          theme: "light",
-        });
+      // setIsLoading(true);
+      // const response = await api.login(email, password);
 
-        auth?.handleLogin(response.data, rememberMe);
-      }
+      // if (response) {
+      //   toast.success("Login Successfully!", {
+      //     position: "top-right",
+      //     theme: "light",
+      //   });
+
+      //   auth?.handleLogin(response.data, rememberMe);
+      // }
     } catch (error: any) {
+      console.log(error);
       if (error.response) {
         toast.error(error.response.data.message, {
           position: "top-right",

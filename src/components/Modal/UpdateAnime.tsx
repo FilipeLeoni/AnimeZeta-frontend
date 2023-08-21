@@ -91,12 +91,12 @@ export const UpdateAnime = ({ animeData }: { animeData: ListAnime }) => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="dialog"
-        className="modal-box overflow-hidden w-full flex flex-col h-full max-h-[520px] bg-gradient-to-b px-8 from-background to-[#e3e8f4]"
+        className="modal-box overflow-hidden w-full flex flex-col h-full max-h-[520px] bg-gradient-to-b px-8 from-background to-[#e3e8f4] "
       >
         <div className="flex flex-wrap">
           <div className="flex gap-8 pt-5">
-            <div className="text-center">
-              <div className="w-40 h-56 flex overflow-hidden rounded-lg drop-shadow-lg">
+            <div className="text-center hidden sm:inline">
+              <div className="w-40 h-56 overflow-hidden rounded-lg drop-shadow-lg flex">
                 <Image
                   src={animeData?.imageUrl}
                   fill
@@ -116,6 +116,11 @@ export const UpdateAnime = ({ animeData }: { animeData: ListAnime }) => {
                 {animeData?.title}
               </h3>
               <ListForm control={control} episodes={animeData?.episodes} />
+              <Link href={`/anime/${animeData?.jikanId}`} className="sm:hidden">
+                <p className="ml-3 mt-3 font-medium text-gray-600 hover:underline">
+                  See details
+                </p>
+              </Link>
             </div>
           </div>
         </div>

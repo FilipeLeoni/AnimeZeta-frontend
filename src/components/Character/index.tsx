@@ -10,7 +10,7 @@ export default function CharacterDescription({ children }: Props) {
   const [showFullText, setShowFullText] = useState(false);
 
   return (
-    <div className="max-w-xl hover:bg-slate-200 rounded-lg mt-2 pt-2 px-2 relative">
+    <div className="w-full max-w-xl hover:bg-slate-200 rounded-lg mt-2 pt-2 px-2 relative">
       <div
         className={clsx(
           "text-overflow-ellipsis text-gray-700",

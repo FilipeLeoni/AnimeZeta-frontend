@@ -9,6 +9,7 @@ import useAddToList from "@/hooks/useAddToList";
 import { ListForm } from "../ListForm";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export const AddToList = ({ animeData, children }: any) => {
   const { control, handleSubmit } = useForm({
@@ -19,6 +20,7 @@ export const AddToList = ({ animeData, children }: any) => {
     },
   });
 
+  const { status: userStatus } = useSession();
   const { isAuthenticated } = useAuth();
   const { addToMyList } = useAddToList();
   const router = useRouter();
@@ -45,7 +47,7 @@ export const AddToList = ({ animeData, children }: any) => {
   const dialogRef: any = useRef();
 
   const handleClick = () => {
-    if (!isAuthenticated) {
+    if (userStatus !== "authenticated") {
       router.push("/auth/login");
     } else {
       dialogRef.current.showModal();
@@ -58,9 +60,9 @@ export const AddToList = ({ animeData, children }: any) => {
 
   return (
     <>
-      {isAuthenticated ? (
+      {userStatus === "authenticated" ? (
         <button
-          className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
+          className=" flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-base"
           onClick={handleClick}
         >
           <BsPlusCircleFill size={22} />

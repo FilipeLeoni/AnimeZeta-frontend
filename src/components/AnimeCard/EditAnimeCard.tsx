@@ -9,9 +9,9 @@ export default function EditAnimeCard({ data, onClick }: any) {
   const title = data.title || data.name;
 
   return (
-    <div className="w-44 h-full flex text-grayDark hover:scale-110 transition-all ">
-      <div className="w-44 h-full rounded-md relative cursor-pointer flex flex-col items-center text-center gap-2 group ">
-        <div className="w-44 h-64 bg-cover bg-center rounded-md drop-shadow-md overflow-hidden relative">
+    <div className="w-44 h-full flex text-grayDark hover:scale-110 transition-all scale-75 md:scale-90 lg:scale-100">
+      <div className="w-32 h-full md:w-44 rounded-md relative cursor-pointer flex flex-col items-center text-center gap-2 group ">
+        <div className="w-32 h-52 md:w-44 md:h-64 bg-cover bg-center rounded-md drop-shadow-md overflow-hidden relative">
           <Image
             src={image}
             alt={title}

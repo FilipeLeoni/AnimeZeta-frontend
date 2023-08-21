@@ -4,12 +4,9 @@ const nextConfig = {
     API_URL: process.env.API_URL,
     JIKAN_URL: process.env.JIKAN_URL,
   },
-  concurrentFeatures: true,
-  swcMinify: true,
     images: {
-        domains: ['cdn.myanimelist.net'],
+        domains: ['cdn.myanimelist.net', 'animezeta.onrender.com'],
       },
-    
 }
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({

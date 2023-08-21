@@ -1,15 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
 import { EditProfile } from "./EditProfile";
+import { SelectAvatar } from "../Modal/SelectAvatar";
+import { format } from "date-fns";
 
 interface ProfileProps {
-  ProfileImg: string;
+  id?: string;
   username: string;
   email?: string;
-  enterDate?: string;
+  createdAt?: string;
+  avatarUrl?: string;
   animesCompleted?: number;
-  totalAnimes: number;
-  EpisodesWatched: number;
+  episodesWatched?: number;
+  totalAnimeCount?: number;
 }
 
 interface ProfileCardProps {
@@ -18,20 +23,24 @@ interface ProfileCardProps {
 
 export function ProfileCard({ data }: ProfileCardProps) {
   const [isEdit, setIsEdit] = useState(false);
+  const avatarUrl = `${process.env.API_URL}${data?.avatarUrl}`;
+
+  console.log(data?.createdAt);
+
   return (
     <div className="bg-white flex w-full items-center flex-col text-center rounded-lg p-10 max-w-2xl h-full ">
-      <div>
+      <SelectAvatar currentAvatar={avatarUrl || ""}>
         <div className="avatar">
           <div className="w-32 rounded-full ring-2 ring-primary ring-offset-base-100 ring-offset-2 mb-2">
             <Image
-              src={data?.ProfileImg}
+              src={avatarUrl || ""}
               alt="Profile Picture"
               width={200}
               height={200}
             />
           </div>
         </div>
-      </div>
+      </SelectAvatar>
 
       {isEdit ? (
         <div className="mt-10 w-full max-w-sm flex flex-col items-center">
@@ -53,7 +62,12 @@ export function ProfileCard({ data }: ProfileCardProps) {
               {data?.username.toUpperCase()}
             </h1>
             <h2 className="text-gray-500">{data?.email}</h2>
-            <p>Joined on {data?.enterDate}</p>
+            <p>
+              Joined on {""}
+              {data && data.createdAt
+                ? format(new Date(data.createdAt), "MMMM yyyy")
+                : ""}
+            </p>
           </div>
           <div className="gap-12 rounded-xl px-8 border border-gray-200/90 py-6 flex bg-gray-100 font-medium my-10">
             <p className="">
@@ -62,12 +76,12 @@ export function ProfileCard({ data }: ProfileCardProps) {
               Animes Completed
             </p>
             <p>
-              <span className="text-yellow-600">{data?.totalAnimes}</span>{" "}
+              <span className="text-yellow-600">{data?.totalAnimeCount}</span>
               <br />
               Total Animes
             </p>
             <p>
-              <span className="text-yellow-600">{data?.EpisodesWatched}</span>
+              <span className="text-yellow-600">{data?.episodesWatched}</span>
               <br />
               Episodes Watched
             </p>
