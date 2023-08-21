@@ -1,15 +1,10 @@
 "use client";
 
 import { ProfileCard } from "@/components/Profile/Profile";
-import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/hooks/useApi";
 import Cookies from "js-cookie";
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
 
 import React from "react";
-// import { authOptions } from "../api/auth/[...nextauth]/route";
-import { User } from "@/@types/user";
 import { useQuery } from "react-query";
 
 export default function Profile() {

@@ -161,7 +161,6 @@ const handler = NextAuth({
       if (user) {
         const currentTime = Math.floor(Date.now() / 1000);
         const decodeToken = decodeAccessToken(user.accessToken);
-        console.log(user.token);
         if (decodeToken.exp < currentTime) {
           try {
             const refreshTokenCookie = cookies().get("refreshToken");
@@ -185,6 +184,7 @@ const handler = NextAuth({
                 });
 
                 const newAccessToken = await response.json();
+                user.accessToken = newAccessToken.accessToken;
                 token.accessToken = newAccessToken.accessToken;
 
                 cookies().set("accessToken", newAccessToken.accessToken, {
