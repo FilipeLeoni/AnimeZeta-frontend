@@ -26,65 +26,12 @@ export default function SuperCarousel({ data }: any) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // autoplay: true,
+    autoplay: true,
     autoplaySpeed: 5000,
   };
 
   return (
     <div className="w-full mb-20 drop-shadow-xl rounded-lg">
-      {/* <Slider {...settings}>
-        {data &&
-          data.slice(0, 6).map((anime: any) => (
-            <div
-              key={anime.mal_id}
-              className="relative h-[445px] w-screen flex items-center overflow-hidden rounded-lg"
-            >
-              <div className="absolute h-full w-full bg-neutral-900 via-neutral-900/0 to-transparent -z-10"></div>
-              <div className="flex w-1/2 h-full z-10 ">
-                <div className="w-full flex flex-col justify-center px-14 mb-16">
-                  <h3 className="text-sm md:text-3xl mb-2 text-center md:text-start text-backgroundSecondary">
-                    {anime.title}
-                  </h3>
-                  <div className={inter.className}>
-                    <p className="max-w-xl overflow-hidden text-overflow-ellipsis line-clamp-5 my-5 invisible md:visible drop-shadow-sm text-gray-200">
-                      {anime.synopsis}
-                    </p>
-                  </div>
-
-                  <div className="gap-2 hidden md:flex mt-5">
-                    {anime.genres.map((genre: any) => (
-                      <Badges key={genre.mal_id}>{genre.name}</Badges>
-                    ))}
-                  </div>
-                  <div className="flex gap-4 text-gray-300 text-sm">
-                    <p>{anime.score}</p>
-                    <p>{anime.year}</p>
-                  </div>
-                  <div className="absolute bottom-8 md:bottom-12 z-20 text-white">
-                    <AddToList animeData={anime} />
-                  </div>
-                </div>
-              </div>
-              <div className="absolute right-0 top-0 h-full w-1/2 ">
-                <Image
-                  src={anime.images.webp.large_image_url}
-                  alt={anime.title}
-                  fill
-                  quality={100}
-                  style={{
-                    maskImage:
-                      "linear-gradient(to right, transparent, rgba(0, 0, 0, 1))",
-                    WebkitMaskImage:
-                      "linear-gradient(to right, transparent, rgba(0, 0, 0, 1))",
-                  }}
-                  sizes="50%"
-                  className="object-center object-cover h-full w-full brightness-110 saturate-150"
-                />
-              </div>
-            </div>
-          ))}
-      </Slider> */}
-
       <Slider {...settings}>
         {data &&
           data.slice(0, 6).map((anime: any) => (

@@ -4,7 +4,7 @@ import { ProfileCard } from "@/components/Profile/Profile";
 import { useApi } from "@/hooks/useApi";
 import Cookies from "js-cookie";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useQuery } from "react-query";
 
 export default function Profile() {
