@@ -5,11 +5,10 @@
 * {
   scrollbar-width: thin;
   scrollbar-color: primary;
-  background: linear-gradient(
-    to bottom,
-    var(--from-background),
-    var(--to-[#e3e8f4])
-  );
+}
+
+body {
+  background-image: linear-gradient(to bottom, #f0f4f8, #e3e8f4);
 }
 
 *::-webkit-scrollbar {
@@ -35,10 +34,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.super-carousel {
-  background-image: url("../assets/images/bg-super-carousel.jpg");
-}
-
 .slick-list {
   padding-bottom: 40px !important;
 }
@@ -49,4 +44,39 @@ body {
 
 .forgot-bg {
   background-image: url("../assets/images/bg-forgot.webp");
+}
+
+.gradient-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1)
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1)
+  );
+}
+
+@media (max-width: 768px) {
+  .gradient-mask {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
+
+.synopsis-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 5;
+}
+
+@media (max-width: 640px) {
+  .synopsis-clamp {
+    display: none;
+  }
 }

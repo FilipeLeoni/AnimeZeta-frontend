@@ -19,39 +19,62 @@ export default function GenreCarousel({ AnimeData }: Props) {
     className: "slider variable-width",
     infinite: false,
     speed: 500,
+    dots: false,
     slidesToShow: 5,
     slidesToScroll: 4,
     initialSlide: 1,
-    prevArrow: (
-      <CaretCircleLeft color={"#1e1e1e"} weight="fill" className="slick-prev" />
-    ),
-    nextArrow: (
-      <CaretCircleRight
-        color={"#1e1e1e"}
-        weight="fill"
-        className="slick-next"
-      />
-    ),
+    // prevArrow: (
+    //   <CaretCircleLeft
+    //     color={"#1e1e1e"}
+    //     weight="fill"
+    //     className="md:slick-prev md:inline hidden opacity-0 md:opacity-100"
+    //   />
+    // ),
+    // nextArrow: (
+    //   <CaretCircleRight
+    //     color={"#1e1e1e"}
+    //     weight="fill"
+    //     className="md:slick-next"
+    //   />
+    // ),
 
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          initialSlide: 4,
         },
       },
       {
         breakpoint: 768,
         settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          initialSlide: 4,
+        },
+      },
+
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 3,
+        },
+      },
+
+      {
+        breakpoint: 480,
+        settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           initialSlide: 2,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 320,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -61,7 +84,7 @@ export default function GenreCarousel({ AnimeData }: Props) {
   };
 
   return (
-    <div className="w-full col-span-12">
+    <div className="w-full col-span-12 bg-red">
       <Slider {...settings} className="z-20 h-96 w-full">
         {AnimeData?.map((data: any) => (
           <Link

@@ -13,8 +13,8 @@ interface ProfileProps {
   createdAt?: string;
   avatarUrl?: string;
   animesCompleted?: number;
-  totalAnimes?: number;
-  EpisodesWatched?: number;
+  episodesWatched?: number;
+  totalAnimeCount?: number;
 }
 
 interface ProfileCardProps {
@@ -24,6 +24,8 @@ interface ProfileCardProps {
 export function ProfileCard({ data }: ProfileCardProps) {
   const [isEdit, setIsEdit] = useState(false);
   const avatarUrl = `${process.env.API_URL}${data?.avatarUrl}`;
+
+  console.log(data?.createdAt);
 
   return (
     <div className="bg-white flex w-full items-center flex-col text-center rounded-lg p-10 max-w-2xl h-full ">
@@ -74,12 +76,12 @@ export function ProfileCard({ data }: ProfileCardProps) {
               Animes Completed
             </p>
             <p>
-              <span className="text-yellow-600">{data?.totalAnimes}</span>
+              <span className="text-yellow-600">{data?.totalAnimeCount}</span>
               <br />
               Total Animes
             </p>
             <p>
-              <span className="text-yellow-600">{data?.EpisodesWatched}</span>
+              <span className="text-yellow-600">{data?.episodesWatched}</span>
               <br />
               Episodes Watched
             </p>

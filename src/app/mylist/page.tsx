@@ -79,7 +79,7 @@ export default function MyList() {
   };
 
   return (
-    <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:max-w-3xl mx-20 max-w-md sm:mx-0 h-auto">
+    <div className="grid grid-cols-1 w-full sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-4 sm:gap-6 lg:max-w-5xl md:mx-20 max-w-full sm:mx-0 h-auto">
       <div className="col-span-12 flex justify-center items-center w-full flex-col ">
         <h1 className="font-medium text-2xl text-gray-800 mb-12">MyList</h1>
         <div className="relative text-gray-600 mb-3 drop-shadow-lg">
@@ -104,7 +104,7 @@ export default function MyList() {
             ) : null}
           </div>
         </div>
-        <div className="flex gap-4 mb-4">
+        <div className="flex gap-4 mb-4 flex-wrap justify-center">
           {MyListOptions.map((option) => (
             <button
               key={option.id}

@@ -13,6 +13,7 @@ import Image from "next/image";
 import { getServerSession } from "next-auth";
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { signOut, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
 
 export default function UserProfileIcon() {
   const { isAuthenticated, logout, avatarUrl } = useAuth();
@@ -20,12 +21,12 @@ export default function UserProfileIcon() {
 
   // const session = await getServerSession(authOptions);
 
-  console.log(session);
-
   const url = `${process.env.API_URL}/${session?.user?.avatarUrl}`;
 
   function handleLogout() {
     signOut();
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
   }
 
   return (

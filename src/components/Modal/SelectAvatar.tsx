@@ -54,44 +54,14 @@ export const SelectAvatar = ({
     }
   }
 
-  // const updateAvatarMutation = useMutation(
-  //   async (selectedAvatar: number) => {
-  //     const avatarUrl = `images/predefined/avatar${selectedAvatar}.jpg`;
-  //     const res = await api.updateUser({ avatarUrl });
-  //     return res.data; // Retorne os dados atualizados do usuário aqui, se necessário
-  //   },
-  //   {
-  //     // Defina uma função de sucesso para executar após a mutação bem-sucedida
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries("user"); // Atualize a query "user"
-  //     },
-  //   }
-  // );
-
-  // async function UpdateAvatar() {
-  //   try {
-  //     // const avatarUrl: string = `images/predefined/avatar${selectedAvatar}.jpg`;
-  //     // const res = await api.updateUser({ avatarUrl });
-  //     // if (res) {
-  //     await updateAvatarMutation.mutateAsync(selectedAvatar);
-  //     await update({
-  //       ...session,
-  //       user: {
-  //         ...session?.user,
-  //         avatarUrl: avatarUrl,
-  //       },
-  //     });
-  //     // }
-  //   } catch (error) {
-  //     console.error("Erro ao atualizar avatar:", error);
-  //   } finally {
-  //     window.my_modal_3.close();
-  //   }
-  // }
-
   return (
     <>
-      <button onClick={() => window.my_modal_3.showModal()}>{children}</button>
+      <button
+        onClick={() => window.my_modal_3.showModal()}
+        className="group relative"
+      >
+        {children}
+      </button>
       <dialog id="my_modal_3" className="modal">
         <form
           method="dialog"

@@ -3,7 +3,7 @@ import { fetchWrapper } from "@/services/fetch";
 
 export const useJikanAPI = () => ({
   getTopAnimes: async () => {
-    return fetchWrapper("top/anime?filter=favorite", {
+    return fetchWrapper("top/anime?filter=bypopularity&page=2", {
       method: "GET",
     });
   },

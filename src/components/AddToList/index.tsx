@@ -62,7 +62,7 @@ export const AddToList = ({ animeData, children }: any) => {
     <>
       {userStatus === "authenticated" ? (
         <button
-          className="flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-sm md:text-base"
+          className=" flex items-center cursor-pointer hover:text-primary gap-2 transition-colors text-base"
           onClick={handleClick}
         >
           <BsPlusCircleFill size={22} />

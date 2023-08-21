@@ -34,11 +34,11 @@ export default function ExtraInfo({ animeId }: any) {
     <section className="w-full pt-20">
       <div className="divider h-0.5 bg-gray-300" />
       <div className="mt-2">
-        <ul className="flex justify-around text-gray-500 font-medium">
+        <ul className="flex justify-around text-gray-500 font-medium flex-wrap">
           {AnimeOtherOptions.map((options) => (
             <li
               key={options.id}
-              className="cursor-pointer hover:bg-slate-300 px-8 py-3 rounded relative transition-all"
+              className="cursor-pointer hover:bg-slate-300 px-2 md:px-8 py-3 rounded relative transition-all"
               onClick={() => handleItemClick(options.endpoint)}
             >
               {options.name}

@@ -9,12 +9,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import nookies from "nookies";
 import { cookies } from "next/headers";
 
-// type ICredentials = {
-//   email: string;
-//   password: string;
-//   rememberMe: boolean;
-// };
-
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -41,7 +35,13 @@ export const authOptions: NextAuthOptions = {
         const userResponse = await response.json();
 
         if (response.ok) {
-          cookies().set("accessToken", userResponse.accessToken);
+          const refreshToken = response.headers.get("set-cookie");
+          cookies().set("refreshToken", refreshToken, {
+            maxAge: 7 * 24 * 60 * 60,
+          });
+          cookies().set("accessToken", userResponse.accessToken, {
+            maxAge: 1 * 60 * 60,
+          });
 
           return userResponse;
         }
@@ -57,20 +57,42 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         const currentTime = Math.floor(Date.now() / 1000);
         const decodeToken = decodeAccessToken(user.accessToken);
-
+        console.log(user.token);
         if (decodeToken.exp < currentTime) {
           try {
-            const res = await fetch(`${process.env.API_URL}token/refresh`, {
-              method: "PATCH",
-              credentials: "include",
-              headers: {
-                Cookie: document.cookie,
-              },
-            });
+            const refreshTokenCookie = cookies().get("refreshToken");
+            if (refreshTokenCookie) {
+              const refreshTokenValue = refreshTokenCookie.value;
+              const response = await fetch(
+                `${process.env.API_URL}token/refresh`,
+                {
+                  method: "PATCH",
+                  credentials: "include",
+                  headers: {
+                    Cookie: refreshTokenValue,
+                  },
+                }
+              );
+
+              if (response.ok) {
+                const refreshToken: any = response.headers.get("set-cookie");
+                cookies().set("refreshToken", refreshToken, {
+                  maxAge: 7 * 24 * 60 * 60,
+                });
+
+                const newAccessToken = await response.json();
+                token.accessToken = newAccessToken.accessToken;
+
+                cookies().set("accessToken", newAccessToken.accessToken, {
+                  maxAge: 1 * 60 * 60,
+                });
+              }
+            }
           } catch (error) {
             console.error("Failed to refresh accessToken:", error);
           }
         }
+
         token.accessToken = user.accessToken;
       }
       return { ...token, ...user };
@@ -90,77 +112,6 @@ export const authOptions: NextAuthOptions = {
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   return await NextAuth(req, res, authOptions);
 }
-//   session: {
-//     strategy: "jwt",
-//   },
-
-//   providers: [
-//     CredentialsProvider({
-//       name: "Credentials",
-//       credentials: {
-//         email: {
-//           label: "Email",
-//           type: "email",
-//         },
-//         password: { label: "Password", type: "password" },
-//       },
-//       async authorize(credentials, req: any) {
-//         const response: any = await fetch(`${process.env.API_URL}sessions`, {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify(credentials),
-//           credentials: "include",
-//         });
-
-//         const userResponse = await response.json();
-
-//         if (response.ok) {
-//           return userResponse;
-//         }
-//         return null;
-//       },
-//     }),
-//   ],
-//   callbacks: {
-//     async jwt({ token, user }: any) {
-//       if (user) {
-//         const currentTime = Math.floor(Date.now() / 1000);
-//         const decodeToken = decodeAccessToken(user.accessToken);
-
-//         if (decodeToken.exp < currentTime) {
-//           console.log("accessToken expirado, renovando...");
-//           try {
-//             const response = await fetch(
-//               `${process.env.API_URL}token/refresh`,
-//               {
-//                 method: "PATCH",
-//                 credentials: "include",
-//                 headers: {
-//                   Cookie: document.cookie,
-//                 },
-//               }
-//             );
-//             console.log(response);
-//           } catch (error) {
-//             console.error("Failed to refresh accessToken:", error);
-//           }
-//         }
-//         token.accessToken = user.accessToken;
-//       }
-//       return { ...token, ...user };
-//     },
-
-//     async session({ session, token, user }: any) {
-//       session.user = token;
-//       return session;
-//     },
-//   },
-
-//   pages: {
-//     signIn: "/auth/login",
-//   },
-// });
-// }
 
 export { auth as GET, auth as POST };
 

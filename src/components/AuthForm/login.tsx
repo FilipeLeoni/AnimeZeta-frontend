@@ -41,7 +41,7 @@ export default function LoginForm() {
         email,
         password,
         rememberMe,
-        callbackUrl: `/profile`, // Redirecionamento após o login
+        callbackUrl: `/profile`,
       });
 
       // setIsLoading(true);

@@ -18,7 +18,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <NextTopLoader color="#F9C91F" />
-          <div className="flex w-full min-h-screen h-full flex-col items-center px-4 md:px-20">
+          <div className="flex w-full min-h-screen h-full flex-col items-center px-4 lg:px-20">
             {children}
           </div>
           <Footer />

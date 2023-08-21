@@ -33,7 +33,6 @@ export const useApi = () => ({
   },
 
   getUser: async (accessToken: string) => {
-    console.log(accessToken);
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };

@@ -14,9 +14,6 @@ import { useQuery } from "react-query";
 
 export default function Profile() {
   const api = useApi();
-  // const session = await getServerSession(authOptions);
-  const { data: session } = useSession();
-  const accessToken: any = Cookies.get("accessToken");
 
   const { data: user } = useQuery("user", async () => {
     const accessToken: any = Cookies.get("accessToken");
