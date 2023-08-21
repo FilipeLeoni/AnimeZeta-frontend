@@ -16,10 +16,7 @@ import { signOut, useSession } from "next-auth/react";
 import Cookies from "js-cookie";
 
 export default function UserProfileIcon() {
-  const { isAuthenticated, logout, avatarUrl } = useAuth();
   const { data: session, status } = useSession();
-
-  // const session = await getServerSession(authOptions);
 
   const url = `${process.env.API_URL}/${session?.user?.avatarUrl}`;
 
@@ -36,13 +33,17 @@ export default function UserProfileIcon() {
           <button className="flex justify-center items-center">
             <div className="avatar">
               <div className="w-10 rounded-full ring-2 ring-primary ring-offset-base-100 ring-offset-2">
-                <Image
-                  src={url || userIcon}
-                  alt="User"
-                  width={100}
-                  height={100}
-                  className="scale-125"
-                />
+                {status === "authenticated" ? (
+                  <Image
+                    src={url}
+                    alt="User"
+                    width={100}
+                    height={100}
+                    className="scale-125"
+                  />
+                ) : (
+                  <Image src={userIcon} alt="User" width={100} height={100} />
+                )}
               </div>
             </div>
           </button>

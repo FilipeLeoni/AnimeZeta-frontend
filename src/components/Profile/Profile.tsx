@@ -25,15 +25,13 @@ export function ProfileCard({ data }: ProfileCardProps) {
   const [isEdit, setIsEdit] = useState(false);
   const avatarUrl = `${process.env.API_URL}${data?.avatarUrl}`;
 
-  console.log(data?.createdAt);
-
   return (
     <div className="bg-white flex w-full items-center flex-col text-center rounded-lg p-10 max-w-2xl h-full ">
-      <SelectAvatar currentAvatar={avatarUrl || ""}>
+      <SelectAvatar currentAvatar={avatarUrl}>
         <div className="avatar">
           <div className="w-32 rounded-full ring-2 ring-primary ring-offset-base-100 ring-offset-2 mb-2">
             <Image
-              src={avatarUrl || ""}
+              src={avatarUrl}
               alt="Profile Picture"
               width={200}
               height={200}
