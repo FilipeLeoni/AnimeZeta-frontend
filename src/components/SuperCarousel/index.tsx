@@ -95,7 +95,7 @@ export default function SuperCarousel({ data }: any) {
               <div className="absolute h-full w-full bg-neutral-900 -z-10" />
               <div className="flex sm:w-1/2 h-full z-10 w-full relative">
                 <div className="w-full flex flex-col justify-between sm:justify-center sm:px-14 sm:mb-10">
-                  <div className="">
+                  <div>
                     <h3 className="text-lg md:text-3xl mb-2 text-center font-medium md:text-start text-gray-50 z-10 bg-gradient-to-b from-grayDark via-grayDark/80 to-transparent sm:bg-none w-full sm:px-0 sm:pt-0 sm:pb-0 pt-8 pb-8 px-2">
                       {anime.title}
                     </h3>
@@ -106,7 +106,7 @@ export default function SuperCarousel({ data }: any) {
                     </p>
                   </div>
 
-                  <div className="hidden md:flex mt-4 items-center">
+                  <div className="hidden md:flex mt-2 items-center">
                     {anime.genres.map((genre: any, index: number) => (
                       <div
                         key={genre.mal_id}

@@ -109,13 +109,13 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-  return await NextAuth(req, res, authOptions);
-}
+// export default async function auth(req: NextApiRequest, res: NextApiResponse) {
+//   return await NextAuth(req, res, authOptions);
+// }
 
-export { auth as GET, auth as POST };
+const handler = NextAuth(authOptions);
 
-// const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
 
 // async jwt({ token, user }: any) {
 //   return { ...token, ...user };
