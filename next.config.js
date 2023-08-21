@@ -7,9 +7,6 @@ const nextConfig = {
     images: {
         domains: ['cdn.myanimelist.net', 'animezeta.onrender.com'],
       },
-  typescript: {
-        ignoreBuildErrors: true,
-     },
 }
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({

@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 
 import React from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { authOptions } from "../api/auth/[...nextauth]/route";
 import { User } from "@/@types/user";
 import { useQuery } from "react-query";
 
