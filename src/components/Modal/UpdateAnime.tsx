@@ -91,7 +91,7 @@ export const UpdateAnime = ({ animeData }: { animeData: ListAnime }) => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="dialog"
-        className="modal-box overflow-hidden w-full flex flex-col h-full max-h-[520px] bg-gradient-to-b px-8 from-background to-[#e3e8f4] "
+        className="modal-box overflow-hidden w-full flex flex-col h-auto max-h-full bg-gradient-to-b px-8 from-background to-[#e3e8f4] "
       >
         <div className="flex flex-wrap">
           <div className="flex gap-8 pt-5">
@@ -124,26 +124,24 @@ export const UpdateAnime = ({ animeData }: { animeData: ListAnime }) => {
             </div>
           </div>
         </div>
-        <div className="flex mt-auto justify-between gap-6">
+        <div className="flex mt-auto justify-between gap-6 pt-20 flex-wrap-reverse">
           <button
-            className="btn bg-gray-300 text-red-600 hover:bg-gray-200"
+            className="btn bg-gray-300 text-red-600 hover:bg-gray-200 w-full sm:w-auto"
             type="button"
             onClick={handleRemove}
           >
             Remove
           </button>
-          <div className="flex mt-auto justify-end gap-6">
-            <div className="modal-action mt-auto">
-              <button
-                type="button"
-                className="btn bg-gray-300 text-gray-600"
-                onClick={() => window.my_modal_2.close()}
-              >
-                Cancel
-              </button>
-            </div>
+          <div className="flex mt-auto justify-end gap-6 flex-wrap-reverse w-full sm:w-auto">
             <button
-              className="btn bg-primary text-gray-600 hover:bg-gray-300"
+              type="button"
+              className="btn bg-gray-300 text-gray-600 w-full sm:w-auto"
+              onClick={() => window.my_modal_2.close()}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn bg-primary text-gray-600 hover:bg-gray-300 w-full sm:w-auto"
               type="submit"
             >
               Update

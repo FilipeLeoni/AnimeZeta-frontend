@@ -313,6 +313,13 @@ export default function Header() {
                 )}
               </AnimatePresence>
             </li>
+            {status === "authenticated" && (
+              <li className="ml-4 pl-4 mt-2 py-4  gap-2 cursor-pointer hover:bg-background rounded-md">
+                <Link href={"/profile"} onClick={() => setIsMenuOpen(false)}>
+                  Profile
+                </Link>
+              </li>
+            )}
             <div className="w-full px-4 relative my-3">
               <SearchBar />
             </div>
@@ -327,7 +334,9 @@ export default function Header() {
               </li>
             ) : (
               <li className="ml-4 pl-4 mb-4 mt-2 py-4 gap-2 cursor-pointer hover:bg-background rounded-md">
-                Login
+                <Link href={"/auth/login"} onClick={() => setIsMenuOpen(false)}>
+                  Login
+                </Link>
               </li>
             )}
           </ul>

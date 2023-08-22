@@ -23,7 +23,7 @@ export default async function AnimePage({
         <title>AnimeZeta</title>
       </head>
       <div>
-        <div className="w-full flex gap-24 justify-center">
+        <div className="w-full flex gap-6 lg:gap-24 justify-center items-center lg:items-start flex-col lg:flex-row">
           <div className="drop-shadow-lg">
             <Image
               src={data?.images?.webp.image_url}
@@ -33,13 +33,13 @@ export default async function AnimePage({
               className="rounded-xl drop-shadow-lg"
             />
           </div>
-          <div className=" flex flex-col flex-wrap">
+          <div className="flex flex-col flex-wrap text-center lg:text-start">
             <h1 className="text-4xl font-medium text-gray-800 mb-2">
               {data.name}
             </h1>
             <div className="w-full h-0.5 rounded bg-gray-300" />
-            <div className="flex gap-2 items-center text-gray-700 my-2 pl-2">
-              <div className="flex gap-2">
+            <div className="flex gap-2 items-center text-gray-700 my-2 pl-2 flex-wrap justify-center">
+              <div className="flex gap-2 justify-center flex-wrap">
                 {data.nicknames?.slice(0, 3).map((nickname: string) => (
                   <p key={nickname}>{nickname} -</p>
                 ))}
