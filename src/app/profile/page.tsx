@@ -3,6 +3,7 @@
 import { ProfileCard } from "@/components/Profile/Profile";
 import { useApi } from "@/hooks/useApi";
 import Cookies from "js-cookie";
+import { useSession } from "next-auth/react";
 
 import React, { Suspense } from "react";
 import { useQuery } from "react-query";

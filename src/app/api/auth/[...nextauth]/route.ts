@@ -154,13 +154,14 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger, session }: any) {
+    async jwt({ token, user, trigger, session, account }: any) {
       if (trigger === "update") {
         return { ...token, ...session.user };
       }
-      if (token || user) {
+      if (user) {
         const currentTime = Math.floor(Date.now() / 1000);
-        if (token.exp < currentTime) {
+        const decodeToken = decodeAccessToken(user.accessToken);
+        if (decodeToken.exp < currentTime) {
           try {
             const refreshTokenCookie = cookies().get("refreshToken");
             if (refreshTokenCookie) {
@@ -195,7 +196,6 @@ const handler = NextAuth({
             console.error("Failed to refresh accessToken:", error);
           }
         }
-
         token.accessToken = user.accessToken;
       }
       return { ...token, ...user };
@@ -213,10 +213,3 @@ const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
-
-// async jwt({ token, user }: any) {
-//   return { ...token, ...user };
-// },
-// async session({ session, token, user }: any) {
-//   return session;
-// },
