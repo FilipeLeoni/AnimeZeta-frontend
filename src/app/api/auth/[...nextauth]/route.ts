@@ -158,8 +158,7 @@ const handler = NextAuth({
       if (trigger === "update") {
         return { ...token, ...session.user };
       }
-      console.log(token);
-      if (token) {
+      if (token || user) {
         const currentTime = Math.floor(Date.now() / 1000);
         if (token.exp < currentTime) {
           try {

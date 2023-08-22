@@ -72,7 +72,7 @@ export const ListForm = ({ control, episodes }: FormFieldsProps) => {
           name="rating"
           control={control}
           render={({ field }) => (
-            <div className="flex flex-col mt-7">
+            <div className="flex flex-col mt-7 justify-center md:justify-start">
               <label
                 htmlFor={inputId}
                 className="font-medium text-gray-600 ml-2 mb-1"
@@ -110,19 +110,6 @@ export const ListForm = ({ control, episodes }: FormFieldsProps) => {
             </div>
           )}
         />
-
-        {/* <label htmlFor={inputId} className="font-medium text-gray-600">
-          Episode Progress
-        </label>
-        <input
-          id={inputId}
-          {...register("episodes")}
-          type="number"
-          placeholder={0}
-          value={episodeProgress}
-          onChange={(e) => setEpisodeProgress(+e.target.value)}
-          className="px-4 py-[7px] border rounded-lg drop-shadow-xl focus:ring-2 focus:ring-primary outline-none"
-        /> */}
       </div>
     </div>
   );

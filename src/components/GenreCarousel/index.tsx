@@ -23,20 +23,21 @@ export default function GenreCarousel({ AnimeData }: Props) {
     slidesToShow: 5,
     slidesToScroll: 4,
     initialSlide: 1,
-    // prevArrow: (
-    //   <CaretCircleLeft
-    //     color={"#1e1e1e"}
-    //     weight="fill"
-    //     className="md:slick-prev md:inline hidden opacity-0 md:opacity-100"
-    //   />
-    // ),
-    // nextArrow: (
-    //   <CaretCircleRight
-    //     color={"#1e1e1e"}
-    //     weight="fill"
-    //     className="md:slick-next"
-    //   />
-    // ),
+    arrows: true,
+    prevArrow: (
+      <CaretCircleLeft
+        color={"#1e1e1e"}
+        weight="fill"
+        className="md:slick-prev custom-next-arrow"
+      />
+    ),
+    nextArrow: (
+      <CaretCircleRight
+        color={"#1e1e1e"}
+        weight="fill"
+        className="md:slick-next custom-next-arrow"
+      />
+    ),
 
     responsive: [
       {
@@ -71,6 +72,7 @@ export default function GenreCarousel({ AnimeData }: Props) {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          arrows: false,
         },
       },
       {
@@ -78,6 +80,10 @@ export default function GenreCarousel({ AnimeData }: Props) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          initialSlide: 0,
+          arrows: false,
+          centerMode: true,
+          centerPadding: "50px",
         },
       },
     ],
@@ -85,13 +91,16 @@ export default function GenreCarousel({ AnimeData }: Props) {
 
   return (
     <div className="w-full col-span-12 bg-red">
-      <Slider {...settings} className="z-20 h-96 w-full">
+      <Slider
+        {...settings}
+        className="z-20 h-full max-h-96 w-full flex justify-center"
+      >
         {AnimeData?.map((data: any) => (
           <Link
             key={data.mal_id}
             prefetch={false}
             href={`/anime/${data.mal_id}`}
-            className="h-full py-10 mx-6"
+            className="h-full py-10 "
           >
             <Suspense fallback={<LoadingAnimeCard />}>
               <AnimeCard data={data} />

@@ -87,11 +87,11 @@ export const AddToList = ({ animeData, children }: any) => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           method="dialog"
-          className="modal-box overflow-hidden w-full flex flex-col h-full max-h-[520px] bg-gradient-to-b px-8 from-background to-[#e3e8f4]"
+          className="modal-box overflow-hidden w-full flex flex-col h-auto max-h-full bg-gradient-to-b px-8 from-background to-[#e3e8f4]"
         >
           <div className="flex flex-wrap">
-            <div className="flex gap-8 pt-5">
-              <div className="w-36 h-48 flex overflow-hidden rounded-lg drop-shadow-lg ">
+            <div className="flex gap-8 justify-center pt-5">
+              <div className="w-36 h-48 lg:flex overflow-hidden rounded-lg drop-shadow-lg hidden">
                 <Image
                   src={animeData?.images.webp.image_url}
                   fill
@@ -100,7 +100,7 @@ export const AddToList = ({ animeData, children }: any) => {
                   style={{ objectFit: "cover" }}
                 />
               </div>
-              <div className="mt-2">
+              <div className="mt-2 w-full flex flex-col items-center lg:items-start">
                 <h3 className="font-semibold text-2xl text-gray-700 mb-7">
                   {animeData?.title}
                 </h3>
@@ -108,18 +108,16 @@ export const AddToList = ({ animeData, children }: any) => {
               </div>
             </div>
           </div>
-          <div className="flex mt-auto justify-end gap-6">
-            <div className="modal-action mt-auto">
-              <button
-                type="button"
-                className="btn bg-gray-300 text-gray-600"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </div>
+          <div className="flex mt-auto justify-center lg:justify-end gap-6 pt-20 flex-wrap sm:flex-nowrap">
             <button
-              className="btn bg-primary text-gray-600 hover:bg-gray-300"
+              type="button"
+              className="btn bg-gray-300 text-gray-600"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn bg-primary text-gray-600 hover:bg-gray-300 "
               type="submit"
             >
               Add to list

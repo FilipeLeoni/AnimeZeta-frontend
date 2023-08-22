@@ -7,14 +7,14 @@ import { SelectAvatar } from "../Modal/SelectAvatar";
 import { format } from "date-fns";
 
 interface ProfileProps {
-  id?: string;
+  id: string;
   username: string;
-  email?: string;
-  createdAt?: string;
-  avatarUrl?: string;
-  animesCompleted?: number;
-  episodesWatched?: number;
-  totalAnimeCount?: number;
+  email: string;
+  createdAt: string;
+  avatarUrl: string;
+  animesCompleted: number;
+  episodesWatched: number;
+  totalAnimeCount: number;
 }
 
 interface ProfileCardProps {
@@ -43,7 +43,7 @@ export function ProfileCard({ data }: ProfileCardProps) {
       {isEdit ? (
         <div className="mt-10 w-full max-w-sm flex flex-col items-center">
           <EditProfile />
-          <div className="flex mt-10 space-x-4 justify-center">
+          <div className="flex mt-10 md:space-x-4 justify-center md:flex-nowrap flex-wrap items-center">
             <button
               className="btn w-full flex-grow"
               onClick={() => setIsEdit(false)}
@@ -67,7 +67,7 @@ export function ProfileCard({ data }: ProfileCardProps) {
                 : ""}
             </p>
           </div>
-          <div className="gap-12 rounded-xl px-8 border border-gray-200/90 py-6 flex bg-gray-100 font-medium my-10">
+          <div className="gap-12 rounded-xl px-8 border border-gray-200/90 py-6 flex bg-gray-100 font-medium my-10 flex-wrap justify-center">
             <p className="">
               <span className="text-yellow-600">{data?.animesCompleted}</span>
               <br />
